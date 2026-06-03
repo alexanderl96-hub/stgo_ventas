@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import useDataProducts from "./api/dataProducts.jsx";
 import data from "./data_json";
 
-import Home from "./Home/Home";
+import Home from "./Home/Home.jsx";
 import Cart from "./Component/cart";
 import Footer from "./Footer/Footer";
 import ProductDetail from "./ItemDetails/ProductDetail";
