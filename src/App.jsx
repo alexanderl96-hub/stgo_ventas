@@ -344,10 +344,10 @@ function App() {
         {/* <Route path="/admin/*" element={<Admin />} /> */}
         {/* <Route path="/admin/update-products" element={<UpdateProduct />} />
         <Route path="/admin/create-product" element={<CreateProduct />} /> */}
-        <Route path="/admin" element={<Admin />}>
-          <Route path="update-products" element={<UpdateProduct />} />
-          <Route path="create-product" element={<CreateProduct />} />
-        </Route>
+        {/* <Route path="/admin" element={<Admin />}> */}
+        <Route path="update-products" element={<UpdateProduct />} />
+        <Route path="create-product" element={<CreateProduct />} />
+        {/* </Route> */}
       </Routes>
       <Footer
         cart={cart}
