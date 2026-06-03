@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import API_URL from "../../api/api_images";
 // import { getDollarPrice } from "../../utils/dollarPrice";
 
-import "./createProduct.css";
+import "./CreateProduct.css";
 
 export default function CreateProduct() {
 
