@@ -17,13 +17,11 @@ import QrOrderPage from "./QRCodeOrder/QrOrderPage";
 import CheckoutGuess from "./CheckoutGuess/PyamentSelectorGuess";
 
 import UpdateProduct from "./updateDB/Update/updateDBProduct.jsx";
-import CreateProduct from "./updateDB/Create/createProduct.jsx";
+import CreateProduct from "./updateDB/createProduct.jsx";
 
 function App() {
   // 🧠 GLOBAL PRODUCT DATA (FROM BACKEND)
-  const { products, filtered, search, 
-    setSearch, category } =
-    useDataProducts();
+  const { products, filtered, search, setSearch, category } = useDataProducts();
 
   console.log("filtered", filtered);
   console.log("category", category);
@@ -158,7 +156,7 @@ function App() {
   // }, []);
 
   // console.log("user", user)
-  console.log("token", activeCategory)
+  console.log("token", activeCategory);
   return (
     <div>
       <Routes>
@@ -213,7 +211,6 @@ function App() {
             <ProductDetail
               products={products}
               category={category}
-
               cart={cart}
               setCart={setCart}
               activeTab={activeTab}
@@ -342,9 +339,9 @@ function App() {
         <Route path="/order/:orderId" element={<QrOrderPage />} />
         <Route path="/product/:orderId" element={<QrOrderPage />} />
         {/* <Route path="/update-products" element={<UpdateProduct />} /> */}
-        <Route path="/create" element={<CreateProduct />} />
+        <Route path="/create-product" element={<CreateProduct />} />
 
-         <Route path="/login" element={<Login onAuth={handleAuth} />} />
+        <Route path="/login" element={<Login onAuth={handleAuth} />} />
         <Route path="/register" element={<Register onAuth={handleAuth} />} />
         <Route
           path="/admin-login"
