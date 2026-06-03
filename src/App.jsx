@@ -329,12 +329,6 @@ function App() {
           }
         />
 
-        {/* <Route path="/login" element={<Login onAuth={handleAuth} />} />
-        <Route path="/register" element={<Register onAuth={handleAuth} />} />
-        <Route
-          path="/admin-login"
-          element={<AdminLogin onAuth={handleAuth} />}
-        /> */}
 
         <Route path="/order/:orderId" element={<QrOrderPage />} />
         <Route path="/product/:orderId" element={<QrOrderPage />} />
