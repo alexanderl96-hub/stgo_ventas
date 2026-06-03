@@ -683,18 +683,3 @@ useEffect(() => {
     </div>
   );
 }
-
-export default function CreateProduct() {
-  return (
-    <div
-      style={{
-        background: "red",
-        color: "white",
-        minHeight: "100vh",
-        fontSize: "40px"
-      }}
-    >
-      CREATE PRODUCT PAGE
-    </div>
-  );
-}
