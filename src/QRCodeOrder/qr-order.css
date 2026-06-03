@@ -1,0 +1,120 @@
+/* Page container */
+.qr-order-container {
+  min-height: 100vh;
+  width: 100%;
+  background: #f9fafb;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Header */
+.qr-order-container h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+/* Card */
+.qr-order-card {
+  width: 100%;
+  max-width: 420px;
+
+  background: #ffffff;
+  border-radius: 16px;
+
+  padding: 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Text rows */
+.qr-order-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Strong labels */
+.qr-order-card strong {
+  color: #111827;
+}
+
+/* Items section */
+.qr-items {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Each item */
+.qr-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px;
+  border-radius: 10px;
+  background: #f3f4f6;
+}
+
+/* Product image */
+.qr-item img {
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+/* Item text */
+.qr-item-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+/* Status badge */
+.qr-status {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 6px 10px;
+
+  border-radius: 8px;
+  width: fit-content;
+
+  font-size: 12px;
+  font-weight: 600;
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+/* Loading state */
+.qr-loading {
+  margin-top: 50px;
+  font-size: 16px;
+  color: #6b7280;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .qr-order-card {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .qr-item img {
+    width: 50px;
+    height: 50px;
+  }
+}

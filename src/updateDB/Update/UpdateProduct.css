@@ -1,0 +1,76 @@
+/* src/pages/Admin/UpdateProduct.css
+
+.update-product-page{
+  padding:20px;
+}
+
+.update-layout{
+  display:flex;
+  gap:20px;
+}
+
+.product-list{
+  width:35%;
+  max-height:90vh;
+  overflow:auto;
+  border-right:1px solid #ddd;
+  padding-right:10px;
+}
+
+.product-card{
+  display:flex;
+  gap:10px;
+  padding:10px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  margin-bottom:10px;
+  cursor:pointer;
+}
+
+.product-card.active{
+  border:2px solid black;
+}
+
+.product-card img{
+  width:80px;
+  height:80px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.update-form{
+  width:65%;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.update-form input,
+.update-form textarea{
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:10px;
+}
+
+.update-form textarea{
+  min-height:120px;
+}
+
+.update-form button{
+  padding:15px;
+  border:none;
+  background:black;
+  color:white;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.featured-check{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.message{
+  font-weight:bold;
+} */

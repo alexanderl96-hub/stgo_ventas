@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +10,40 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+} */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 🎨 COLORS */
+:root {
+  --bg: #f6f6f7;
+  --card: #ffffff;
+  --text: #111111;
+  --muted: #6b7280;
+
+  --primary: #111111;
+  --accent: linear-gradient(135deg, #ff4d6d, #7c3aed);
+
+  /* 🌫 Shadows */
+  --shadow-soft: 0 4px 20px rgba(0,0,0,0.05);
+  --shadow-medium: 0 8px 30px rgba(0,0,0,0.08);
+
+  /* 🔵 Radius */
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+}
+
+/* 🌍 GLOBAL RESET */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ✨ SMOOTH EVERYTHING */
+* {
+  transition: all 0.2s ease;
 }
