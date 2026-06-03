@@ -17,7 +17,7 @@ import QrOrderPage from "./QRCodeOrder/QrOrderPage";
 import CheckoutGuess from "./CheckoutGuess/PyamentSelectorGuess";
 
 // import UpdateProduct from "./updateDB/Update/updateDBProduct.jsx";
-import CreateProduct from "./updateDB/createProduct.jsx";
+import CreateProduct from "./updateDB/NewProduct.jsx";
 
 function App() {
   // 🧠 GLOBAL PRODUCT DATA (FROM BACKEND)
