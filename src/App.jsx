@@ -332,22 +332,24 @@ function App() {
           }
         />
 
-        <Route path="/login" element={<Login onAuth={handleAuth} />} />
+        {/* <Route path="/login" element={<Login onAuth={handleAuth} />} />
+        <Route path="/register" element={<Register onAuth={handleAuth} />} />
+        <Route
+          path="/admin-login"
+          element={<AdminLogin onAuth={handleAuth} />}
+        /> */}
+
+        <Route path="/order/:orderId" element={<QrOrderPage />} />
+        <Route path="/product/:orderId" element={<QrOrderPage />} />
+        <Route path="update-products" element={<UpdateProduct />} />
+        <Route path="create-product" element={<CreateProduct />} />
+
+         <Route path="/login" element={<Login onAuth={handleAuth} />} />
         <Route path="/register" element={<Register onAuth={handleAuth} />} />
         <Route
           path="/admin-login"
           element={<AdminLogin onAuth={handleAuth} />}
         />
-
-        <Route path="/qr/order/:orderId" element={<QrOrderPage />} />
-        <Route path="/qr/product/:orderId" element={<QrOrderPage />} />
-        {/* <Route path="/admin/*" element={<Admin />} /> */}
-        {/* <Route path="/admin/update-products" element={<UpdateProduct />} />
-        <Route path="/admin/create-product" element={<CreateProduct />} /> */}
-        {/* <Route path="/admin" element={<Admin />}> */}
-        <Route path="update-products" element={<UpdateProduct />} />
-        <Route path="create-product" element={<CreateProduct />} />
-        {/* </Route> */}
       </Routes>
       <Footer
         cart={cart}
