@@ -13,6 +13,7 @@ import {
 from "../api/productsApi.jsx";
 import { filteringImgColor } from "../utils/filteringImgColor.jsx"
 
+
 export default function Home({
   products, category, activeCategory, setActiveCategory,
   
