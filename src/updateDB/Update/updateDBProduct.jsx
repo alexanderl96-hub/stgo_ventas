@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import API_URL from "../../api/api_images";
 
-import "./UpdateProduct.css";
+import "./update_product.css";
 
 export default function UpdateProduct() {
   const [products, setProducts] = useState([]);

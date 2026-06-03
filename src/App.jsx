@@ -16,7 +16,7 @@ import AdminLogin from "./Admin/AdminLogin";
 import QrOrderPage from "./QRCodeOrder/QrOrderPage";
 import CheckoutGuess from "./CheckoutGuess/PyamentSelectorGuess";
 
-import UpdateProduct from "./updateDB/Update/updateDBProduct.jsx";
+// import UpdateProduct from "./updateDB/Update/updateDBProduct.jsx";
 import CreateProduct from "./updateDB/createProduct.jsx";
 
 function App() {
@@ -339,7 +339,7 @@ function App() {
         <Route path="/order/:orderId" element={<QrOrderPage />} />
         <Route path="/product/:orderId" element={<QrOrderPage />} />
         {/* <Route path="/update-products" element={<UpdateProduct />} /> */}
-        <Route path="/create-product" element={<CreateProduct />} />
+        <Route path="/admin/create-product" element={<CreateProduct />} />
 
         <Route path="/login" element={<Login onAuth={handleAuth} />} />
         <Route path="/register" element={<Register onAuth={handleAuth} />} />

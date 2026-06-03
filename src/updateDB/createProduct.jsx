@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import API_URL from "../api/api_images";
 // import { getDollarPrice } from "../../utils/dollarPrice";
 
-import "./CreateProduct.css";
+import "./create_product.css";
+// import "../../styles/CreateProduct.css";
 
 export default function CreateProduct() {
   const [loading, setLoading] = useState(false);
