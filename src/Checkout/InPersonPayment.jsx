@@ -29,9 +29,6 @@ import useDataOrders from "../api/useDataOrders";
 import { generateOrderQr } from "../utils/orderQrGenerator";
 import { calculateOrderPricing } from "../utils/pricing";
 
-
-import data from "../data_json";
-
 export default function InPersonPayment({ 
   user,
   cart,
@@ -40,8 +37,12 @@ export default function InPersonPayment({
   customers,
   setCustomers,
   method,
-  formatPay
+  formatPay,
+  administrator,
+  administratorDB
 }) {
+
+    console.log("amountOrder", amountOrder)
 
     const navigate = useNavigate();
     const { admin } = useDataProducts();
@@ -50,9 +51,10 @@ export default function InPersonPayment({
     const [step, setStep] = useState("idle");
     const [phone, setPhone] = useState("");
 
-    const person = amountOrder.map(a => a.personInCharge)?.[0] || "";
+    const person = amountOrder.map(a => a.person_in_charge)?.[0] || "";
 
 
+    console.log("person", person)
      // -----------------------------
   // 🧠 FORMAT PHONE
   // -----------------------------
@@ -295,7 +297,6 @@ export default function InPersonPayment({
   //   //         Notificatyion need to be create for the admin, so they can be alert 
   //   //         about the orders.
 
-  //   console.log("Send pickup info to:", phone);
 
   //    // ✅ CREATE ORDER
   //   const newOrder = createOrderObject();
@@ -308,7 +309,6 @@ export default function InPersonPayment({
   //     updateCustomerSection(prev, userEmail, "order", newOrder)
   //   );
 
-  //   console.log("NEW ORDER SAVED:", newOrder);
 
   //   setStep("success");
   //   setCart([])
@@ -355,14 +355,13 @@ export default function InPersonPayment({
         .replace(/[\u0300-\u036f]/g, "")
         .trim();
 
-    const filterAdmin2 = admin?.filter(
+    console.log("administrator", administratorDB)
+
+    const filterAdmin2 = administratorDB?.filter(
        a => normalize(a.name) === normalize(person)
     );
 
-// console.log("admin", filterAdmin2)
-// console.log("orders", amountOrder.map(a => a))
-//  console.log("customers state", customers);
-
+    console.log("filterAdmin2", filterAdmin2)
 
   return (
     <div className="payment-box">

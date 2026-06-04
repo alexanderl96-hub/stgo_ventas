@@ -1,121 +1,7 @@
-// import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import QRCode from "react-qr-code";
-
-// export default function WhatsAppOrder({
-//   fullName,
-//   address,
-//   phone,
-//   formatPhone,
-//   cart,
-//   step,
-//   setStep,
-//   setAddress, setFullname, setPhone, setCart
-// }) {
-
-//   const navigate = useNavigate();
-
-//  const BUSINESS_PHONES = [ "5350031672" , "5356428430"];
-
-
-// const handleSendWhatsApp = () => {
-//   if (!fullName || !address || phone.length !== 8) return;
-
-//   const message = buildOrderMessage(cart, fullName, address, phone);
-
-  
-
-
-//     // ✅ open WhatsApp (only one)
-//   window.open(`https://wa.me/${BUSINESS_PHONES[0]}?text=${message}`, "_blank");
-
-//   setFullname("");
-//   setAddress("");
-//   setPhone("");
-//   setCart([])
-//   setStep("succes");
-//    navigate("/");
-// };
-
-// const buildOrderMessage = (cart, fullName, address, phone) => {
-//   const mainImage = "https://via.placeholder.com/300"; // replace later
-
-//   let productsText = cart.map((item, index) => {
-//     return `
-// ${index + 1}. 👟 ${item.name}
-//    🏷 ${item.category}
-//    💲 Precio: ${item.price}
-//    🔢 Cantidad: ${item.qty}
-//    📏 Talla: ${item.size || "N/A"}
-// `;
-//   }).join("\n");
-
-//   const message = `
-// 🖼 Producto:
-// ${mainImage}
-
-// 🚚 NUEVA ORDEN
-
-// 👤 Nombre: ${fullName}
-// 📍 Dirección: ${address}
-// 📞 Teléfono: +53 ${formatPhone(phone)}
-
-// 🛒 PRODUCTOS:
-// ${productsText}
-
-// 📦 Entrega: 24–48 horas
-// `;
-
-//   return encodeURIComponent(message.trim());
-// };
-//   const handleClose = () => {
-//     setStep("idle");
-//   };
-
-//   return (
-//     <>
-//       {/* BUTTON */}
-//       <button
-//         className="confirm-btn"
-//         disabled={!fullName || !address || phone.length !== 8}
-//         onClick={handleSendWhatsApp}
-//       >
-//         Confirmar por WhatsApp
-//       </button>
-
-//       {/* MODAL */}
-//       {step === "success" && (
-//         <div className="modal-overlay" onClick={handleClose}>
-//           <div
-//             className="modal-box success-modal"
-//             onClick={(e) => e.stopPropagation()}
-//           >
-//             <h3>📲 Redirigiendo a WhatsApp</h3>
-
-//             <p>
-//               Tu pedido será enviado por WhatsApp para confirmación.
-//             </p>
-
-//             <p>
-//               📦 Entrega estimada: <strong>24–48 horas</strong>
-//             </p>
-
-//             <button className="confirm-btn" onClick={handleClose}>
-//               Cerrar
-//             </button>
-//           </div>
-//         </div>
-//       )}
-
-  
-//     </>
-//   );
-// }
 
 import { useNavigate } from "react-router-dom";
-// import { ShoppingCart, Menu, X, Search, QrCode, Store,
-//    XCircle, } from "lucide-react";
-import data from "../data_json"
+import useDataProducts from "../api/dataProducts";
+
 
 export default function WhatsAppOrder({
   fullName,
@@ -139,22 +25,19 @@ export default function WhatsAppOrder({
   setMoneyType,
   moneyType
 }) {
+  const {administrator, dataColors} = useDataProducts()
   const navigate = useNavigate();
 
   const MAIN_PHONE =  `${result.map(a => a.phone)[0]}` ; // 👈 use one number
 
-  const translateColor = (color) => {
-     return data.colorMap[color?.toLowerCase()] || color;
-  };
+  // const translateColor = (color) => {
+  //    return dataColors.colorMap[color?.toLowerCase()] || color;
+  // };
   
   const ordersUser = customers?.flatMap(
     c => (c.order || []).map(o => o.orders)
   )[0]
 
-
-  console.log("result", result)
-  console.log("cart", cart)
-  console.log("customers whatsapp new order", customers)
 
 
   const handleSendWhatsApp = () => {
@@ -184,15 +67,19 @@ export default function WhatsAppOrder({
 
   //   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(orderLink)}`;
 
-    let productsText = ordersUser.map((item, index) => {
+
+    let productsText = ordersUser?.map((item, index) => {
       return `• *${item.name}*
           Precio: $${item.price}
           Cantidad: ${item.qty}
-          Talla: ${item.size || "N/A"}
-          Color: ${translateColor(item.color)}`
+          Talla: ${item.sizes || "N/A"}
+          Color: ${[item.colors][0]}`
+          
           ;
 
     }).join("\n\n");
+
+    // Color: ${translateColor(item.color)}`
 
     // let proooo = customers.map(a => a.order.map( b => a.orders))
 

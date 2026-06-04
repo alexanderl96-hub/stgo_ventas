@@ -1,8 +1,7 @@
-// import API_URL from "../api/api_images";
-const API = "http://localhost:5001/api/admin-auth";
+import API_URL from "./api_images";
 
 export const adminLogin = async (data) => {
-  const res = await fetch(`${API}/api/admin-auth/login`, {
+  const res = await fetch(`${API_URL}/api/admin-auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

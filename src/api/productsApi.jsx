@@ -1,6 +1,4 @@
-const API_URL =
-  "https://stgo-express-backend.onrender.com";
-
+import API_URL from "./api_images";
 
 export const updateWishlist =
 async (id, likes) => {
@@ -31,11 +29,6 @@ async (id, likes) => {
 
     const data =
       await response.json();
-
-    console.log(
-      "update data",
-      data
-    );
 
 
 

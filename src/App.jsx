@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import useDataProducts from "./api/dataProducts.jsx";
-import data from "./data_json";
 
 import Home from "./Home/Home.jsx";
 import Cart from "./Component/cart";
@@ -21,10 +20,15 @@ import CreateProduct from "./updateDB/NewProduct.jsx";
 
 function App() {
   // 🧠 GLOBAL PRODUCT DATA (FROM BACKEND)
-  const { products, filtered, search, setSearch, category } = useDataProducts();
+  const {  
+    productsDB,
+    administratorDB,
+    filteredDB,
+    search,
+    setSearch,
+    categoryDB,
+    dataColorsDB } = useDataProducts();
 
-  console.log("filtered", filtered);
-  console.log("category", category);
 
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -33,7 +37,7 @@ function App() {
   const [cart, setCart] = useState([]);
   const [activeTab, setActiveTab] = useState("home");
   // const [products ] = useState(data?.products);
-  const [activeCategory, setActiveCategory] = useState(category);
+  const [activeCategory, setActiveCategory] = useState(categoryDB);
   const [activeProduct, setActiveProduct] = useState(null);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [amountOrder, setAmountOrder] = useState([]);
@@ -51,16 +55,6 @@ function App() {
   });
 
   // 🔐 HANDLE LOGIN / REGISTER
-  // const handleAuth = (data) => {
-  //   if (data.token) {
-  //     localStorage.setItem("token", data.token);
-  //     localStorage.setItem("user", JSON.stringify(data.user));
-
-  //     setToken(data.token);
-  //     setUser(data.user);
-  //   }
-  // };
-
   const handleAuth = (data) => {
     if (!data?.token) return;
 
@@ -99,64 +93,10 @@ function App() {
       setUser(JSON.parse(savedUser));
     }
   }, []);
-  // useEffect(() => {
-  //   const savedToken = localStorage.getItem("token");
-  //   const savedUser = localStorage.getItem("user");
+  
+  console.log("CPM App", activeCategory);
 
-  //   if (!savedToken) return;
 
-  //   // 🧠 restore instantly from localStorage (no flicker)
-  //   if (savedUser) {
-  //     setUser(JSON.parse(savedUser));
-  //     setToken(savedToken);
-  //   }
-
-  //   // 🔍 optional backend validation (safe)
-  //   fetch("http://localhost:5001/api/auth/profile", {
-  //     headers: {
-  //       Authorization: `Bearer ${savedToken}`
-  //     }
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       if (!data.user) {
-  //         // only clear if truly invalid
-  //         localStorage.removeItem("token");
-  //         localStorage.removeItem("user");
-  //         setUser(null);
-  //         setToken(null);
-  //       }
-  //     })
-  //     .catch(() => {
-  //       // DO NOTHING (IMPORTANT)
-  //     });
-  // }, []);
-
-  // 🔄 VALIDATE TOKEN WITH BACKEND (optional but recommended)
-  // useEffect(() => {
-  //   const savedToken = localStorage.getItem("token");
-
-  //   if (savedToken) {
-  //     fetch("http://localhost:5001/api/auth/profile", {
-  //       headers: {
-  //         Authorization: `Bearer ${savedToken}`
-  //       }
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         if (data.user) {
-  //           setUser(data.user);
-  //           setToken(savedToken);
-  //          }  else {
-  //           localStorage.clear();
-  //         }
-  //       })
-  //       .catch(() => localStorage.clear());
-  //   }
-  // }, []);
-
-  // console.log("user", user)
-  console.log("token", activeCategory);
   return (
     <div>
       <Routes>
@@ -164,8 +104,8 @@ function App() {
           path="/"
           element={
             <Home
-              products={products}
-              category={category}
+              productsDB={productsDB}
+              categoryDB={categoryDB}
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
               cart={cart}
@@ -190,6 +130,7 @@ function App() {
             <Cart
               cart={cart}
               setCart={setCart}
+
               activeTab={activeTab}
               setActiveTab={setActiveTab}
               activeProduct={activeProduct}
@@ -209,8 +150,8 @@ function App() {
           path="/details/:id"
           element={
             <ProductDetail
-              products={products}
-              category={category}
+              productsDB={productsDB}
+              categoryDB={categoryDB}
               cart={cart}
               setCart={setCart}
               activeTab={activeTab}
@@ -236,6 +177,7 @@ function App() {
               <Checkout
                 cart={cart}
                 setCart={setCart}
+                administratorDB={administratorDB}
                 amountOrder={amountOrder}
                 setAmountOrder={setAmountOrder}
                 orderConfig={orderConfig}
@@ -260,6 +202,7 @@ function App() {
               <CustomerProfile
                 cart={cart}
                 setCart={setCart}
+                administratorDB={administratorDB}
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
                 activeProduct={activeProduct}
@@ -289,6 +232,7 @@ function App() {
               <AdminStore
                 cart={cart}
                 setCart={setCart}
+                administratorDB={administratorDB}
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
                 activeProduct={activeProduct}
@@ -317,6 +261,7 @@ function App() {
             <CheckoutGuess
               cart={cart}
               setCart={setCart}
+              administratorDB={administratorDB}
               amountOrder={amountOrder}
               setAmountOrder={setAmountOrder}
               orderConfig={orderConfig}

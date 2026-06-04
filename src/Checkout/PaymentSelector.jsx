@@ -13,10 +13,11 @@ export default function PaymentSelector({
   setAmountOrder,
   customers,
   setCustomers,
-  orderConfig
+  orderConfig,
+  administratorDB
 }) {
 
-  const { admin } = useDataProducts();
+  const { administrator } = useDataProducts();
 
   const [method, setMethod] = useState(null);
   const [formatPay, setFormatPay] = useState(null)
@@ -77,7 +78,6 @@ export default function PaymentSelector({
   //       return updated;
   //     });
 
-  //     console.log("ORDER SAVED FOR USER:", order);
   //     return;
   //   }
 
@@ -101,7 +101,6 @@ export default function PaymentSelector({
   //     }
   //   ]);
 
-  //   console.log("ORDER SAVED FOR GUEST:", order);
   // };
 
   // -----------------------------
@@ -172,10 +171,11 @@ export default function PaymentSelector({
           user={user}
           cart={cart}
           setCart={setCart}
+          administratorDB={administratorDB}
           amountOrder={amountOrder}
           customers={customers}
           setCustomers={setCustomers}
-          admin={admin}
+          administrator={administrator}
           method={method}
           formatPay={formatPay}
         />
@@ -186,10 +186,11 @@ export default function PaymentSelector({
            user={user}
           cart={cart}
           setCart={setCart}
+          administratorDB={administratorDB}
           amountOrder={amountOrder}
           customers={customers}
           setCustomers={setCustomers}
-          admin={admin}
+          admin={administrator}
           method={method}
           formatPay={formatPay}
         />

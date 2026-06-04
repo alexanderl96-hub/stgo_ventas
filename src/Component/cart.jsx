@@ -15,9 +15,6 @@ function Cart({token, user, cart, setCart, activeProduct, setActiveProduct,
   const [activeQR, setActiveQR] = useState(null);
   const [cartWarning, setCartWarning] = useState(false);
 
-  // console.log("user", user)
-  console.log("cart", cart)
-  console.log("amountOrder", amountOrder)
 
   // 🔥 GROUP ITEMS BY NAME
   const groupedCart = useMemo(() => {
@@ -107,9 +104,6 @@ useEffect(() => {
 useEffect(()=>{
     setAmountOrder(groupedCart) 
 }, [groupedCart, setAmountOrder])
-
-// console.log("User", user);
-// console.log("token", token)
 
 
   return (

@@ -1,45 +1,43 @@
 import { useEffect, useState } from "react";
+import API_URL from "./api_images";
 
 export default function useDataProducts() {
-  const [products, setProducts] = useState([]);
-  const [filtered, setFiltered] = useState([]);
+  const [productsDB, setProductsDB] = useState([]);
+  const [filteredDB, setFilteredDB] = useState([]);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState([]);
-  const [admin , setAdmin] = useState([])
+  const [categoryDB, setCategoryDB] = useState();
+  const [administratorDB , setAdministratorDB] = useState([])
+  const [dataColorsDB, setDataColorsDB] = useState([])
 
-  console.log("search", search)
+  // console.log("search", search)
+  // console.log("path to back end", API_URL)
 
   // 🔥 FETCH FROM BACKEND PRODUCTS
   useEffect(() => {
-    fetch("https://stgo-express-backend.onrender.com/api/products")
+    fetch(`${API_URL}/api/products`)
       .then(res => res.json())
       .then(data => {
-
-        console.log("filtered is false", data.filter( a => a.featured === true))
-        setProducts(data);
-        setFiltered(data);
-
+          setProductsDB(data);
+          setFilteredDB(data);
       });
   }, []);
 
     // 🔥 FETCH FROM BACKEND CATEGORY
   useEffect(() => {
-    fetch("https://stgo-express-backend.onrender.com/api/categories")
+    fetch(`${API_URL}/api/categories`)
       .then(res => res.json())
       .then(data => {
-
-        // console.log(data)
-        setCategory(data.categories)
+        console.log("categories", data)
+        setCategoryDB(data.categories)
       });
   }, []);
 
       // 🔥 FETCH FROM BACKEND ADMIN
   useEffect(() => {
-    fetch("https://stgo-express-backend.onrender.com/api/admin")
+    fetch(`${API_URL}/api/admin`)
       .then(res => res.json())
       .then(data => {
-           console.log("data", data)
-           setAdmin(data)
+           setAdministratorDB(data)
       });
   }, []);
 
@@ -56,22 +54,35 @@ export default function useDataProducts() {
       );
     }
 
+
     // if (category !== "all") {
     //   result = result.filter(p => p.type === category);
     // }
 
-    console.log("serach", result)
+    setFilteredDB(result);
+  }, [search, categoryDB, productsDB, administratorDB ]);
 
-    setFiltered(result);
-  }, [search, category, products, admin]);
+      // 🔥 FETCH FROM BACKEND PRODUCTS
+  useEffect(() => {
+    fetch(`${API_URL}/api/colors`)
+      .then(res => res.json())
+      .then(data => {
+
+        console.log("data colors", data)
+
+          setDataColorsDB(data)
+
+      });
+  }, []);
 
   return {
-    products,
-    admin,
-    filtered,
+    productsDB,
+    administratorDB,
+    filteredDB,
     search,
     setSearch,
-    category
-    // setCategory
+    categoryDB,
+    dataColorsDB
+    // setCategoryDB
   };
 }

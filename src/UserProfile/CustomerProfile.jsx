@@ -302,7 +302,6 @@ const CustomerProfile = ({ user, customers, setCustomers }) => {
   }, 0);
 };
 
- console.log("users", user)
 
   // ---------------------------
   // REGISTER VIEW

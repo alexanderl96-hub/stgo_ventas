@@ -13,20 +13,17 @@ export default function InPersonPaymentGuess({
   customers,
   setCustomers,
   method,
-  formatPay
+  formatPay,
+  administratorDB
 }) {
 
   const navigate = useNavigate();
-  const { admin } = useDataProducts();
-  // const { ordersQR } = useDataOrders();
-
   const [step, setStep] = useState("idle");
   const [phone, setPhone] = useState("");
 
 
   const person = amountOrder.map(a => a.person_in_charge)?.[0] || "";
-  console.log("person", person)
-   console.log("admin", admin)
+
 
   // -----------------------------
   // 🧠 FORMAT PHONE
@@ -74,8 +71,8 @@ export default function InPersonPaymentGuess({
         qty: item.qty || 1,
         img: item.img || "",
         price: item.price || 0,
-        color: item.color || "",
-        size: item.size || "",
+        colors: item.colors || "",
+        sizes: item.sizes || "",
         dollar_price: item.dollar_price || 0,
         })),
 
@@ -179,6 +176,7 @@ export default function InPersonPaymentGuess({
 
     saveOrder(newOrder);
 
+
     setStep("success");
     setCart([]);
 
@@ -194,13 +192,11 @@ export default function InPersonPaymentGuess({
         .replace(/[\u0300-\u036f]/g, "")
         .trim();
 
-    const filterAdmin = admin.filter(
+    const filterAdmin = administratorDB.filter(
        a => normalize(a.name) === normalize(person)
     );
 
 
-
-  console.log("customer", customers)
 
   return (
     <div className="payment-box">

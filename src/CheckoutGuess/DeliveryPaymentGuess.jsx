@@ -6,7 +6,6 @@ import { generateOrderQr } from "../utils/orderQrGenerator";
 import { calculateOrderPricing, calculateOrder } from "../utils/pricing";
 import "../Checkout/delivery.css"
 import WhatsAppOrder from "../WhatsAppOrder/WhatsAppOrder";
-import data from "../data_json";
 
 export default function DeliveryPaymentGuess ({ 
     user,
@@ -16,11 +15,10 @@ export default function DeliveryPaymentGuess ({
     customers, 
     setCustomers, 
     method,
-    formatPay  
+    formatPay ,
+    administratorDB
 }) {
   const navigate = useNavigate();
-  const { admin } = useDataProducts();
-  const { ordersQR } = useDataOrders();
 
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -28,10 +26,7 @@ export default function DeliveryPaymentGuess ({
   const [step, setStep] = useState("idle");
   const [moneyType, setMoneyType] = useState("cup")
 
-
-
-  const person = amountOrder.map(a => a.personInCharge)?.[0] || "";
-  
+  const person = amountOrder.map(a => a.person_in_charge)?.[0] || "";
 
     // -----------------------------
   // 🧠 FORMAT PHONE
@@ -116,11 +111,11 @@ export default function DeliveryPaymentGuess ({
     const createOrder = () => {
   
       const usdTotal = amountOrder.reduce(
-          (sum, a) => sum + (a.dollarPrice || 0),
+          (sum, a) => sum + (a.dollar_Price || 0),
           0
       );
   
-      const exchangeRate = amountOrder[0]?.currentDollarPrice ;
+      const exchangeRate = amountOrder[0]?.current_dollar_price ;
   
       const pricing = calculateOrderPricing({
           usdPrice: usdTotal,
@@ -131,7 +126,8 @@ export default function DeliveryPaymentGuess ({
 
       return {
           id: Date.now(),
-          qrcode: generateOrderQr(ordersQR.map(c => c.qrcode)),
+          // qrcode: generateOrderQr(ordersQR.map(c => c.qrcode)),
+          qrcode: "",
           admInCharge: person,
           gestorSell: "",
   
@@ -139,10 +135,10 @@ export default function DeliveryPaymentGuess ({
           name: item.name,
           qty: item.qty || 1,
           img: item.img || "",
-          price: calculateOrder(item.dollarPrice, exchangeRate, formatPay)  || 0,
-          color: item.color || "",
-          size: item.size || "",
-          dollarPrice: item.dollarPrice || 0,
+          price: calculateOrder(item.dollar_price, exchangeRate, formatPay)  || 0,
+          colors: item.colors || "",
+          sizes: item.sizes || "",
+          dollar_price: item.dollar_price || 0,
           })),
   
           dollarPrice: usdTotal,
@@ -176,22 +172,22 @@ export default function DeliveryPaymentGuess ({
           const newOrders = [...(customer.order || []), order];
   
           const dollarPrice = newOrders.reduce(
-            (sum, o) => sum + (o.dollarPrice || 0),
+            (sum, o) => sum + (o.dollar_price || 0),
             0
           );
   
           const cupPrice = newOrders.reduce(
-            (sum, o) => sum + (o.cupPrice || 0),
+            (sum, o) => sum + (o.cup_price || 0),
             0
           );
   
           const revenewTotal = newOrders.reduce(
-            (sum, o) => sum + (o.revenewTotal || 0),
+            (sum, o) => sum + (o.revenew_total || 0),
             0
           );
   
           const sellerCash = newOrders.reduce(
-            (sum, o) => sum + (o.sellerCash || 0),
+            (sum, o) => sum + (o.seller_cash || 0),
             0
           );
   
@@ -242,7 +238,9 @@ export default function DeliveryPaymentGuess ({
 
         saveOrder(newOrder);
 
-        console.log("NEW ORDER SAVED:", newOrder);
+        console.log("newOrder", newOrder)
+
+
         if(formatPay === "Zelle"){
             setMoneyType("usd")
         }
@@ -256,7 +254,6 @@ const handleConfirmDelivery = () => {
 
     // saveOrder(newOrder);
 
-    // console.log("NEW ORDER SAVED:", newOrder);
 
     setAddress("");
     setFullname("");
@@ -308,22 +305,22 @@ const normalize = (str) =>
     .replace(/[\u0300-\u036f]/g, "")
     .trim();
 
-
-const filterAdmin2 = admin.filter(
+ 
+const filterAdmin2 = administratorDB.filter(
   a => normalize(a.name) === normalize(person)
 );
 
 
 const revenuesPayTotal = customers.flatMap(
-  c => (c.order || []).map(o => o.revenewTotal)
+  c => (c.order || []).map(o => o.revenew_total)
 )[0];
 
 const revenuesPayFormat = customers.flatMap(
-  c => (c.order || []).map(o => o.paymentFormat)
+  c => (c.order || []).map(o => o.payment_format)
 )[0];
 
 const revenuesSeller = customers.flatMap(
-  c => (c.order || []).map(o => o.sellerCash)
+  c => (c.order || []).map(o => o.seller_cash)
 )[0];
 
 const revenuesTienda = customers.flatMap(
@@ -331,13 +328,12 @@ const revenuesTienda = customers.flatMap(
 )[0];
 
 
+
  useEffect(() => {
   if (fullName && address && phone.length === 8) {
     const timer = setTimeout(() => {
 
     handleConfirmInformation()
-    console.log("customers", customers)
-    
 
     }, 1000); // wait 4 seconds
 
@@ -345,28 +341,7 @@ const revenuesTienda = customers.flatMap(
   }
 }, [fullName, address, phone]);
 
-// const orderssss = customers.flatMap(
-//   c => (c.order || []).map(o => o.orders)
-// )[0]
 
-// console.log("admin", filterAdmin2)
-// console.log("orders", amountOrder.map(a => a))
-//  console.log("customers state", customers);
-//   console.log("customers state amount", 
-//     revenuesPayTotal, revenuesPayFormat, revenuesPyaOption);
-    // console.log("customers", customers.map(a => a.order))  
-    // console.log("revenuesPayTotal", revenuesPayTotal)  
-    // console.log("revenuesPayFormat", revenuesPayFormat)  
-    // console.log("revenuesPyaOption", revenuesPyaOption)  
-    // console.log("name", fullName)  
-    // console.log("address", address)  
-    // console.log("phone", formatPhone(phone)) 
-    // console.log("admin", filterAdmin2)  
-    // console.log("")  
-    // console.log("")  
-    // console.log("customers", orderssss)  
-
- 
   return (
     <div className="payment-box">
 

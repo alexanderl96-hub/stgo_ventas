@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import API_URL from "./api_images";
 
 export default function useDataOrders() {
   const [ordersQR, setOrdersQR] = useState([]);
@@ -8,19 +9,19 @@ export default function useDataOrders() {
 //   const [admin , setAdmin] = useState([])
 
   // 🔥 FETCH FROM BACKEND
-  useEffect(() => {
-    fetch("http://localhost:5001/api/orders/ordersQR")
-      .then(res => res.json())
-      .then(data => {
-        // setProducts(data.products);
-        // setCategory(data.categoryData)
-        // setAdmin(data.administrador)
-        // setFiltered(data.products);
-        console.log("data", data)
-        setOrdersQR(data)
+  // useEffect(() => {
+  //   fetch(`${API_URL}/api/orders/ordersQR`)
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       // setProducts(data.products);
+  //       // setCategory(data.categoryData)
+  //       // setAdmin(data.administrador)
+  //       // setFiltered(data.products);
 
-      });
-  }, []);
+  //       setOrdersQR(data || [])
+
+  //     });
+  // }, []);
 
   // 🔍 SEARCH + CATEGORY FILTER
 //   useEffect(() => {
@@ -42,6 +43,6 @@ export default function useDataOrders() {
 //   }, [search, category, products, admin]);
 
   return {
-    ordersQR
+    // ordersQR
   };
 }

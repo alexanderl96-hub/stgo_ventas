@@ -6,7 +6,7 @@ import { ShoppingCart, Menu, X, Search, QrCode,
 import useDataProducts from "../api/dataProducts";
 import { calculateOrderPricing } from "../utils/pricing";
 import API_URL from "../api/api_images";
-import data from "../data_json"
+
 import {
   updateWishlist
 }
@@ -15,22 +15,15 @@ import { filteringImgColor } from "../utils/filteringImgColor.jsx"
 
 
 export default function Home({
-  products, category, activeCategory, setActiveCategory,
+  productsDB, categoryDB, activeCategory, setActiveCategory,
   
   
   user, cart, setCart, activeTab, setActiveTab, 
   activeProduct, setActiveProduct, orderConfig, setOrderConfig,
    orderSuccess, setOrderSuccess
 }) {
-  // 🧠 GLOBAL PRODUCT DATA (FROM BACKEND)
-  // const {
-  //   // products,
-  //   filtered,
-  //   // search,
-  //   setSearch,
-  //   // category,
-  //   setCategory
-  // } = useDataProducts();
+
+  const { category } = useDataProducts()
 
   const [open, setOpen] = useState(false);
   const itemsPerPage = 6;
@@ -39,15 +32,10 @@ export default function Home({
   const [searchTerm, setSearchTerm] = useState("");
   const [wishlist, setWishlist] = useState([]);
   
-  // console.log("user", user)
-  // console.log("activeCategory check", activeCategory)
-  // console.log("categoryData", category)
-
-
 
   const fieldsToSearch = ["name", "category_key", "category", "sub_category"];
 
-  const filteredProducts = products?.filter((p) => {
+  const filteredProducts = productsDB?.filter((p) => {
     const term = searchTerm.toLowerCase();
 
     return fieldsToSearch.some(field =>
@@ -58,7 +46,7 @@ export default function Home({
 
   const filterSubCategory = (value) => {
 
-    const totalCount = products
+    const totalCount = productsDB
           .filter((v) => v.category === activeCategory)
           .filter((t) => t.sub_category === value)
           .reduce((sum, item) => sum + (item.total_items || 0), 0)
@@ -82,7 +70,6 @@ export default function Home({
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentItems = filteredProducts?.slice(startIndex, startIndex + itemsPerPage);
 
-  // console.log("currentItems", currentItems)
 
   const getDiscount = (price, originalPrice) => {
     if (!originalPrice) return null;
@@ -94,7 +81,6 @@ export default function Home({
       exchangeRate: currentItems?.map(a => a.currentDollarPrice)[0]
   });
 
-  // console.log("currentItems", currentItems)
 
 
   useEffect(() => {
@@ -124,29 +110,6 @@ export default function Home({
     }
   }, [open]);
 
-  // // console.log("openCategory", search)
-  //   console.log("activeCategory",category, activeCategory)
-
-      console.log("active product", cart)
-
-
-  const filteringImgColor = (value, color) => {
-
-   let stringChar =  value.map(a =>
-      a.image_path.substring(
-        a.image_path.lastIndexOf("-") + 1
-      ).replaceAll("%20", " ")
-       .slice(0, -5)
-    ).filter(a => a === color);
-    console.log("String", stringChar)
-
-   let findIndex =  
-   value.filter(a => `${a.public_id.substring(
-    a.public_id.lastIndexOf("-") + 1)}` === 
-    `${stringChar}`)
-
-   return findIndex.map(a => a.image_path);
-}
 
   return (
     <div className="main_Contianer_Portal">
@@ -183,7 +146,7 @@ export default function Home({
         <XCircle size={14} 
                 onClick={() => {setSearchTerm(""); 
                                 setOpenCategory(null);
-                                setActiveCategory(category)}} />
+                                setActiveCategory(categoryDB)}} />
          )}
       </div>
 
@@ -215,7 +178,7 @@ export default function Home({
 
           {/* 🔽 Scrollable content */}
           <div className="sidenav-scroll">
-          {category?.map((cat) => (
+          {categoryDB?.map((cat) => (
                 <div key={cat.name}>
 
                 {/* 🔥 CATEGORY */}
@@ -286,7 +249,7 @@ export default function Home({
 
 
      <div className="category-scroll">
-        {category?.map((cat) => (
+        {categoryDB?.map((cat) => (
           <div
             key={cat.name}
             onClick={() => {
@@ -365,7 +328,6 @@ export default function Home({
                         className="add-btn"
                         onClick={(e) => {
                           e.preventDefault(); 
-                          console.log("Create Order", p);
                            setActiveProduct(p); 
                         }}
                       >
@@ -396,16 +358,26 @@ export default function Home({
                     key={c}
                     className={orderConfig.color === c.split("_")[0] ? "active" : ""}
                     onClick={() =>{
-                      const categoryActi = category.find(a => a.name === activeProduct.category);
+                      const normalize = str =>
+                              str
+                                ?.normalize("NFD")
+                                .replace(/[\u0300-\u036f]/g, "")
+                                .trim()
+                                .toLowerCase();
 
+                            const categoryActi = categoryDB.find(
+                              a => normalize(a.name) === normalize(activeProduct.category)
+                            );
+                       console.log("categoryActi", categoryActi);
+                       console.log("categoryActi", categoryDB);
+                       console.log("activeProduct.category", activeProduct.category);
                             setOrderConfig((prev) => ({
                                 ...prev,
                                 color: c.split("_")[0],
                                 person_in_charge: categoryActi?.person_in_charge || "",
                                 img: filteringImgColor(activeProduct.img, c.split("_")[0]) || []
                             }));
-                             setOrderConfig((prev) => ({ ...prev, color: c.split("_")[0]  }));
-                            
+
                     }}
                   >
                     {c.split("_")[0]}

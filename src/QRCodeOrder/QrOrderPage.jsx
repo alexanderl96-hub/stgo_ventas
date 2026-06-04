@@ -13,7 +13,7 @@ export default function QrOrderPage() {
     fetch("http://localhost:5001/api/orders/admin")
       .then(res => res.json())
       .then(data => {
-        // console.log("data", data.filter(a => a.qrcode === orderId), orderId)
+
         const found = data.filter(o => o.qrcode === orderId);
         setOrder(found);
         setPaymentProcess(found?.map(a => a.order)[0])
@@ -21,9 +21,6 @@ export default function QrOrderPage() {
       });
   }, [orderId]);
 
-  console.log(order)
-  console.log(orderset)
-  console.log(paymentProcess)
 
   if (!order) {
     return <div className="qr-loading">Loading order...</div>;

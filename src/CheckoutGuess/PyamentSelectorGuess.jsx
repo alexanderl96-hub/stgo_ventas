@@ -10,7 +10,8 @@ export default function PaymentSelectorGuess({
   amountOrder,
   setAmountOrder,
   customers,
-  setCustomers
+  setCustomers,
+  administratorDB
 }) {
 
   const [method, setMethod] = useState(null);
@@ -80,6 +81,7 @@ export default function PaymentSelectorGuess({
           user={user}
           cart={cart}
           setCart={setCart}
+          administratorDB={administratorDB}
           amountOrder={amountOrder}
           setCustomers={setCustomers}
           customers={customers}
@@ -93,6 +95,7 @@ export default function PaymentSelectorGuess({
           user={user}
           cart={cart}
           setCart={setCart}
+          administratorDB={administratorDB}
           amountOrder={amountOrder}
           setCustomers={setCustomers}
           customers={customers}

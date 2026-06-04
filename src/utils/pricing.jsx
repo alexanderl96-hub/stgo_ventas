@@ -30,8 +30,6 @@ export const calculateOrderPricing = ({
 
         gananciaTienda = gananciaVenta - gananciaVendedor;
 
-        console.log("transfer", totalEfectivo, gananciaVenta, gananciaVendedor, gananciaTienda);
-
     } else if (totalZelle > 20000 && formatPay === "Zelle") {
        
         totalEfectivo = Math.round(totalVenta / exchangeRate);
@@ -98,8 +96,6 @@ export const calculateOrder = (  usdPrice,
         // gananciaVendedor = Math.round(gananciaVenta * 0.4);
 
         // gananciaTienda = gananciaVenta - gananciaVendedor;
-
-        // console.log("transfer", totalEfectivo, gananciaVenta, gananciaVendedor, gananciaTienda);
 
     } else if (totalZelle > 20000 && formatPay === "Zelle") {
        

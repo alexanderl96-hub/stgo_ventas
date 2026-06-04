@@ -2,17 +2,20 @@ import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import "./delivery.css"
 import WhatsAppOrder from "../WhatsAppOrder/WhatsAppOrder";
-import data from "../data_json";
+import useDataProducts from "../api/dataProducts";
 
 export default function DeliveryPayment ({ cart, setCart, amountOrder,
-   customers, setCustomers  }) {
+   customers, setCustomers, administrator, administratorDB  }) {
+
+  const { products, filtered, search, setSearch, category, } = useDataProducts();
   const navigate = useNavigate();
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [fullName, setFullname] = useState("")
   const [step, setStep] = useState("idle");
-  const [admin, setAdmin] = useState(data.administrador)
+  const [admin, setAdmin] = useState(administrator)
   const [ person ] = useState(amountOrder.map(a => a.personInCharge)[0])
+
 
 
   // -----------------------------------
@@ -96,7 +99,6 @@ export default function DeliveryPayment ({ cart, setCart, amountOrder,
 const handleConfirmDelivery = () => {
   if (!fullName || !address || phone.length !== 8) return;
 
-    // console.log("Send pickup info to:", phone);
 
     //  // ✅ CREATE ORDER
     // const newOrder = createOrderObject();
@@ -108,8 +110,6 @@ const handleConfirmDelivery = () => {
     // setCustomers(prev =>
     //   updateCustomerSection(prev, userEmail, "order", newOrder)
     // );
-
-    // console.log("NEW ORDER SAVED:", newOrder);
 
   // 👉 here you can later send to backend / API
     console.log("Order Delivery Info:", {
@@ -163,18 +163,11 @@ const normalize = (str) =>
     .trim();
 
 
-//  console.log("orden:", amountOrder)
 //  const person = amountOrder.map(a => a.personInCharge)[0]
 
 const filterAdmin2 = admin.filter(
   a => normalize(a.name) === normalize(person)
 );
-
-console.log("admin", filterAdmin2)
-console.log("orders", amountOrder.map(a => a))
- console.log("customers state", customers);
-// console.log(admin, person, filterAdmin2)
-// console.log(filterAdmin2.map(a => a.phone))
 
  
   return (

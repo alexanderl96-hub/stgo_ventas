@@ -95,10 +95,6 @@ useEffect(() => {
     });
 }, []);
 
-console.log("admin customers", orders)
-console.log("admin customers", [user].map(a => a.customerId))
-
-console.log("qrcode", activeQR)
 
   return (
     <div className="admin-page">

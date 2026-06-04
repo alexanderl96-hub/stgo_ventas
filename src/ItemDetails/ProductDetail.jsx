@@ -359,7 +359,6 @@ export default function ProductDetail({
             <button className="buy-btn"
                    onClick={(e) => {
                          e.preventDefault();  //🔥 prevents link navigation
-                          console.log("Create Order", );
                            setActiveProduct(product); 
                         }}>Crear Orden</button>
         </div>
