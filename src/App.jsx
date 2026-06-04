@@ -282,7 +282,7 @@ function App() {
         <Route path="/admin/create-product" element={<CreateProduct />} />
         {/* <Route path="/newProduct" element={<Product />} /> */}
         <Route
-  path="/newProduct"
+  path="/new-product"
   element={<h1>NEW PRODUCT PAGE WORKS</h1>}
 />
 
