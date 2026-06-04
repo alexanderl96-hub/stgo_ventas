@@ -17,6 +17,7 @@ import CheckoutGuess from "./CheckoutGuess/PyamentSelectorGuess";
 
 // import UpdateProduct from "./updateDB/Update/updateDBProduct.jsx";
 import CreateProduct from "./updateDB/NewProduct.jsx";
+import { Product } from "./Product/Product.jsx";
 
 function App() {
   // 🧠 GLOBAL PRODUCT DATA (FROM BACKEND)
@@ -279,6 +280,7 @@ function App() {
         <Route path="/product/:orderId" element={<QrOrderPage />} />
         {/* <Route path="/update-products" element={<UpdateProduct />} /> */}
         <Route path="/admin/create-product" element={<CreateProduct />} />
+        <Route path="/newProduct" element={<Product />} />
 
         <Route path="/login" element={<Login onAuth={handleAuth} />} />
         <Route path="/register" element={<Register onAuth={handleAuth} />} />

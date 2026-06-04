@@ -1,0 +1,57 @@
+
+.create-product-page{
+  padding:20px;
+}
+
+.create-product-form{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  max-width:700px;
+}
+
+.create-product-form input,
+.create-product-form textarea{
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:10px;
+}
+
+.create-product-form textarea{
+  min-height:120px;
+}
+
+.create-product-form button{
+  padding:15px;
+  border:none;
+  border-radius:10px;
+  background:black;
+  color:white;
+  cursor:pointer;
+}
+
+.featured-check{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.message{
+  font-weight:bold;
+}
+
+
+.preview-images-create{
+  display:flex;
+  gap:13px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+.preview-images-create img{
+  width:105px;
+  height:105px;
+  object-fit:cover;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
