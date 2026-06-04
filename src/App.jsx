@@ -282,9 +282,9 @@ function App() {
         <Route path="/admin/create-product" element={<CreateProduct />} />
         {/* <Route path="/newProduct" element={<Product />} /> */}
         <Route
-  path="/new-product"
-  element={<h1>NEW PRODUCT PAGE WORKS</h1>}
-/>
+            path="/new-product"
+            element={<h1>NEW PRODUCT PAGE WORKS</h1>}
+          />
 
         <Route path="/login" element={<Login onAuth={handleAuth} />} />
         <Route path="/register" element={<Register onAuth={handleAuth} />} />

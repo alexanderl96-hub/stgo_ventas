@@ -7,7 +7,7 @@ import useDataProducts from "../api/dataProducts";
 import API_URL from "../api/api_images";
 
 export default function ProductDetail({
-    products, category,
+    productsDB, categoryDB,
     
     activeProduct, setActiveProduct, 
     orderConfig, setOrderConfig, cart, setCart, activeTab, setActiveTab, 
@@ -52,7 +52,7 @@ export default function ProductDetail({
     };
 
   // 🔥 Replace with real data later
-  const product = products?.find(p => p.id === id);
+  const product = productsDB?.find(p => p.id === id);
 
   if (!product) return <div>Product not found</div>;
  
@@ -212,7 +212,7 @@ export default function ProductDetail({
                         key={c}
                         className={orderConfig.color === c.split("_")[0] ? "active" : ""}
                         onClick={() => {
-                            const categoryActi = category.find(a => a.name === product.category);
+                            const categoryActi = categoryDB.find(a => a.name === product.category);
 
                             setOrderConfig((prev) => ({
                                 ...prev,
