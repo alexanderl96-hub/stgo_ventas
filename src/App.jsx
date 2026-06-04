@@ -280,7 +280,11 @@ function App() {
         <Route path="/product/:orderId" element={<QrOrderPage />} />
         {/* <Route path="/update-products" element={<UpdateProduct />} /> */}
         <Route path="/admin/create-product" element={<CreateProduct />} />
-        <Route path="/newProduct" element={<Product />} />
+        {/* <Route path="/newProduct" element={<Product />} /> */}
+        <Route
+  path="/newProduct"
+  element={<h1>NEW PRODUCT PAGE WORKS</h1>}
+/>
 
         <Route path="/login" element={<Login onAuth={handleAuth} />} />
         <Route path="/register" element={<Register onAuth={handleAuth} />} />
