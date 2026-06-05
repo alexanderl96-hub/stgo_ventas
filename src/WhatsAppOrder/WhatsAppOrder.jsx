@@ -69,12 +69,11 @@ export default function WhatsAppOrder({
 
 
     let productsText = ordersUser?.map((item, index) => {
-      return `• *${item.name}*
-          Precio: $${item.price}
-          Cantidad: ${item.qty}
-          Talla: ${item.sizes || "N/A"}
-          Color: ${[item.colors][0]}`
-          
+      return `Product: *${item.name}*
+          Talla:     ${item.sizes || "N/A"}
+          Color:     ${[item.colors][0]}
+          Cantidad:  ${item.qty}
+          Precio:    $${item.price}`
           ;
 
     }).join("\n\n");
@@ -89,9 +88,9 @@ export default function WhatsAppOrder({
   ━━━━━━━━━━━━━━━
   👤 *Cliente*
   ━━━━━━━━━━━━━━━
-  Nombre: ${fullName}
-  Dirección: ${address}
+  Nombre:    ${fullName}
   Teléfono: +53 ${formatPhone(phone)}
+  Dirección: ${address}
 
   ━━━━━━━━━━━━━━━
   🛒 *Productos*
@@ -102,16 +101,15 @@ export default function WhatsAppOrder({
   📦 *Entrega a Domicilio*
     * Forma de pago: 
         > ${formatPay}
-    * Total: $${revenuesPayTotal} ${moneyType}
-    * Vendedor: $${revenuesSeller} cup
-    * Tienda: $${revenuesTienda} cup
+    * Total:    $ ${revenuesPayTotal} ${moneyType}
+    * Vendedor: $ ${revenuesSeller} cup
+    * Tienda:   $ ${revenuesTienda} cup
         
   ━━━━━━━━━━━━━━━
   Tiempo estimado: *24–48 horas*
   !!Domicilio no esta incluido!!
 
-
-  Gracias por su compra!!!
+  !!!Gracias por elegirnos!!!
   `;
 
     return encodeURIComponent(message.trim());

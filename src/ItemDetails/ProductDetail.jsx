@@ -1,26 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./productDetails.css"
 import { filteringImgColor } from "../utils/filteringImgColor.jsx"
+import { ShoppingCart, Menu, X, Search, QrCode,
+   XCircle, ArrowLeft } from "lucide-react";
 
 import useDataProducts from "../api/dataProducts";
 import API_URL from "../api/api_images";
 
 export default function ProductDetail({
-    productsDB, categoryDB,
+    productsDB, categoryDB, 
+    searchTerm, setSearchTerm,
+    // openCategory,
+     setOpenCategory,
     
     activeProduct, setActiveProduct, 
     orderConfig, setOrderConfig, cart, setCart, activeTab, setActiveTab, 
     activeCategory, setActiveCategory, orderSuccess, setOrderSuccess}) {
-   // 🧠 GLOBAL PRODUCT DATA (FROM BACKEND)
-    // const {
-    // //   products,
-    //   filtered,
-    //   search,
-    //   setSearch,
-    //   category,
-    //   setCategory
-    // } = useDataProducts();
+
+    const navigate = useNavigate();
+    const [showTabs, setShowTabs] = useState(false);
+    const [activeSection, setActiveSection] = useState("overview");
+
+    const overviewRef = useRef(null);
+    const featuresRef = useRef(null);
+
+
   const [currentImg, setCurrentImg] = useState(0);
   const [showImageModal, setShowImageModal] = useState(false);
   const [modalImgIndex, setModalImgIndex] = useState(0);
@@ -51,6 +57,28 @@ export default function ProductDetail({
     );
     };
 
+    useEffect(() => {
+  const handleScroll = () => {
+
+    // show tabs after 10px scroll
+    setShowTabs(window.scrollY > 10);
+
+    const featuresTop =
+      featuresRef.current?.getBoundingClientRect().top || 9999;
+
+    if (featuresTop <= 120) {
+      setActiveSection("features");
+    } else {
+      setActiveSection("overview");
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () =>
+    window.removeEventListener("scroll", handleScroll);
+}, []);
+
   // 🔥 Replace with real data later
   const product = productsDB?.find(p => p.id === id);
 
@@ -58,6 +86,79 @@ export default function ProductDetail({
  
   return (
     <div className="detail-page">
+        <header  className={`product-header ${
+                showTabs ? "product-header-active" : ""
+            }`}>
+
+            <div className="header-top">
+            <div onClick={() => navigate("/")} >
+               <ArrowLeft
+                    size={18}
+                    className="back-arrow"
+                />
+            </div>
+
+
+            <div className="main_inputContainer_Portal">
+                <Search size={14} />
+
+                <input
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Busqueda..."
+                />
+
+                <QrCode size={14} />
+
+                {searchTerm && (
+                <XCircle
+                    size={14}
+                    onClick={() => {
+                    setSearchTerm("");
+                    setOpenCategory(null);
+                    setActiveCategory(categoryDB);
+                    }}
+                />
+                )}
+            </div>
+
+            </div>
+
+            <div className={`header-tabs ${showTabs ? "visible" : ""}`}>
+
+                <div
+                className={
+                    activeSection === "overview"
+                    ? "tab active"
+                    : "tab"
+                }
+                onClick={() =>
+                    overviewRef.current?.scrollIntoView({
+                    behavior: "smooth"
+                    })
+                }
+                >
+                Overview
+                </div>
+
+                <div
+                className={
+                    activeSection === "features"
+                    ? "tab active"
+                    : "tab"
+                }
+                onClick={() =>
+                    featuresRef.current?.scrollIntoView({
+                    behavior: "smooth"
+                    })
+                }
+                >
+                Características
+                </div>
+
+            </div>
+
+            </header>
 
         <div className="image-slider">
 
@@ -212,16 +313,21 @@ export default function ProductDetail({
                         key={c}
                         className={orderConfig.color === c.split("_")[0] ? "active" : ""}
                         onClick={() => {
-                            const categoryActi = categoryDB.find(a => a.name === product.category);
-
+                             const normalize = str =>
+                              str
+                                ?.normalize("NFD")
+                                .replace(/[\u0300-\u036f]/g, "")
+                                .trim()
+                                .toLowerCase();
+                            const categoryActi = categoryDB.find(
+                              a => normalize(a.name) === normalize(product.category)
+                            );
                             setOrderConfig((prev) => ({
                                 ...prev,
                                 color: c.split("_")[0],
                                 person_in_charge: categoryActi?.person_in_charge || "",
                                 img: filteringImgColor(activeProduct.img, c.split("_")[0]) || []
                             }));
-
-                            setOrderConfig((prev) => ({ ...prev, color: c.split("_")[0]  }));
                         }}
                         >
                         {c.split("_")[0]}
@@ -332,7 +438,7 @@ export default function ProductDetail({
             )}
 
 
-        <div className="detail-info">
+        <div ref={overviewRef} className="detail-info">
             <h2>{product.name}</h2>
 
             <div className="stars">
@@ -356,12 +462,52 @@ export default function ProductDetail({
              {product.description}
             </p>
 
-            <button className="buy-btn"
+            {/* <button className="buy-btn"
+                   onClick={(e) => {
+                         e.preventDefault();  //🔥 prevents link navigation
+                           setActiveProduct(product); 
+                        }}>Crear Orden</button> */}
+        </div>
+
+        <div
+            ref={featuresRef}
+            className="features-section"
+            >
+            <h3>Características</h3>
+
+            <div className="feature-row">
+                <span>Marca</span>
+                <strong>{product.brand}</strong>
+            </div>
+
+            <div className="feature-row">
+                <span>Categoría</span>
+                <strong>{product.category}</strong>
+            </div>
+
+            <div className="feature-row">
+                <span>Sub Categoría</span>
+                <strong>{product.sub_category}</strong>
+            </div>
+
+            <div className="feature-row">
+                <span>Stock</span>
+                <strong>{product.stock}</strong>
+            </div>
+
+            <div className="feature-row">
+                <span>Rating</span>
+                <strong>{product.rating}</strong>
+            </div>
+
+                                   <button className="buy-btn"
                    onClick={(e) => {
                          e.preventDefault();  //🔥 prevents link navigation
                            setActiveProduct(product); 
                         }}>Crear Orden</button>
-        </div>
+            </div>
+
+
 
     </div> 
   );

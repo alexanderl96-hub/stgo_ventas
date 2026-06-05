@@ -1,9 +1,9 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 import { Link } from "react-router-dom";
 import './home.css';
 import { ShoppingCart, Menu, X, Search, QrCode,
    XCircle, } from "lucide-react";
-import useDataProducts from "../api/dataProducts";
+
 import { calculateOrderPricing } from "../utils/pricing";
 import API_URL from "../api/api_images";
 
@@ -15,7 +15,11 @@ import { filteringImgColor } from "../utils/filteringImgColor.jsx"
 
 
 export default function Home({
-  productsDB, categoryDB, activeCategory, setActiveCategory,
+  productsDB, categoryDB, 
+  activeCategory, setActiveCategory,
+  loading, setLoading, 
+  searchTerm, setSearchTerm, 
+  openCategory, setOpenCategory,
   
   
   user, cart, setCart, activeTab, setActiveTab, 
@@ -23,13 +27,13 @@ export default function Home({
    orderSuccess, setOrderSuccess
 }) {
 
-  const { category } = useDataProducts()
+  const productsRef = useRef(null);
 
   const [open, setOpen] = useState(false);
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
-  const [openCategory, setOpenCategory] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [openCategory, setOpenCategory] = useState(null);
+  // const [searchTerm, setSearchTerm] = useState("");
   const [wishlist, setWishlist] = useState([]);
   
 
@@ -81,6 +85,15 @@ export default function Home({
       exchangeRate: currentItems?.map(a => a.currentDollarPrice)[0]
   });
 
+useEffect(() => {
+  if (categoryDB?.length > 0) {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // 2 seconds
+
+    return () => clearTimeout(timer);
+  }
+}, [categoryDB]);
 
 
   useEffect(() => {
@@ -133,6 +146,13 @@ export default function Home({
         </div>
       </header>
 
+       {loading ? (
+          <div className="loader-container">
+            <div className="loader"></div>
+          </div>
+        ) : (
+          <>
+
       {/* 🔍 Search */}
       <div className="main_inputContainer_Portal">
         <Search size={14} />
@@ -175,19 +195,20 @@ export default function Home({
               }}
             />
           </div>
-
+   
           {/* 🔽 Scrollable content */}
-          <div className="sidenav-scroll">
+          <div    className="sidenav-scroll">
           {categoryDB?.map((cat) => (
-                <div key={cat.name}>
+                <div key={cat.name} >
 
                 {/* 🔥 CATEGORY */}
                 <div
                   className="sidenav-item"
-                  onClick={() =>{
+                  onClick={(e) =>{
                     setOpenCategory(openCategory === cat.name ? null : cat.name);
                     setActiveCategory(cat.name)
                     setSearchTerm(cat.name)
+                    
                   }}
                 >
                   <span>{cat.name}</span>
@@ -246,7 +267,7 @@ export default function Home({
         </div>
 
 
-
+         
 
      <div className="category-scroll">
         {categoryDB?.map((cat) => (
@@ -263,6 +284,8 @@ export default function Home({
           </div>
         ))} 
       </div>
+
+        
 
       {/* 🛍 Products */}
         <div className="product-grid">
@@ -368,9 +391,7 @@ export default function Home({
                             const categoryActi = categoryDB.find(
                               a => normalize(a.name) === normalize(activeProduct.category)
                             );
-                       console.log("categoryActi", categoryActi);
-                       console.log("categoryActi", categoryDB);
-                       console.log("activeProduct.category", activeProduct.category);
+
                             setOrderConfig((prev) => ({
                                 ...prev,
                                 color: c.split("_")[0],
@@ -507,6 +528,10 @@ export default function Home({
 
         </div>
 
+
+
+           </>
+        )}
     </div>
   );
 }

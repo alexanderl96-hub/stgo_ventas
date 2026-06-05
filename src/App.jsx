@@ -30,7 +30,7 @@ function App() {
     categoryDB,
     dataColorsDB } = useDataProducts();
 
-
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [orders, setOrders] = useState([]);
@@ -43,6 +43,9 @@ function App() {
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [amountOrder, setAmountOrder] = useState([]);
   const [customers, setCustomers] = useState([]);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [openCategory, setOpenCategory] = useState(null);
 
   const navigate = useNavigate();
 
@@ -122,6 +125,13 @@ function App() {
               orderSuccess={orderSuccess}
               setOrderSuccess={setOrderSuccess}
               user={user}
+
+              loading={loading}
+              setLoading={setLoading}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              openCategory={openCategory} 
+              setOpenCategory={setOpenCategory}
             />
           }
         />
@@ -166,6 +176,11 @@ function App() {
               orderSuccess={orderSuccess}
               setOrderSuccess={setOrderSuccess}
               user={user}
+
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              openCategory={openCategory} 
+              setOpenCategory={setOpenCategory}
             />
           }
         />

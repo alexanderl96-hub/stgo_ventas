@@ -208,7 +208,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import "./customerProfile.css";
 
-const CustomerProfile = ({ user, customers, setCustomers }) => {
+const CustomerProfile = ({ user, customers, setCustomers, logout }) => {
 
   // ---------------------------
   // STATE
@@ -387,6 +387,14 @@ const CustomerProfile = ({ user, customers, setCustomers }) => {
               : ""}
           </strong>
         </div>
+
+             <button
+          className="logout-btn"
+          onClick={logout}
+        >
+          Cerrar Sesión
+        </button>
+
       </div>
 
       {/* ORDERS */}
@@ -456,6 +464,13 @@ const CustomerProfile = ({ user, customers, setCustomers }) => {
           ))
         )}
       </div>
+
+      <button
+          className="logout-btn"
+          onClick={logout}
+        >
+          Cerrar Sesión
+        </button>
 
     </div>
   );
