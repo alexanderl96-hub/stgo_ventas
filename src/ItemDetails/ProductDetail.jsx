@@ -99,7 +99,7 @@ export default function ProductDetail({
             </div>
 
 
-            <div className="main_inputContainer_Portal">
+            <div className="main_inputContainer_PortalDetails">
                 <Search size={14} />
 
                 <input
