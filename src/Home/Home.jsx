@@ -123,6 +123,8 @@ useEffect(() => {
     }
   }, [open]);
 
+  console.log("cart", cart)
+
 
   return (
     <div className="main_Contianer_Portal">

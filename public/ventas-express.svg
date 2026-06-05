@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+<defs>
+  <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#1f5cff"/>
+    <stop offset="100%" stop-color="#2f7dff"/>
+  </linearGradient>
+</defs>
+
+<rect width="1024" height="1024" fill="white"/>
+
+<!-- speed lines -->
+<rect x="210" y="305" width="180" height="16" rx="8" fill="url(#g)"/>
+<rect x="170" y="370" width="230" height="22" rx="11" fill="url(#g)"/>
+<rect x="240" y="450" width="150" height="16" rx="8" fill="url(#g)"/>
+
+<!-- cart body -->
+<polygon points="420,240 760,240 700,455 455,455" fill="url(#g)"/>
+
+<!-- handle/frame -->
+<path d="M390 190 L450 190 L485 470 L710 470"
+      fill="none" stroke="#001a70" stroke-width="22"
+      stroke-linecap="round" stroke-linejoin="round"/>
+
+<!-- V -->
+<text x="585" y="410"
+      font-family="Arial, Helvetica, sans-serif"
+      font-size="180"
+      font-weight="700"
+      fill="white"
+      text-anchor="middle">V</text>
+
+<!-- wheels -->
+<circle cx="500" cy="560" r="34" fill="#001a70"/>
+<circle cx="650" cy="560" r="34" fill="#001a70"/>
+
+<!-- text -->
+<text x="512" y="760"
+      font-family="Arial, Helvetica, sans-serif"
+      font-size="170"
+      font-style="italic"
+      font-weight="700"
+      fill="#001a70"
+      text-anchor="middle">Ventas</text>
+
+<text x="512" y="900"
+      font-family="Arial, Helvetica, sans-serif"
+      font-size="130"
+      font-style="italic"
+      font-weight="700"
+      fill="url(#g)"
+      text-anchor="middle">Express</text>
+</svg>

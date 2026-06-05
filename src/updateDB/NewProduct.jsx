@@ -7,68 +7,111 @@ import "./newProduct.css";
 
 
 export default function NewProduct() {
-  // console.log("NEW PRODUCT COMPONENT LOADED");
 
-  // return (
-  //   <div>
-  //     TEST PAGE
-  //   </div>
-  // );
   const [loading, setLoading] = useState(false);
 
   const [message, setMessage] = useState("");
 
   const [images, setImages] = useState([]);
 
-  const [formData, setFormData] = useState({
-    name: "",
+//   const [formData, setFormData] = useState({
+//   name: "",
+//   description: "",
 
-    description: "",
+//   price: 0,
+//   dollar_price: 0,
+//   current_dollar_price: 0,
+//   original_price: 0,
 
-    price: 0,
+//   discount: 0,
+//   stock: 0,
+//   rating: 0,
+//   reviews: 0,
 
-    dollar_price: 0,
+//   category: "",
+//   sub_category: "",
+//   brand: "",
 
-    current_dollar_price: 0,
+//   gender: "",
+//   age_group: "",
 
-    original_price: 0,
+//   colors: "",
+//   sizes: "",
 
-    discount: 0,
+//   material: "",
 
-    stock: 0,
+//   total_items: 0,
+//   sold: 0,
 
-    rating: 0,
+//   featured: false,
 
-    reviews: 0,
+//   store: "",
 
-    category: "",
+//   likes: 0,
 
-    sub_category: "",
+//   qrcode: "",
 
-    brand: "",
+//   caracteristics: [],
+//   recommended: [],
+//   battery_details: {
+//   battery_type: "",
+//   capacity: "",
+//   ac_output: "",
+//   fast_charge: "",
+//   solar_compatible: false,
+//   recommended_devices: []
+// }
+// });
 
-    gender: "",
+const [formData, setFormData] = useState({
+  name: "",
+  description: "",
 
-    age_group: "",
+  price: 0,
+  dollar_price: 0,
+  current_dollar_price: 0,
+  original_price: 0,
 
-    colors: "",
+  discount: 0,
+  stock: 0,
+  rating: 0,
+  reviews: 0,
 
-    sizes: "",
+  category: "",
+  sub_category: "",
+  brand: "",
 
-    material: "",
+  gender: "",
+  age_group: "",
 
-    total_items: 0,
+  colors: "",
+  sizes: "",
 
-    sold: 0,
+  material: "",
 
-    featured: false,
+  total_items: 0,
+  sold: 0,
 
-    store: "",
+  featured: false,
 
-    likes: 0,
+  store: "",
 
-    qrcode: "",
-  });
+  likes: 0,
+
+  qrcode: "",
+
+  caracteristics: "",
+  recommended: "",
+
+  battery_details: {
+    battery_type: "",
+    capacity: "",
+    ac_output: "",
+    fast_charge: "",
+    solar_compatible: false,
+    recommended_devices: []
+  }
+});
 
   // HANDLE INPUT CHANGE
   const handleChange = (e) => {
@@ -87,149 +130,307 @@ export default function NewProduct() {
   };
 
   // CREATE PRODUCT
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      setLoading(true);
+  //   try {
+  //     setLoading(true);
 
-      setMessage("");
+  //     setMessage("");
 
-      // VALIDATE IMAGES
-      if (images.length === 0) {
-        setMessage("Please select at least one image");
+  //     // VALIDATE IMAGES
+  //     if (images.length === 0) {
+  //       setMessage("Please select at least one image");
 
-        setLoading(false);
+  //       setLoading(false);
 
-        return;
-      }
+  //       return;
+  //     }
 
-      const form = new FormData();
+  //     const form = new FormData();
 
-      // NORMAL FIELDS
-      Object.entries(formData).forEach(([key, value]) => {
-        if (key !== "colors" && key !== "sizes") {
-          form.append(key, value);
-        }
-      });
+  //     // NORMAL FIELDS
+  //     Object.entries(formData).forEach(([key, value]) => {
+  //       if (key !== "colors" && key !== "sizes") {
+  //         form.append(key, value);
+  //       }
+  //     });
 
-      // COLORS
-      form.append(
-        "colors",
+  //     // COLORS
+  //     form.append(
+  //       "colors",
 
-        JSON.stringify(formData.colors.split(",").map((c) => c.trim())),
-      );
-
-      // SIZES
-      form.append(
-        "sizes",
-
-        JSON.stringify(formData.sizes.split(",").map((s) => s.trim())),
-      );
-
-      // IMAGES
-      images.forEach((image) => {
-        form.append("images", image);
-      });
-
-      // DEBUG
-      for (let pair of form.entries()) {
-      }
-
-      const response = await fetch(
-        `${API_URL}/api/products/create`,
-        //  `http://localhost:5001/api/products/create`
-        {
-          method: "POST",
-
-          body: form,
-        },
-      );
-
-      const data = await response.json();
-
-      if (data.success) {
-        setMessage("Product created successfully");
-
-        // RESET FORM
-        setFormData({
-          name: "",
-
-          description: "",
-
-          price: 0,
-
-          dollar_price: 0,
-
-          current_dollar_price: 0,
-
-          original_price: 0,
-
-          discount: 0,
-
-          stock: 0,
-
-          rating: 0,
-
-          reviews: 0,
-
-          category: "",
-
-          sub_category: "",
-
-          brand: "",
-
-          gender: "",
-
-          age_group: "",
-
-          colors: "",
-
-          sizes: "",
-
-          material: "",
-
-          total_items: 0,
-
-          sold: 0,
-
-          featured: false,
-
-          store: "",
-
-          likes: 0,
-
-          qrcode: "",
-        });
-
-        setImages([]);
-      } else {
-        setMessage(data.message || data.error);
-      }
-    } catch (error) {
-
-      setMessage("Error creating product");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  //  const calculateSalePrice = (
-  //   dollar_price,
-  //   current_dollar_price
-  // ) => {
-
-  //   const feeTotal = 0.55;
-
-  //   const totalVenta =
-  //     Math.round(
-  //       dollar_price *
-  //       current_dollar_price *
-  //       (1 + feeTotal)
+  //       JSON.stringify(formData.colors.split(",").map((c) => c.trim())),
   //     );
 
-  //   return totalVenta;
+  //     // SIZES
+  //     form.append(
+  //       "sizes",
+
+  //       JSON.stringify(formData.sizes.split(",").map((s) => s.trim())),
+  //     );
+  //     form.append(
+  //      "caracteristics",
+  //       JSON.stringify(formData.caracteristics)
+  //     );
+
+  //     form.append(
+  //       "recommended",
+  //       JSON.stringify(formData.recommended)
+  //     );
+
+  //     form.append(
+  //       "battery_details",
+  //       JSON.stringify(formData.battery_details)
+  //     );
+
+  //     // IMAGES
+  //     images.forEach((image) => {
+  //       form.append("images", image);
+  //     });
+
+  //     // DEBUG
+  //     for (let pair of form.entries()) {
+  //     }
+
+  //     const response = await fetch(
+  //       `${API_URL}/api/products/create`,
+  //       //  `http://localhost:5001/api/products/create`
+  //       {
+  //         method: "POST",
+
+  //         body: form,
+  //       },
+  //     );
+
+  //     const data = await response.json();
+
+  //     if (data.success) {
+  //       setMessage("Product created successfully");
+
+  //       // RESET FORM
+  //       setFormData({
+  //         name: "",
+
+  //         description: "",
+
+  //         price: 0,
+
+  //         dollar_price: 0,
+
+  //         current_dollar_price: 0,
+
+  //         original_price: 0,
+
+  //         discount: 0,
+
+  //         stock: 0,
+
+  //         rating: 0,
+
+  //         reviews: 0,
+
+  //         category: "",
+
+  //         sub_category: "",
+
+  //         brand: "",
+
+  //         gender: "",
+
+  //         age_group: "",
+
+  //         colors: "",
+
+  //         sizes: "",
+
+  //         material: "",
+
+  //         total_items: 0,
+
+  //         sold: 0,
+
+  //         featured: false,
+
+  //         store: "",
+
+  //         likes: 0,
+
+  //         qrcode: "",
+
+  //         caracteristics: "",
+
+  //         recommended: "",
+
+  //         battery_details: ""
+
+  //       });
+
+  //       setImages([]);
+  //     } else {
+  //       setMessage(data.message || data.error);
+  //     }
+  //   } catch (error) {
+
+  //     setMessage("Error creating product");
+  //   } finally {
+  //     setLoading(false);
+  //   }
   // };
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    setLoading(true);
+    setMessage("");
+
+    if (images.length === 0) {
+      setMessage("Please select at least one image");
+      setLoading(false);
+      return;
+    }
+
+    const form = new FormData();
+
+    // NORMAL FIELDS
+    Object.entries(formData).forEach(([key, value]) => {
+      if (
+        key !== "colors" &&
+        key !== "sizes" &&
+        key !== "caracteristics" &&
+        key !== "recommended" &&
+        key !== "battery_details"
+      ) {
+        form.append(key, value);
+      }
+    });
+
+    // COLORS
+    form.append(
+      "colors",
+      JSON.stringify(
+        formData.colors
+          .split(",")
+          .map((c) => c.trim())
+          .filter(Boolean)
+      )
+    );
+
+    // SIZES
+    form.append(
+      "sizes",
+      JSON.stringify(
+        formData.sizes
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean)
+      )
+    );
+
+    // CARACTERISTICS
+    form.append(
+      "caracteristics",
+      JSON.stringify(
+        formData.caracteristics
+          .split(",")
+          .map((c) => c.trim())
+          .filter(Boolean)
+      )
+    );
+
+    // RECOMMENDED
+    form.append(
+      "recommended",
+      JSON.stringify(
+        formData.recommended
+          .split(",")
+          .map((r) => r.trim())
+          .filter(Boolean)
+      )
+    );
+
+    // BATTERY DETAILS
+    // form.append(
+    //   "battery_details",
+    //   JSON.stringify(
+    //     formData.battery_details
+    //       ? JSON.parse(formData.battery_details)
+    //       : {}
+    //   )
+    // );
+    form.append(
+      "battery_details",
+      JSON.stringify(formData.battery_details)
+    );
+
+    // IMAGES
+    images.forEach((image) => {
+      form.append("images", image);
+    });
+
+    const response = await fetch(
+      `${API_URL}/api/products/create`,
+      {
+        method: "POST",
+        body: form,
+      }
+    );
+
+    const data = await response.json();
+
+    if (data.success) {
+      setMessage("Product created successfully");
+
+      setFormData({
+        name: "",
+        description: "",
+        price: 0,
+        dollar_price: 0,
+        current_dollar_price: 0,
+        original_price: 0,
+        discount: 0,
+        stock: 0,
+        rating: 0,
+        reviews: 0,
+        category: "",
+        sub_category: "",
+        brand: "",
+        gender: "",
+        age_group: "",
+        colors: "",
+        sizes: "",
+        material: "",
+        total_items: 0,
+        sold: 0,
+        featured: false,
+        store: "",
+        likes: 0,
+        qrcode: "",
+        caracteristics: "",
+        recommended: "",
+          battery_details: {
+            battery_type: "",
+            capacity: "",
+            ac_output: "",
+            fast_charge: "",
+            solar_compatible: false,
+            recommended_devices: []
+          }
+      });
+
+      setImages([]);
+    } else {
+      setMessage(data.message || data.error);
+    }
+  } catch (error) {
+    console.error(error);
+    setMessage("Error creating product");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const calculateSalePrice = (dollar_price, current_dollar_price) => {
     const feeTotal = 0.55;
@@ -418,13 +619,6 @@ export default function NewProduct() {
         />
 
         {/* IMAGE UPLOAD */}
-        {/* <input
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={handleImages}
-        /> */}
-
         <input
           type="file"
           multiple
@@ -469,6 +663,126 @@ export default function NewProduct() {
           value={formData.store}
           onChange={handleChange}
         />
+
+        <textarea
+          name="caracteristics"
+          placeholder="Caracteristicas (comma separated)"
+          value={formData.caracteristics}
+          onChange={handleChange}
+        />
+
+        <textarea
+          name="recommended"
+          placeholder="Recommended Uses (comma separated)"
+          value={formData.recommended}
+          onChange={handleChange}
+        />
+
+        <textarea
+          name="battery_details"
+          placeholder='{"battery_type":"Lithium","capacity":"266Wh","ac_output":"300W","fast_charge":"1 Hour","solar_compatible":true,"recommended_devices":["Phone","Laptop"]}'
+          value={formData.battery_details}
+          onChange={handleChange}
+        />
+
+        <input
+          type="text"
+          placeholder="Battery Type"
+          value={formData.battery_details.battery_type}
+          onChange={(e) =>
+            setFormData(prev => ({
+              ...prev,
+              battery_details: {
+                ...prev.battery_details,
+                battery_type: e.target.value
+              }
+            }))
+          }
+        />
+
+<input
+  type="text"
+  placeholder="Capacity"
+  value={formData.battery_details.capacity}
+  onChange={(e) =>
+    setFormData(prev => ({
+      ...prev,
+      battery_details: {
+        ...prev.battery_details,
+        capacity: e.target.value
+      }
+    }))
+  }
+/>
+
+<input
+  type="text"
+  placeholder="AC Output"
+  value={formData.battery_details.ac_output}
+  onChange={(e) =>
+    setFormData(prev => ({
+      ...prev,
+      battery_details: {
+        ...prev.battery_details,
+        ac_output: e.target.value
+      }
+    }))
+  }
+/>
+
+<input
+  type="text"
+  placeholder="Fast Charge"
+  value={formData.battery_details.fast_charge}
+  onChange={(e) =>
+    setFormData(prev => ({
+      ...prev,
+      battery_details: {
+        ...prev.battery_details,
+        fast_charge: e.target.value
+      }
+    }))
+  }
+/>
+
+<label>
+  Solar Compatible
+
+  <input
+    type="checkbox"
+    checked={formData.battery_details.solar_compatible}
+    onChange={(e) =>
+      setFormData(prev => ({
+        ...prev,
+        battery_details: {
+          ...prev.battery_details,
+          solar_compatible: e.target.checked
+        }
+      }))
+    }
+  />
+</label>
+
+<input
+  type="text"
+  placeholder="Recommended Devices (comma separated)"
+  onChange={(e) =>
+    setFormData(prev => ({
+      ...prev,
+      battery_details: {
+        ...prev.battery_details,
+        recommended_devices: e.target.value
+          .split(",")
+          .map(v => v.trim())
+          .filter(Boolean)
+      }
+    }))
+  }
+/>
+
+<pre>
+  {JSON.stringify(formData.battery_details, null, 2)}
+</pre>
 
         <label className="featured-check">
           Featured

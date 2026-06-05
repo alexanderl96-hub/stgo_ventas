@@ -82,6 +82,8 @@ export default function ProductDetail({
   // 🔥 Replace with real data later
   const product = productsDB?.find(p => p.id === id);
 
+  console.log("product", product)
+
   if (!product) return <div>Product not found</div>;
  
   return (
