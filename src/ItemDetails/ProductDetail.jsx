@@ -536,7 +536,7 @@ export default function ProductDetail({
             </div>
 
              <div
-                ref={featuresRef}
+                // ref={featuresRef}
                 className="features-section"
                 >
                 <h3>Materiales</h3>
