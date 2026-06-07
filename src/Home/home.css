@@ -350,7 +350,7 @@
   width: 75%;
 
   background: white;
-  z-index: 10000;
+  z-index: 900;
 
   transform: translateX(0);
   transition: transform 0.3s ease;
@@ -677,3 +677,10 @@
 
   cursor: pointer;
 }
+
+
+
+
+/* 
+aexanghm@gmail.com
+castelaroja */
