@@ -27,11 +27,11 @@ export default function PaymentSelectorGuess({
       <div className="payment-options">
 
         <button onClick={() => setMethod("En person")}>
-          💵 En Persona Guest
+          💵 En Persona
         </button>
 
         <button onClick={() => setMethod("Domicilio")}>
-          🚚 Entrega a Domicilio Guest
+          🚚 Entrega a Domicilio
         </button>
 
       </div>
