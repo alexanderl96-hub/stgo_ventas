@@ -185,6 +185,34 @@ function App() {
           }
         />
 
+        <Route
+          path="/qrcode/:id"
+          element={
+            <ProductDetail
+              productsDB={productsDB}
+              categoryDB={categoryDB}
+              cart={cart}
+              setCart={setCart}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              activeProduct={activeProduct}
+              setActiveProduct={setActiveProduct}
+              orderConfig={orderConfig}
+              setOrderConfig={setOrderConfig}
+              activeCategory={activeCategory}
+              setActiveCategory={setActiveCategory}
+              orderSuccess={orderSuccess}
+              setOrderSuccess={setOrderSuccess}
+              user={user}
+
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              openCategory={openCategory} 
+              setOpenCategory={setOpenCategory}
+            />
+          }
+        />
+
         {/* 💳 CHECKOUT (PROTECTED) */}
         <Route
           path="/checkout"
@@ -294,12 +322,11 @@ function App() {
         <Route path="/order/:orderId" element={<QrOrderPage />} />
         <Route path="/product/:orderId" element={<QrOrderPage />} />
         {/* <Route path="/update-products" element={<UpdateProduct />} /> */}
-        <Route path="/admin/create-product" element={<CreateProduct />} />
-        {/* <Route path="/newProduct" element={<Product />} /> */}
-        <Route
-            path="/new-product"
-            element={<h1>NEW PRODUCT PAGE WORKS</h1>}
-          />
+        <Route path="/create-product" 
+               element={
+                  <CreateProduct  
+                       categoryDB={categoryDB} />} 
+                  />
 
         <Route path="/login" element={<Login onAuth={handleAuth} />} />
         <Route path="/register" element={<Register onAuth={handleAuth} />} />

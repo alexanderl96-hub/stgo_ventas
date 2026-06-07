@@ -27,6 +27,10 @@ export default function Home({
    orderSuccess, setOrderSuccess
 }) {
 
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(20);
+
+
   const productsRef = useRef(null);
 
   const [open, setOpen] = useState(false);
@@ -66,13 +70,13 @@ export default function Home({
     );
   };
 
+ const currentItems = filteredProducts?.slice(0, visibleCount);
 
+  // const totalItems = filteredProducts?.length;
+  // const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const totalItems = filteredProducts?.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = filteredProducts?.slice(startIndex, startIndex + itemsPerPage);
+  // const startIndex = (currentPage - 1) * itemsPerPage;
+  // const currentItems = filteredProducts?.slice(startIndex, startIndex + itemsPerPage);
 
 
   const getDiscount = (price, originalPrice) => {
@@ -96,9 +100,14 @@ useEffect(() => {
 }, [categoryDB]);
 
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm]);
+  // useEffect(() => {
+  //   setCurrentPage(1);
+  // }, [searchTerm]);
+
+useEffect(() => {
+  console.log("filteredProducts changed");
+  setVisibleCount(10);
+}, [searchTerm]);
 
   useEffect(() => {
     window.scrollTo({
@@ -123,54 +132,74 @@ useEffect(() => {
     }
   }, [open]);
 
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   console.log("cart", cart)
+
+  console.log("visibleCount", visibleCount);
+console.log("filteredProducts", filteredProducts?.length);
 
 
   return (
     <div className="main_Contianer_Portal">
 
-      {/* 🔝 Header */}
-      <header className="main_Header_Portal">
-        <div className="main_subContainer_Portal">
-          <div >
-            <Menu onClick={() => setOpen(true)} size={20}  />
-            <h4 className="text-l font-bold tracking-tight">STGO_Ventas</h4>
-          </div>
-          <Link to="/cart" className="cart-link">
-          <div className="cart-container">
-              <ShoppingCart size={18} />
+         <div className={`portal-top ${isScrolled ? "header-blur" : ""}`}>
 
-              {cart.length > 0 && (
-                <span className="cart-count">{cart.length}</span>
+          {/* 🔝 Header */}
+          <header   className="main_Header_Portal">
+            <div className="main_subContainer_Portal">
+              <div >
+                <Menu onClick={() => setOpen(true)} size={20}  />
+                <h4 className="text-l font-bold tracking-tight">
+                  Ventas Express
+                  </h4>
+              </div>
+              <Link to="/cart" className="cart-link">
+              <div className="cart-container">
+                  <ShoppingCart size={18} />
+
+                  {cart.length > 0 && (
+                    <span className="cart-count">{cart.length}</span>
+                  )}
+                </div>
+              </Link>
+            </div>
+          </header>
+              {/* 🔍 Search */}
+          <div className="main_inputContainer_Portal">
+              <Search size={14} />
+              <input
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Busqueda..."
+              />
+              <QrCode size={14} />
+              {searchTerm && (
+              <XCircle size={14} 
+                      onClick={() => {setSearchTerm(""); 
+                                      setOpenCategory(null);
+                                      setActiveCategory(categoryDB)}} />
               )}
             </div>
-          </Link>
+        
         </div>
-      </header>
+
 
        {loading ? (
           <div className="loader-container">
             <div className="loader"></div>
           </div>
         ) : (
-          <>
-
-      {/* 🔍 Search */}
-      <div className="main_inputContainer_Portal">
-        <Search size={14} />
-        <input
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Busqueda..."
-        />
-        <QrCode size={14} />
-         {searchTerm && (
-        <XCircle size={14} 
-                onClick={() => {setSearchTerm(""); 
-                                setOpenCategory(null);
-                                setActiveCategory(categoryDB)}} />
-         )}
-      </div>
+           <div className="portal-content">
 
       {/* 🏷 Categories */}
 
@@ -511,7 +540,7 @@ useEffect(() => {
             </div>
           )}
 
-       {/* 🔽 Pagination Container */}
+       {/* 🔽 Pagination Container
         <div className="pagination-container">
 
           <div className="pagination-info">
@@ -529,10 +558,19 @@ useEffect(() => {
           </div>
 
         </div>
+ */}.    {visibleCount < filteredProducts?.length && (
+              <div className="load-more-container">
+                <button
+                  className="load-more-btn"
+                  onClick={() => setVisibleCount(prev => prev + 20)}
+                >
+                  Cargar Más
+                </button>
+              </div>
+            )}
 
 
-
-           </>
+           </div>
         )}
     </div>
   );

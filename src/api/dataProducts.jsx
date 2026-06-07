@@ -27,7 +27,6 @@ export default function useDataProducts() {
     fetch(`${API_URL}/api/categories`)
       .then(res => res.json())
       .then(data => {
-        console.log("categories", data)
         setCategoryDB(data.categories)
       });
   }, []);

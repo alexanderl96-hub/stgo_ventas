@@ -1,12 +1,23 @@
 import { useState, useEffect } from "react";
 
 import API_URL from "../api/api_images";
-// import { getDollarPrice } from "../../utils/dollarPrice";
 
 import "./newProduct.css";
 
 
-export default function NewProduct() {
+export default function NewProduct({categoryDB}) {
+  
+  const [categorias, setCategorias] = useState([])
+
+  const [sub_categorias, setSub_Categorias] = useState([])
+
+  const [showCategories, setShowCategories] = useState(false);
+
+  const [showSubCategories, setShowSubCategories] = useState(false);
+
+  const [generos, setGeneros] = useState(["Unixes", "Mujer", "Hombre"])
+
+  const [showGeneros, setShowGeneros] = useState(false)
 
   const [loading, setLoading] = useState(false);
 
@@ -14,104 +25,59 @@ export default function NewProduct() {
 
   const [images, setImages] = useState([]);
 
-//   const [formData, setFormData] = useState({
-//   name: "",
-//   description: "",
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
 
-//   price: 0,
-//   dollar_price: 0,
-//   current_dollar_price: 0,
-//   original_price: 0,
+    price: 0,
+    dollar_price: 0,
+    current_dollar_price: 0,
+    original_price: 0,
 
-//   discount: 0,
-//   stock: 0,
-//   rating: 0,
-//   reviews: 0,
+    discount: 0,
+    stock: 0,
+    rating: 0,
+    reviews: 0,
 
-//   category: "",
-//   sub_category: "",
-//   brand: "",
+    category: "",
+    sub_category: "",
+    brand: "",
 
-//   gender: "",
-//   age_group: "",
+    gender: "",
+    age_group: "",
 
-//   colors: "",
-//   sizes: "",
+    colors: "",
+    sizes: "",
 
-//   material: "",
+    material: "",
 
-//   total_items: 0,
-//   sold: 0,
+    total_items: 0,
+    sold: 0,
 
-//   featured: false,
+    featured: false,
 
-//   store: "",
+    store: "",
 
-//   likes: 0,
+    likes: 0,
 
-//   qrcode: "",
+    qrcode: "",
 
-//   caracteristics: [],
-//   recommended: [],
-//   battery_details: {
-//   battery_type: "",
-//   capacity: "",
-//   ac_output: "",
-//   fast_charge: "",
-//   solar_compatible: false,
-//   recommended_devices: []
-// }
-// });
+    caracteristics: "",
+    recommended: "",
 
-const [formData, setFormData] = useState({
-  name: "",
-  description: "",
+    battery_details: {
+      battery_type: "",
+      capacity: "",
+      ac_output: "",
+      fast_charge: "",
+      solar_compatible: false,
+      recommended_devices: []
+    },
 
-  price: 0,
-  dollar_price: 0,
-  current_dollar_price: 0,
-  original_price: 0,
+    modelo: "",
+    original_store_price: 0
 
-  discount: 0,
-  stock: 0,
-  rating: 0,
-  reviews: 0,
-
-  category: "",
-  sub_category: "",
-  brand: "",
-
-  gender: "",
-  age_group: "",
-
-  colors: "",
-  sizes: "",
-
-  material: "",
-
-  total_items: 0,
-  sold: 0,
-
-  featured: false,
-
-  store: "",
-
-  likes: 0,
-
-  qrcode: "",
-
-  caracteristics: "",
-  recommended: "",
-
-  battery_details: {
-    battery_type: "",
-    capacity: "",
-    ac_output: "",
-    fast_charge: "",
-    solar_compatible: false,
-    recommended_devices: []
-  }
-});
+  });
 
   // HANDLE INPUT CHANGE
   const handleChange = (e) => {
@@ -130,306 +96,152 @@ const [formData, setFormData] = useState({
   };
 
   // CREATE PRODUCT
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     setLoading(true);
-
-  //     setMessage("");
-
-  //     // VALIDATE IMAGES
-  //     if (images.length === 0) {
-  //       setMessage("Please select at least one image");
-
-  //       setLoading(false);
-
-  //       return;
-  //     }
-
-  //     const form = new FormData();
-
-  //     // NORMAL FIELDS
-  //     Object.entries(formData).forEach(([key, value]) => {
-  //       if (key !== "colors" && key !== "sizes") {
-  //         form.append(key, value);
-  //       }
-  //     });
-
-  //     // COLORS
-  //     form.append(
-  //       "colors",
-
-  //       JSON.stringify(formData.colors.split(",").map((c) => c.trim())),
-  //     );
-
-  //     // SIZES
-  //     form.append(
-  //       "sizes",
-
-  //       JSON.stringify(formData.sizes.split(",").map((s) => s.trim())),
-  //     );
-  //     form.append(
-  //      "caracteristics",
-  //       JSON.stringify(formData.caracteristics)
-  //     );
-
-  //     form.append(
-  //       "recommended",
-  //       JSON.stringify(formData.recommended)
-  //     );
-
-  //     form.append(
-  //       "battery_details",
-  //       JSON.stringify(formData.battery_details)
-  //     );
-
-  //     // IMAGES
-  //     images.forEach((image) => {
-  //       form.append("images", image);
-  //     });
-
-  //     // DEBUG
-  //     for (let pair of form.entries()) {
-  //     }
-
-  //     const response = await fetch(
-  //       `${API_URL}/api/products/create`,
-  //       //  `http://localhost:5001/api/products/create`
-  //       {
-  //         method: "POST",
-
-  //         body: form,
-  //       },
-  //     );
-
-  //     const data = await response.json();
-
-  //     if (data.success) {
-  //       setMessage("Product created successfully");
-
-  //       // RESET FORM
-  //       setFormData({
-  //         name: "",
-
-  //         description: "",
-
-  //         price: 0,
-
-  //         dollar_price: 0,
-
-  //         current_dollar_price: 0,
-
-  //         original_price: 0,
-
-  //         discount: 0,
-
-  //         stock: 0,
-
-  //         rating: 0,
-
-  //         reviews: 0,
-
-  //         category: "",
-
-  //         sub_category: "",
-
-  //         brand: "",
-
-  //         gender: "",
-
-  //         age_group: "",
-
-  //         colors: "",
-
-  //         sizes: "",
-
-  //         material: "",
-
-  //         total_items: 0,
-
-  //         sold: 0,
-
-  //         featured: false,
-
-  //         store: "",
-
-  //         likes: 0,
-
-  //         qrcode: "",
-
-  //         caracteristics: "",
-
-  //         recommended: "",
-
-  //         battery_details: ""
-
-  //       });
-
-  //       setImages([]);
-  //     } else {
-  //       setMessage(data.message || data.error);
-  //     }
-  //   } catch (error) {
-
-  //     setMessage("Error creating product");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    setLoading(true);
-    setMessage("");
+    try {
+      setLoading(true);
+      setMessage("");
 
-    if (images.length === 0) {
-      setMessage("Please select at least one image");
-      setLoading(false);
-      return;
-    }
-
-    const form = new FormData();
-
-    // NORMAL FIELDS
-    Object.entries(formData).forEach(([key, value]) => {
-      if (
-        key !== "colors" &&
-        key !== "sizes" &&
-        key !== "caracteristics" &&
-        key !== "recommended" &&
-        key !== "battery_details"
-      ) {
-        form.append(key, value);
+      if (images.length === 0) {
+        setMessage("Please select at least one image");
+        setLoading(false);
+        return;
       }
-    });
 
-    // COLORS
-    form.append(
-      "colors",
-      JSON.stringify(
-        formData.colors
-          .split(",")
-          .map((c) => c.trim())
-          .filter(Boolean)
-      )
-    );
+      const form = new FormData();
 
-    // SIZES
-    form.append(
-      "sizes",
-      JSON.stringify(
-        formData.sizes
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean)
-      )
-    );
-
-    // CARACTERISTICS
-    form.append(
-      "caracteristics",
-      JSON.stringify(
-        formData.caracteristics
-          .split(",")
-          .map((c) => c.trim())
-          .filter(Boolean)
-      )
-    );
-
-    // RECOMMENDED
-    form.append(
-      "recommended",
-      JSON.stringify(
-        formData.recommended
-          .split(",")
-          .map((r) => r.trim())
-          .filter(Boolean)
-      )
-    );
-
-    // BATTERY DETAILS
-    // form.append(
-    //   "battery_details",
-    //   JSON.stringify(
-    //     formData.battery_details
-    //       ? JSON.parse(formData.battery_details)
-    //       : {}
-    //   )
-    // );
-    form.append(
-      "battery_details",
-      JSON.stringify(formData.battery_details)
-    );
-
-    // IMAGES
-    images.forEach((image) => {
-      form.append("images", image);
-    });
-
-    const response = await fetch(
-      `${API_URL}/api/products/create`,
-      {
-        method: "POST",
-        body: form,
-      }
-    );
-
-    const data = await response.json();
-
-    if (data.success) {
-      setMessage("Product created successfully");
-
-      setFormData({
-        name: "",
-        description: "",
-        price: 0,
-        dollar_price: 0,
-        current_dollar_price: 0,
-        original_price: 0,
-        discount: 0,
-        stock: 0,
-        rating: 0,
-        reviews: 0,
-        category: "",
-        sub_category: "",
-        brand: "",
-        gender: "",
-        age_group: "",
-        colors: "",
-        sizes: "",
-        material: "",
-        total_items: 0,
-        sold: 0,
-        featured: false,
-        store: "",
-        likes: 0,
-        qrcode: "",
-        caracteristics: "",
-        recommended: "",
-          battery_details: {
-            battery_type: "",
-            capacity: "",
-            ac_output: "",
-            fast_charge: "",
-            solar_compatible: false,
-            recommended_devices: []
-          }
+      // NORMAL FIELDS
+      Object.entries(formData).forEach(([key, value]) => {
+        if (
+          key !== "colors" &&
+          key !== "sizes" &&
+          key !== "caracteristics" &&
+          key !== "recommended" &&
+          key !== "battery_details"
+        ) {
+          form.append(key, value);
+        }
       });
 
-      setImages([]);
-    } else {
-      setMessage(data.message || data.error);
+      // COLORS
+      form.append(
+        "colors",
+        JSON.stringify(
+          formData.colors
+            .split(",")
+            .map((c) => c.trim())
+            .filter(Boolean)
+        )
+      );
+
+      // SIZES
+      form.append(
+        "sizes",
+        JSON.stringify(
+          formData.sizes
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean)
+        )
+      );
+
+      // CARACTERISTICS
+      form.append(
+        "caracteristics",
+        JSON.stringify(
+          formData.caracteristics
+            .split(",")
+            .map((c) => c.trim())
+            .filter(Boolean)
+        )
+      );
+
+      // RECOMMENDED
+      form.append(
+        "recommended",
+        JSON.stringify(
+          formData.recommended
+            .split(",")
+            .map((r) => r.trim())
+            .filter(Boolean)
+        )
+      );
+
+      // BATTERY DETAILS
+      form.append(
+        "battery_details",
+        JSON.stringify(formData.battery_details)
+      );
+
+      // IMAGES
+      images.forEach((image) => {
+        form.append("images", image);
+      });
+
+      const response = await fetch(
+        `${API_URL}/api/products/create`,
+        {
+          method: "POST",
+          body: form,
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setMessage("Product created successfully");
+
+        setFormData({
+          name: "",
+          description: "",
+          price: 0,
+          dollar_price: 0,
+          current_dollar_price: 0,
+          original_price: 0,
+          discount: 0,
+          stock: 0,
+          rating: 0,
+          reviews: 0,
+          category: "",
+          sub_category: "",
+          brand: "",
+          gender: "",
+          age_group: "",
+          colors: "",
+          sizes: "",
+          material: "",
+          total_items: 0,
+          sold: 0,
+          featured: false,
+          store: "",
+          likes: 0,
+          qrcode: "",
+          caracteristics: "",
+          recommended: "",
+            battery_details: {
+              battery_type: "",
+              capacity: "",
+              ac_output: "",
+              fast_charge: "",
+              solar_compatible: false,
+              recommended_devices: []
+            },
+              modelo: "",
+              original_store_price: 0
+        });
+
+        setImages([]);
+      } else {
+        setMessage(data.message || data.error);
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage("Error creating product");
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.error(error);
-    setMessage("Error creating product");
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
 
   const calculateSalePrice = (dollar_price, current_dollar_price) => {
@@ -459,6 +271,22 @@ const [formData, setFormData] = useState({
     }
   }, [formData.dollar_price, formData.current_dollar_price]);
 
+useEffect(() => {
+  if (categoryDB?.length > 0) {
+    setCategorias(categoryDB.map(a => a.name))
+    
+  }
+}, [categoryDB]);
+
+useEffect(() => {
+  if (formData.category !== "") {
+    setSub_Categorias(categoryDB.filter(a => a.name === formData.category)
+                          .map(a => a.sub_category)[0])
+  }
+}, [formData.category]);
+  // console.log("categorias", categorias )
+  // console.log("categoryDB", categoryDB )
+
   return (
     <div className="create-product-page">
       <h1>Create Product</h1>
@@ -467,14 +295,14 @@ const [formData, setFormData] = useState({
         <input
           type="text"
           name="name"
-          placeholder="Product Name"
+          placeholder="Nombre del Producto"
           value={formData.name}
           onChange={handleChange}
         />
 
         <textarea
           name="description"
-          placeholder="Description"
+          placeholder="Descripcion del Producto"
           value={formData.description}
           onChange={handleChange}
         />
@@ -482,9 +310,9 @@ const [formData, setFormData] = useState({
         <input
           type="number"
           name="dollar_price"
-          placeholder="Dollar Price"
+          placeholder="Price del Dollar"
           value={
-            formData.dollar_price > 0 ? formData.dollar_price : "Dollar Price"
+            formData.dollar_price > 0 ? formData.dollar_price : "Precio del Dollar"
           }
           onChange={handleChange}
         />
@@ -492,11 +320,11 @@ const [formData, setFormData] = useState({
         <input
           type="number"
           name="current_dollar_price"
-          placeholder="Current Dollar Price"
+          placeholder="Precio del Dollar en el Toque"
           value={
             formData.current_dollar_price > 0
               ? formData.current_dollar_price
-              : "Current Dollar Price"
+              : "Precio del Dollar en el Toque"
           }
           onChange={handleChange}
         />
@@ -504,100 +332,254 @@ const [formData, setFormData] = useState({
         <input
           type="number"
           name="price"
-          placeholder="Price"
-          value={formData.price > 0 ? formData.price : "Price"}
+          placeholder="Precio"
+          value={formData.price > 0 
+            ? formData.price 
+            : "Precio"}
           onChange={handleChange}
         />
 
         <input
           type="number"
           name="original_price"
-          placeholder="Original Price"
+          placeholder="Precio Original"
           value={
             formData.original_price > 0
               ? formData.original_price
-              : "Original Price"
+              : "Precio Original"
           }
+          onChange={handleChange}
+        />
+
+         <input
+          type="number"
+          name="original_store_price"
+          placeholder="Precio original de tienda"
+          value={formData.original_store_price > 0 
+            ? formData.original_store_price 
+            : "Precio original de tienda"}
           onChange={handleChange}
         />
 
         <input
           type="number"
+          style={{ display: "none" }}
           name="discount"
-          placeholder="Discount"
-          value={formData.discount > 0 ? formData.discount : "Discount"}
+          placeholder="Descuento"
+          value={formData.discount > 0 
+            ? formData.discount 
+            : "Descuento"}
           onChange={handleChange}
         />
 
         <input
           type="number"
           name="stock"
-          placeholder="Stock"
-          value={formData.stock > 0 ? formData.stock : "Stock"}
+          placeholder="Almacen"
+          value={formData.stock > 0 
+            ? formData.stock 
+            : "Almacen"}
           onChange={handleChange}
         />
 
         <input
           type="number"
+          style={{ display: "none" }}
           step="0.1"
           name="rating"
           placeholder="Rating"
-          value={formData.rating > 0 ? formData.rating : "Rating"}
+          value={formData.rating > 0 
+            ? formData.rating 
+            : "Rating"}
           onChange={handleChange}
         />
 
         <input
           type="number"
+          style={{ display: "none" }}
           name="reviews"
           placeholder="Reviews"
-          value={formData.reviews > 0 ? formData.reviews : "Reviews"}
+          value={formData.reviews > 0 
+            ? formData.reviews 
+            : "Reviews"}
           onChange={handleChange}
         />
 
-        <input
+        {/* <input
           type="text"
           name="category"
-          placeholder="Category"
+          placeholder="Categorias"
           value={formData.category}
           onChange={handleChange}
-        />
+        /> */}
 
-        <input
+        <div className="custom-dropdown">
+
+            <div
+              className="dropdown-selected"
+              onClick={() => setShowCategories(!showCategories)}
+            >
+              {formData.category || "Seleccione una categoría"}
+
+              <span className="dropdown-arrow">
+                {showCategories ? "▲" : "▼"}
+              </span>
+            </div>
+
+            {showCategories && (
+              <div className="dropdown-options">
+
+                {categorias.map((categoria, index) => (
+                  <div
+                    key={index}
+                    className="dropdown-option"
+                    onClick={() => {
+
+                      setFormData(prev => ({
+                        ...prev,
+                        category: categoria
+                      }));
+
+                      setShowCategories(false);
+                    }}
+                  >
+                    {categoria}
+                  </div>
+                ))}
+
+              </div>
+            )}
+
+          </div>
+
+        {/* <input
           type="text"
           name="sub_category"
-          placeholder="Sub Category"
+          placeholder="Sub Categorias"
           value={formData.sub_category}
           onChange={handleChange}
-        />
+        /> */}
+
+        {formData.category !== "" && (
+
+        <div className="custom-dropdown">
+
+            <div
+              className="dropdown-selected"
+              onClick={() => setShowSubCategories(!showSubCategories)}
+            >
+              {formData.sub_category || "Seleccione una sub_categoría"}
+
+              <span className="dropdown-arrow">
+                {showSubCategories ? "▲" : "▼"}
+              </span>
+            </div>
+
+            {showSubCategories && (
+              <div className="dropdown-options">
+
+                {sub_categorias.map((subcategoria, index) => (
+                  <div
+                    key={index}
+                    className="dropdown-option"
+                    onClick={() => {
+
+                      setFormData(prev => ({
+                        ...prev,
+                        sub_category: subcategoria
+                      }));
+
+                      setShowSubCategories(false);
+                    }}
+                  >
+                    {subcategoria}
+                  </div>
+                ))}
+
+              </div>
+            )}
+
+          </div>
+
+          )}
 
         <input
           type="text"
           name="brand"
-          placeholder="Brand"
+          placeholder="Marca"
           value={formData.brand}
           onChange={handleChange}
         />
 
-        <input
+          <input
           type="text"
-          name="gender"
-          placeholder="Gender"
-          value={formData.gender}
+          name="modelo"
+          placeholder="Modelo"
+          value={formData.modelo}
           onChange={handleChange}
         />
+
+        {/* <input
+          type="text"
+          name="gender"
+          placeholder="Genero"
+          value={formData.gender}
+          onChange={handleChange}
+        /> */}
+
+       
+        <div className="custom-dropdown">
+
+            <div
+              className="dropdown-selected"
+              onClick={() => setShowGeneros(!showGeneros)}
+            >
+              {formData.gender || "Genero"}
+
+              <span className="dropdown-arrow">
+                {showGeneros ? "▲" : "▼"}
+              </span>
+            </div>
+
+            {showGeneros && (
+              <div className="dropdown-options">
+
+                {generos.map((genero, index) => (
+                  <div
+                    key={index}
+                    className="dropdown-option"
+                    onClick={() => {
+
+                      setFormData(prev => ({
+                        ...prev,
+                        gender: genero
+                      }));
+
+                      setShowGeneros(false);
+                    }}
+                  >
+                    {genero}
+                  </div>
+                ))}
+
+              </div>
+            )}
+
+          </div>
 
         <input
           type="text"
           name="age_group"
-          placeholder="Age Group"
+          placeholder="Edad de grupo"
           value={formData.age_group}
           onChange={handleChange}
         />
 
+
         <input
           type="text"
           name="colors"
-          placeholder="Colors (comma separated)"
+          placeholder="Colores (separado por coma)"
           value={formData.colors}
           onChange={handleChange}
         />
@@ -605,7 +587,7 @@ const [formData, setFormData] = useState({
         <input
           type="text"
           name="sizes"
-          placeholder="Sizes (comma separated)"
+          placeholder="Dimensiones (separado por coma)"
           value={formData.sizes}
           onChange={handleChange}
         />
@@ -641,53 +623,64 @@ const [formData, setFormData] = useState({
         <input
           type="number"
           name="total_items"
-          placeholder="Total Items"
+          placeholder="Cantida de productos"
           value={
-            formData.total_items > 0 ? formData.total_items : "Total Items"
+            formData.total_items > 0 
+            ? formData.total_items 
+            : "Cantida de productos"
           }
           onChange={handleChange}
         />
 
         <input
           type="number"
+          style={{ display: "none" }}
           name="sold"
-          placeholder="Sold"
-          value={formData.sold > 0 ? formData.sold : "Sold"}
+          placeholder="Ventas"
+          value={formData.sold > 0 
+            ? formData.sold 
+            : "Ventas"}
           onChange={handleChange}
         />
 
         <input
           type="text"
           name="store"
-          placeholder="Store"
+          placeholder="Tienda"
           value={formData.store}
           onChange={handleChange}
         />
 
         <textarea
           name="caracteristics"
-          placeholder="Caracteristicas (comma separated)"
+          placeholder="Caracteristicas (separado por coma)"
           value={formData.caracteristics}
           onChange={handleChange}
         />
 
         <textarea
           name="recommended"
-          placeholder="Recommended Uses (comma separated)"
+          placeholder="Recomendaciones  de uso (separado por coma)"
           value={formData.recommended}
           onChange={handleChange}
         />
 
-        <textarea
-          name="battery_details"
-          placeholder='{"battery_type":"Lithium","capacity":"266Wh","ac_output":"300W","fast_charge":"1 Hour","solar_compatible":true,"recommended_devices":["Phone","Laptop"]}'
-          value={formData.battery_details}
-          onChange={handleChange}
-        />
+        {(formData.category === "Equipos" || 
+          formData.category === "Electrónicos"
+        )
+          // formData.sub_category === "EcoFlow"
+           && (<>
+            <textarea
+              style={{ display: "none" }}
+              name="battery_details"
+              value={formData.battery_details}
+              onChange={handleChange}
+            />
+
 
         <input
           type="text"
-          placeholder="Battery Type"
+          placeholder="Tipo de Bateria"
           value={formData.battery_details.battery_type}
           onChange={(e) =>
             setFormData(prev => ({
@@ -700,89 +693,91 @@ const [formData, setFormData] = useState({
           }
         />
 
-<input
-  type="text"
-  placeholder="Capacity"
-  value={formData.battery_details.capacity}
-  onChange={(e) =>
-    setFormData(prev => ({
-      ...prev,
-      battery_details: {
-        ...prev.battery_details,
-        capacity: e.target.value
-      }
-    }))
-  }
-/>
+        <input
+          type="text"
+          placeholder="Capacidad"
+          value={formData.battery_details.capacity}
+          onChange={(e) =>
+            setFormData(prev => ({
+              ...prev,
+              battery_details: {
+                ...prev.battery_details,
+                capacity: e.target.value
+              }
+            }))
+          }
+        />
 
-<input
-  type="text"
-  placeholder="AC Output"
-  value={formData.battery_details.ac_output}
-  onChange={(e) =>
-    setFormData(prev => ({
-      ...prev,
-      battery_details: {
-        ...prev.battery_details,
-        ac_output: e.target.value
-      }
-    }))
-  }
-/>
+        <input
+          type="text"
+          placeholder="AC Output"
+          value={formData.battery_details.ac_output}
+          onChange={(e) =>
+            setFormData(prev => ({
+              ...prev,
+              battery_details: {
+                ...prev.battery_details,
+                ac_output: e.target.value
+              }
+            }))
+          }
+        />
 
-<input
-  type="text"
-  placeholder="Fast Charge"
-  value={formData.battery_details.fast_charge}
-  onChange={(e) =>
-    setFormData(prev => ({
-      ...prev,
-      battery_details: {
-        ...prev.battery_details,
-        fast_charge: e.target.value
-      }
-    }))
-  }
-/>
+        <input
+          type="text"
+          placeholder="Carga rapida"
+          value={formData.battery_details.fast_charge}
+          onChange={(e) =>
+            setFormData(prev => ({
+              ...prev,
+              battery_details: {
+                ...prev.battery_details,
+                fast_charge: e.target.value
+              }
+            }))
+          }
+        />
 
-<label>
-  Solar Compatible
+        <label>
+          Compatible con Paneles Solares
 
-  <input
-    type="checkbox"
-    checked={formData.battery_details.solar_compatible}
-    onChange={(e) =>
-      setFormData(prev => ({
-        ...prev,
-        battery_details: {
-          ...prev.battery_details,
-          solar_compatible: e.target.checked
-        }
-      }))
-    }
-  />
-</label>
+          <input
+            type="checkbox"
+            checked={formData.battery_details.solar_compatible}
+            onChange={(e) =>
+              setFormData(prev => ({
+                ...prev,
+                battery_details: {
+                  ...prev.battery_details,
+                  solar_compatible: e.target.checked
+                }
+              }))
+            }
+          />
+        </label>
 
-<input
-  type="text"
-  placeholder="Recommended Devices (comma separated)"
-  onChange={(e) =>
-    setFormData(prev => ({
-      ...prev,
-      battery_details: {
-        ...prev.battery_details,
-        recommended_devices: e.target.value
-          .split(",")
-          .map(v => v.trim())
-          .filter(Boolean)
-      }
-    }))
-  }
-/>
+        <input
+          type="text"
+          placeholder="Recomendaciones del Equipo (separado por coma)"
+          onChange={(e) =>
+            setFormData(prev => ({
+              ...prev,
+              battery_details: {
+                ...prev.battery_details,
+                recommended_devices: e.target.value
+                  .split(",")
+                  .map(v => v.trim())
+                  .filter(Boolean)
+              }
+            }))
+          }
+        />
 
-<pre>
-  {JSON.stringify(formData.battery_details, null, 2)}
-</pre>
+        <pre>
+          {JSON.stringify(formData.battery_details, null, 2)}
+        </pre>
+
+          </>)}
 
         <label className="featured-check">
           Featured

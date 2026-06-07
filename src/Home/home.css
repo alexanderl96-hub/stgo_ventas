@@ -1,17 +1,4 @@
 
-/* .bottom-nav {
-  position: fixed;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  background: white;
-  border-radius: 24px;
-  box-shadow: var(--shadow-medium);
-  display: flex;
-  justify-content: space-around;
-  padding: 12px;
-} */
 .bottom-nav{
   position: fixed;
   bottom: 0;
@@ -67,12 +54,33 @@
 }
 
 
+
+.portal-top {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all .3s ease;
+  background: rgba(255, 255, 255, 0.918);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+
+/* Everything below scrolls */
+.portal-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+
 .main_Header_Portal{
   margin: 0 12px 10px; /* same as search */
 }
 
 .main_subContainer_Portal{
-  background: white;
+  background: rgba(255, 255, 255, 0.435);
   border-radius: 20px;
   padding: 1px 14px;
   display: flex;
@@ -215,8 +223,9 @@
   align-items: center;
   gap: 8px;
 
-  background: white;
+  background: rgba(255, 255, 255, 0.435);
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+
 }
 
 .main_inputContainer_Portal input{
@@ -323,23 +332,6 @@
   overflow-y: auto;
 }
 
-/* .open_sideNav{
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 70%;
-
-  background: white;
-  box-shadow: 4px 0 20px rgba(0,0,0,0.1);
-
-  padding: 20px;
-  transition: transform 0.3s ease;
-
-  transform: translateX(0);
-  z-index: 100;
-} */
-
 .open_sideNav{
   position: fixed;
   top: 0;
@@ -353,8 +345,6 @@
   transform: translateX(0);
   transition: transform 0.3s ease;
 
-  /* border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px; */
 
   box-shadow: 4px 0 25px rgba(0,0,0,0.1);
 
@@ -653,4 +643,27 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.load-more-container{
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 80px;
+}
+
+.load-more-btn{
+  padding: 12px 24px;
+  border: none;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    135deg,
+    #ff4d6d,
+    #7c3aed
+  );
+
+  color: white;
+  font-weight: 600;
+
+  cursor: pointer;
 }
