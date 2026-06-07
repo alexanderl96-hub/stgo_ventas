@@ -6,6 +6,7 @@ import { ShoppingCart, Menu, X, Search, QrCode,
 
 import { calculateOrderPricing } from "../utils/pricing";
 import { getColorStyle } from "../utils/filterColorSet.jsx";
+import logo from "../source/logo.png"
 import API_URL from "../api/api_images";
 
 import {
@@ -160,9 +161,24 @@ console.log("filteredProducts", filteredProducts?.length);
             <div className="main_subContainer_Portal">
               <div >
                 <Menu onClick={() => setOpen(true)} size={20}  />
-                <h4 className="text-l font-bold tracking-tight">
-                  Ventas Express
-                  </h4>
+
+                <div className="logo-container">
+                    <img
+                      src={logo}
+                      alt="Ventas"
+                      className="logo-cart"
+                    />
+
+                    <span className="logo-speed">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </span>
+
+                    <span className="logo-express">
+                      Express
+                    </span>
+                  </div>
               </div>
               <Link to="/cart" className="cart-link">
               <div className="cart-container">

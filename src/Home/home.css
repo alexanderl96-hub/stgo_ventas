@@ -43,6 +43,21 @@
 }
 
 
+.logo-title{
+  font-weight: 700;
+
+  background: linear-gradient(
+    135deg,
+    #ff4d6d,
+    #7c3aed
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  background-clip: text;
+}
+
 
 .main_Contianer_Portal{
   /* background: #f6f6f7; */
@@ -678,4 +693,72 @@
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+.logo-speed{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.logo-speed span{
+  height: 2px;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    #7c3aed,
+    #ff4d6d
+  );
+}
+
+.logo-speed span:nth-child(1){
+  width: 10px;
+}
+
+.logo-speed span:nth-child(2){
+  width: 16px;
+}
+
+.logo-speed span:nth-child(3){
+  width: 22px;
+}
+
+.logo-container{
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: -7px;
+}
+
+.logo-cart{
+  height: 40px;
+  width: auto;
+}
+
+.logo-express{
+  position: relative;
+
+  font-size: 16px;
+  font-weight: 800;
+  font-style: italic;
+
+  background: linear-gradient(
+    90deg,
+    #7c3aed,
+    #ff4d6d
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
