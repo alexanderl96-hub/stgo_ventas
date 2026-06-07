@@ -6,7 +6,7 @@ import API_URL from "../../api/api_images";
 
 import "./updateProduct.css";
 
-export default function UpdateProduct() {
+export default function UpdateDBProduct() {
   const [products, setProducts] = useState([]);
 
   const [selectedProduct, setSelectedProduct] = useState(null);
