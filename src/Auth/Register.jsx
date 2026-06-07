@@ -2,6 +2,7 @@ import { useState } from "react";
 import { registerUser } from "../api/auth";
 import "./auth.css";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../api/api_images";
 
 export default function Register({ onAuth }) {
   const [form, setForm] = useState({

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../api/api_images";
 import "./auth.css";
 
 export default function Login({ onAuth }) {
@@ -15,7 +16,7 @@ export default function Login({ onAuth }) {
 
     try {
       // 🔐 1. TRY USER LOGIN
-      let res = await fetch("http://localhost:5001/api/auth/login", {
+      let res = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -39,7 +40,7 @@ export default function Login({ onAuth }) {
       }
 
       // 🛠️ 2. TRY ADMIN LOGIN
-      res = await fetch("http://localhost:5001/api/admin/login", {
+      res = await fetch(`${API_URL}/api/admin/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

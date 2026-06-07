@@ -45,7 +45,7 @@
 
 
 .main_Contianer_Portal{
-  background: #f6f6f7;
+  /* background: #f6f6f7; */
   display:flex;
   flex-direction: column;
   font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
@@ -60,9 +60,17 @@
   top: 0;
   z-index: 1000;
   transition: all .3s ease;
-  background: rgba(255, 255, 255, 0.918);
+}
+
+.header-blur{
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+
+  background: rgba(255, 255, 255, 0.917);;
+
+  transition: all 0.3s ease;
+
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
 
