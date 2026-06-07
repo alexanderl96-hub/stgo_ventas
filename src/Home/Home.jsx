@@ -194,12 +194,12 @@ console.log("filteredProducts", filteredProducts?.length);
         </div>
 
 
-       {loading ? (
+       {/* {loading ? (
           <div className="loader-container">
             <div className="loader"></div>
           </div>
         ) : (
-           <div className="portal-content">
+           <div className="portal-content"> */}
 
       {/* 🏷 Categories */}
 
@@ -298,7 +298,13 @@ console.log("filteredProducts", filteredProducts?.length);
         </div>
 
 
-         
+      {loading ? (
+          <div className="loader-container">
+            <div className="loader"></div>
+          </div>
+        ) : (
+           <div className="portal-content">
+    
 
      <div className="category-scroll">
         {categoryDB?.map((cat) => (
