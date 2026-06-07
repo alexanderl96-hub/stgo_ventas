@@ -355,7 +355,6 @@
   transform: translateX(0);
   transition: transform 0.3s ease;
 
-
   box-shadow: 4px 0 25px rgba(0,0,0,0.1);
 
   /* 🔥 ADD THIS */
