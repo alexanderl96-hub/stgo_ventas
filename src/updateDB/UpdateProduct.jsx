@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-import API_URL from "../../api/api_images";
+import API_URL from "../api/api_images";
 
 import "./updateProduct.css";
 
-export default function UpdateDBProduct() {
+export default function UpdateProduct() {
   const [products, setProducts] = useState([]);
 
   const [selectedProduct, setSelectedProduct] = useState(null);

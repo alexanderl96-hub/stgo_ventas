@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./productDetails.css"
 import { filteringImgColor } from "../utils/filteringImgColor.jsx"
+import { getColorStyle } from "../utils/filterColorSet.jsx";
 import { ShoppingCart, Menu, X, Search, QrCode,
    XCircle, ArrowLeft } from "lucide-react";
 
@@ -340,7 +341,15 @@ export default function ProductDetail({
                             }));
                         }}
                         >
-                        {c.split("_")[0]}
+                        {/* {c.split("_")[0]} */}
+
+                         
+                        <div className="color-details">
+                                <span className="color-dot-details"
+                                    style={{
+                                        background: getColorStyle(c.split("_")[0])
+                                        }} />
+                       </div> 
                         </button>
                     ))}
                     </div>
@@ -506,12 +515,23 @@ export default function ProductDetail({
 
                 <div className="feature-row">
                     <span>Dimenciones</span>
-                    <strong>{product.sizes.map(a => `${a}, `)}</strong>
+                    <strong>{product.sizes.map(a => a).join(", ")}</strong>
                 </div>
 
                 <div className="feature-row">
                     <span>Colores</span>
-                    <strong>{product.colors.map(a => `${a}, `)}</strong>
+                    <div className="color-details">
+                    {product.colors.map(a => (
+                        <>
+                        <span className="color-dot-details"
+                            style={{
+                                background: getColorStyle(a)
+                                }} />
+                        </>
+                    ))}
+                    </div>
+                    
+                    {/* <strong>{product.colors.map(a => a).join(", ")}</strong> */}
                 </div>
 
                  <div className="feature-row">
@@ -525,11 +545,11 @@ export default function ProductDetail({
                 ref={featuresRef}
                 className="features-section"
                 >
-                <h3>Características</h3>
+                <h2>Características</h2>
 
                 <div className="feature-row-20">
                         {product.
-                    caracteristics.map( a => `${a}, `)
+                    caracteristics.map( a => a).join(", ")
                     }
                 </div>
 
@@ -539,7 +559,7 @@ export default function ProductDetail({
                 // ref={featuresRef}
                 className="features-section"
                 >
-                <h3>Materiales</h3>
+                <h2>Materiales</h2>
 
                 <div className="feature-row-20">
                         {product.
@@ -554,11 +574,11 @@ export default function ProductDetail({
                 // ref={recommendationsRef}
                 className="features-section"
                 >
-                <h3>Recomendacion de uso</h3>
+                <h2>Recomendacion de uso</h2>
 
                 <div className="feature-row-20">
                     {product.
-                    recommended.map( a => `${a}. `)}
+                    recommended.map( a => a).join(", ")}
                 </div>
 
             </div>
@@ -574,7 +594,7 @@ export default function ProductDetail({
                 // ref={featuresRef}
                 className="features-section"
                 >
-                <h3>Detalles del Equipo</h3>
+                <h2>Detalles del Equipo</h2>
 
                 <div className="feature-row">
                     <span>Tipo de Bateria</span>
@@ -604,7 +624,7 @@ export default function ProductDetail({
             </div>
 
              <div  className="features-section">
-                    <h4>Dispositivos Compatibles que Puede Alimentar</h4>
+                    <h2>Dispositivos Compatibles que Puede Alimentar</h2>
 
                         {product.battery_details.recommended_devices.map((a, i) => (
                         <div key={i} className="feature-item">

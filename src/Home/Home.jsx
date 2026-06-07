@@ -303,280 +303,259 @@ console.log("filteredProducts", filteredProducts?.length);
             <div className="loader"></div>
           </div>
         ) : (
-           <div className="portal-content">
-    
+        <div className="portal-content">
 
-     <div className="category-scroll">
-        {categoryDB?.map((cat) => (
-          <div
-            key={cat.name}
-            onClick={() => {
-               setSearchTerm(cat.name)
-            } }
-            className={`category-pill ${
-              activeCategory === cat.name ? "active" : ""
-            }`}
-          >
-            {cat.name} 
+          <div className="category-scroll">
+            {categoryDB?.map((cat) => (
+              <div
+                key={cat.name}
+                onClick={() => {
+                    setSearchTerm(cat.name)
+                    setActiveCategory(cat.name)
+                } }
+                className={`category-pill ${
+                  activeCategory === cat.name ? "active" : ""
+                }`}
+              >
+                {cat.name} 
+              </div>
+            ))} 
           </div>
-        ))} 
-      </div>
 
-        
+          {/* 🛍 Products */}
+            <div className="product-grid">
+                {currentItems?.map((p) => {
+                  const discount = getDiscount(p.price, p.original_price);
 
-      {/* 🛍 Products */}
-        <div className="product-grid">
-            {currentItems?.map((p) => {
-              const discount = getDiscount(p.price, p.original_price);
-
-              return (
-                <Link
-                  key={p.id}
-                  to={`/details/${p.id}`}
-                  className="product-link"
-                >
-                  <div className="product-card">
-                    {/* ❤️ Wishlist (prevent navigation) */}
-                    <div
-                      className={`wishlist ${wishlist.includes(p.id) ? "active" : ""}`}
-
-                       onClick={async (e) => {
-
-                        e.preventDefault();
-
-                        toggleWishlist(p.id);
-
-                       await updateWishlist(
-
-                          p.id,
-
-                          p.likes + 1
-                        );
-
-                      }}
+                  return (
+                    <Link
+                      key={p.id}
+                      to={`/details/${p.id}`}
+                      className="product-link"
                     >
-                      {wishlist.includes(p.id) ? "♥" : "♡"}
-                    </div>
+                      <div className="product-card">
+                        {/* ❤️ Wishlist (prevent navigation) */}
+                        <div
+                          className={`wishlist ${wishlist.includes(p.id) ? "active" : ""}`}
 
-                    {/* 🔥 Badge */}
-                    {discount > 0 && <div className="badge">-{discount}%</div>}
+                            onClick={async (e) => {
 
-                    <img src={p.img[0].image_path} alt={p.name} className="product-img" />
+                            e.preventDefault();
 
-                    <div className="product-info">
-                      <h2>{p.name}</h2>
+                            toggleWishlist(p.id);
 
-                      <div className="stars">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <span key={i}>
-                            {i < Math.floor(p.rating) ? "★" : "☆"}
-                          </span>
-                        ))}
-                        <span className="reviews">({p.reviews})</span>
-                      </div>
+                            await updateWishlist(
 
-                      <div className="price-container">
-                        <span className="price">${p.price}</span>
+                              p.id,
 
-                        {Number(p.price) !== Number(p.original_price)&& (
-                          <span className="old-price">${p.original_price}</span>
-                        )}
-                      </div>
-
-                      {/* 🛒 Button (optional navigation override) */}
-                      <button
-                        className="add-btn"
-                        onClick={(e) => {
-                          e.preventDefault(); 
-                           setActiveProduct(p); 
-                        }}
-                      >
-                        Crear Orden
-                      </button>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-
-        
-
-        {activeProduct && (
-        <div className="modal-overlay">
-
-          <div className="modal-box">
-
-            <h2>{activeProduct.name}</h2>
-
-            {/* COLOR */}
-            <div className="section">
-              <p>Color</p>
-              <div className="options">
-                {activeProduct.colors.map((c) => (
-                  <button
-                    key={c}
-                    className={orderConfig.color === c.split("_")[0] ? "active" : ""}
-                    onClick={() =>{
-                      const normalize = str =>
-                              str
-                                ?.normalize("NFD")
-                                .replace(/[\u0300-\u036f]/g, "")
-                                .trim()
-                                .toLowerCase();
-
-                            const categoryActi = categoryDB.find(
-                              a => normalize(a.name) === normalize(activeProduct.category)
+                              p.likes + 1
                             );
 
-                            setOrderConfig((prev) => ({
-                                ...prev,
-                                color: c.split("_")[0],
-                                person_in_charge: categoryActi?.person_in_charge || "",
-                                img: filteringImgColor(activeProduct.img, c.split("_")[0]) || []
-                            }));
+                          }}
+                        >
+                          {wishlist.includes(p.id) ? "♥" : "♡"}
+                        </div>
 
+                        {/* 🔥 Badge */}
+                        {discount > 0 && <div className="badge">-{discount}%</div>}
+
+                        <img src={p.img[0].image_path} alt={p.name} className="product-img" />
+
+                        <div className="product-info">
+                          <h2>{p.name}</h2>
+
+                          <div className="stars">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <span key={i}>
+                                {i < Math.floor(p.rating) ? "★" : "☆"}
+                              </span>
+                            ))}
+                            <span className="reviews">({p.reviews})</span>
+                          </div>
+
+                          <div className="price-container">
+                            <span className="price">${p.price}</span>
+
+                            {Number(p.price) !== Number(p.original_price)&& (
+                              <span className="old-price">${p.original_price}</span>
+                            )}
+                          </div>
+
+                          {/* 🛒 Button (optional navigation override) */}
+                          <button
+                            className="add-btn"
+                            onClick={(e) => {
+                              e.preventDefault(); 
+                                setActiveProduct(p); 
+                            }}
+                          >
+                            Crear Orden
+                          </button>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+
+            
+
+            {activeProduct && (
+            <div className="modal-overlay">
+
+              <div className="modal-box">
+
+                <h2>{activeProduct.name}</h2>
+
+                {/* COLOR */}
+                <div className="section">
+                  <p>Color</p>
+                  <div className="options">
+                    {activeProduct.colors.map((c) => (
+                      <button
+                        key={c}
+                        className={orderConfig.color === c.split("_")[0] ? "active" : ""}
+                        onClick={() =>{
+                          const normalize = str =>
+                                  str
+                                    ?.normalize("NFD")
+                                    .replace(/[\u0300-\u036f]/g, "")
+                                    .trim()
+                                    .toLowerCase();
+
+                                const categoryActi = categoryDB.find(
+                                  a => normalize(a.name) === normalize(activeProduct.category)
+                                );
+
+                                setOrderConfig((prev) => ({
+                                    ...prev,
+                                    color: c.split("_")[0],
+                                    person_in_charge: categoryActi?.person_in_charge || "",
+                                    img: filteringImgColor(activeProduct.img, c.split("_")[0]) || []
+                                }));
+
+                        }}
+                      >
+                        {c.split("_")[0]}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* SIZE */}
+                {activeProduct.sizes.length > 0 &&
+                <div className="section">
+                  <p>Talla</p>
+                  <div className="options">
+                    {activeProduct.sizes.map((s) => (
+                      <button
+                        key={s}
+                        className={orderConfig.size === s ? "active" : ""}
+                        onClick={() =>
+                          setOrderConfig((prev) => ({ ...prev, size: s }))
+                        }
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                  } 
+
+                {/* GENERO */}
+                <div className="section">
+                  <p>Genero</p>
+                  <div className="options">
+                    {activeProduct.gender.split(" ").map((g) => (
+                      <button
+                        key={g}
+                        className={orderConfig.gender === g ? "active" : ""}
+                        onClick={() =>
+                          setOrderConfig((prev) => ({ ...prev, gender: g }))
+                        }
+                      >
+                        {g}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* ACTIONS */}
+                <div className="modal-actions">
+
+                  <button
+                    className="confirm"
+                    disabled={
+                      !orderConfig.color ||
+                      !orderConfig.size ||
+                      !orderConfig.gender ||
+                      !orderConfig.img.length
+                    
+                    }
+                    onClick={() => {
+                      const newOrder = {
+                        id: Date.now(),
+                        ...activeProduct,
+                        
+                        colors: orderConfig.color,
+                        sizes: orderConfig.size,
+                        gender: orderConfig.gender,
+                        person_in_charge: orderConfig.person_in_charge,
+                        img: orderConfig.img,
+
+                        status: "create",
+                        date: new Date().toLocaleDateString()
+                      };
+
+                      setCart((prev) => [...prev, newOrder]);
+
+                      setActiveProduct(null);
+                      setOrderConfig({ color: "", size: "", gender: "", person_in_charge: "", img: [] });
+
+                        // ✅ show success message
+                        setOrderSuccess(true);
+
+                        // auto hide after 3 seconds
+                        setTimeout(() => setOrderSuccess(false), 3000);
                     }}
                   >
-                    {c.split("_")[0]}
+                    Confirmar
                   </button>
-                ))}
-              </div>
-            </div>
 
-            {/* SIZE */}
-            {activeProduct.sizes.length > 0 &&
-            <div className="section">
-              <p>Talla</p>
-              <div className="options">
-                {activeProduct.sizes.map((s) => (
                   <button
-                    key={s}
-                    className={orderConfig.size === s ? "active" : ""}
-                    onClick={() =>
-                      setOrderConfig((prev) => ({ ...prev, size: s }))
-                    }
+                    className="cancel"
+                    onClick={() => {
+                      setActiveProduct(null);
+                      setOrderConfig({ color: "", size: "", gender: "", person_in_charge: "", img: [] });
+                    }}
                   >
-                    {s}
+                    Cancelar
                   </button>
-                ))}
+
+                </div>
+
               </div>
             </div>
-              } 
+                  )}
 
-            {/* GENERO */}
-            <div className="section">
-              <p>Genero</p>
-              <div className="options">
-                {activeProduct.gender.split(" ").map((g) => (
-                  <button
-                    key={g}
-                    className={orderConfig.gender === g ? "active" : ""}
-                    onClick={() =>
-                      setOrderConfig((prev) => ({ ...prev, gender: g }))
-                    }
-                  >
-                    {g}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* ACTIONS */}
-            <div className="modal-actions">
-
-              <button
-                className="confirm"
-                disabled={
-                  !orderConfig.color ||
-                  !orderConfig.size ||
-                  !orderConfig.gender ||
-                  !orderConfig.img.length
-                
-                }
-                onClick={() => {
-                  const newOrder = {
-                    id: Date.now(),
-                    ...activeProduct,
-                    
-                    colors: orderConfig.color,
-                    sizes: orderConfig.size,
-                    gender: orderConfig.gender,
-                    person_in_charge: orderConfig.person_in_charge,
-                    img: orderConfig.img,
-
-                    status: "create",
-                    date: new Date().toLocaleDateString()
-                  };
-
-                  setCart((prev) => [...prev, newOrder]);
-
-                  setActiveProduct(null);
-                  setOrderConfig({ color: "", size: "", gender: "", person_in_charge: "", img: [] });
-
-                    // ✅ show success message
-                    setOrderSuccess(true);
-
-                    // auto hide after 3 seconds
-                    setTimeout(() => setOrderSuccess(false), 3000);
-                }}
-              >
-                Confirmar
-              </button>
-
-              <button
-                className="cancel"
-                onClick={() => {
-                  setActiveProduct(null);
-                  setOrderConfig({ color: "", size: "", gender: "", person_in_charge: "", img: [] });
-                }}
-              >
-                Cancelar
-              </button>
-
-            </div>
-
-          </div>
-        </div>
+            {orderSuccess && (
+                <div className="success-toast">
+                  ✅ Orden Creada
+                </div>
               )}
 
-        {orderSuccess && (
-            <div className="success-toast">
-              ✅ Orden Creada
-            </div>
-          )}
-
-       {/* 🔽 Pagination Container
-        <div className="pagination-container">
-
-          <div className="pagination-info">
-            Page {currentPage} of {totalPages}
-          </div>
-
-          <div className="pagination-dots">
-            {Array.from({ length: totalPages }).map((_, i) => (
-              <div
-                key={i}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`dot ${currentPage === i + 1 ? "active" : ""}`}
-              />
-            ))}
-          </div>
+              {visibleCount < filteredProducts?.length && (
+                  <div className="load-more-container">
+                    <button
+                      className="load-more-btn"
+                      onClick={() => setVisibleCount(prev => prev + 20)}
+                    >
+                      Cargar Más
+                    </button>
+                  </div>
+                )}
 
         </div>
- */}.    {visibleCount < filteredProducts?.length && (
-              <div className="load-more-container">
-                <button
-                  className="load-more-btn"
-                  onClick={() => setVisibleCount(prev => prev + 20)}
-                >
-                  Cargar Más
-                </button>
-              </div>
-            )}
-
-
-           </div>
         )}
     </div>
   );
