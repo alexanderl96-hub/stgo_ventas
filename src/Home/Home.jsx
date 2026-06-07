@@ -5,6 +5,7 @@ import { ShoppingCart, Menu, X, Search, QrCode,
    XCircle, } from "lucide-react";
 
 import { calculateOrderPricing } from "../utils/pricing";
+import { getColorStyle } from "../utils/filterColorSet.jsx";
 import API_URL from "../api/api_images";
 
 import {
@@ -436,7 +437,13 @@ console.log("filteredProducts", filteredProducts?.length);
 
                         }}
                       >
-                        {c.split("_")[0]}
+                        {/* {c.split("_")[0]} */}
+                           <div className="color-details">
+                                  <span className="color-dot-details"
+                                      style={{
+                                          background: getColorStyle(c.split("_")[0])
+                                          }} />
+                          </div> 
                       </button>
                     ))}
                   </div>
