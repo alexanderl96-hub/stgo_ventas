@@ -16,7 +16,7 @@ import QrOrderPage from "./QRCodeOrder/QrOrderPage";
 import CheckoutGuess from "./CheckoutGuess/PyamentSelectorGuess";
 
 // import UpdateProduct from "./updateDB/Update/UpdateDBProduct";
-import UpdateDBProduct from "./updateDB/Update/UpdateDBProduct.jsx";
+import UpdateDBProduct from "./updateDB/UpdateProduct.jsx";
 import CreateProduct from "./updateDB/NewProduct.jsx";
 import { Product } from "./Product/Product.jsx";
 
