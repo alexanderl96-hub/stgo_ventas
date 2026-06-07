@@ -21,10 +21,11 @@ export default function ProductDetail({
 
     const navigate = useNavigate();
     const [showTabs, setShowTabs] = useState(false);
-    const [activeSection, setActiveSection] = useState("overview");
+    const [activeSection, setActiveSection] = useState("generales");
 
     const overviewRef = useRef(null);
     const featuresRef = useRef(null);
+    
 
 
   const [currentImg, setCurrentImg] = useState(0);
@@ -69,7 +70,7 @@ export default function ProductDetail({
     if (featuresTop <= 120) {
       setActiveSection("features");
     } else {
-      setActiveSection("overview");
+      setActiveSection("generales");
     }
   };
 
@@ -78,6 +79,13 @@ export default function ProductDetail({
   return () =>
     window.removeEventListener("scroll", handleScroll);
 }, []);
+
+ useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   // 🔥 Replace with real data later
   const product = productsDB?.find(p => p.id === id);
@@ -130,7 +138,7 @@ export default function ProductDetail({
 
                 <div
                 className={
-                    activeSection === "overview"
+                    activeSection === "generales"
                     ? "tab active"
                     : "tab"
                 }
@@ -140,7 +148,7 @@ export default function ProductDetail({
                     })
                 }
                 >
-                Overview
+                Generales
                 </div>
 
                 <div
@@ -464,50 +472,163 @@ export default function ProductDetail({
              {product.description}
             </p>
 
-            {/* <button className="buy-btn"
-                   onClick={(e) => {
-                         e.preventDefault();  //🔥 prevents link navigation
-                           setActiveProduct(product); 
-                        }}>Crear Orden</button> */}
         </div>
 
+        {/* Generales */}
+
         <div
-            ref={featuresRef}
-            className="features-section"
-            >
-            <h3>Características</h3>
+                className="features-section"
+                >
+                <div className="feature-row">
+                    <span>Marca</span>
+                    <strong>{product.brand}</strong>
+                </div>
 
-            <div className="feature-row">
-                <span>Marca</span>
-                <strong>{product.brand}</strong>
+                <div className="feature-row">
+                    <span>Categoría</span>
+                    <strong>{product.category}</strong>
+                </div>
+
+                <div className="feature-row">
+                    <span>Sub Categoría</span>
+                    <strong>{product.sub_category}</strong>
+                </div>
+
+                <div className="feature-row">
+                    <span>Modelo</span>
+                    <strong>{product.modelo}</strong>
+                </div>
+
+                <div className="feature-row">
+                    <span>Disponibles</span>
+                    <strong>{product.stock}</strong>
+                </div>
+
+                <div className="feature-row">
+                    <span>Dimenciones</span>
+                    <strong>{product.sizes.map(a => `${a}, `)}</strong>
+                </div>
+
+                <div className="feature-row">
+                    <span>Colores</span>
+                    <strong>{product.colors.map(a => `${a}, `)}</strong>
+                </div>
+
+                 <div className="feature-row">
+                    <span>Edades</span>
+                    <strong>{product.age_group}</strong>
+                </div>
             </div>
 
-            <div className="feature-row">
-                <span>Categoría</span>
-                <strong>{product.category}</strong>
+        {/* Características */}
+         <div
+                ref={featuresRef}
+                className="features-section"
+                >
+                <h3>Características</h3>
+
+                <div className="feature-row-20">
+                        {product.
+                    caracteristics.map( a => `${a}, `)
+                    }
+                </div>
+
             </div>
 
-            <div className="feature-row">
-                <span>Sub Categoría</span>
-                <strong>{product.sub_category}</strong>
+             <div
+                ref={featuresRef}
+                className="features-section"
+                >
+                <h3>Materiales</h3>
+
+                <div className="feature-row-20">
+                        {product.
+                    material
+                    }
+                </div>
+
             </div>
 
-            <div className="feature-row">
-                <span>Stock</span>
-                <strong>{product.stock}</strong>
+        {/* Recomendaciones de uso */}
+         <div
+                // ref={recommendationsRef}
+                className="features-section"
+                >
+                <h3>Recomendacion de uso</h3>
+
+                <div className="feature-row-20">
+                    {product.
+                    recommended.map( a => `${a}. `)}
+                </div>
+
             </div>
 
-            <div className="feature-row">
-                <span>Rating</span>
-                <strong>{product.rating}</strong>
+            {(product.category === "Equipos" 
+            || product.category === "Electrodomésticos" 
+            || product.category === "Electrónicos" ) && (<>
+
+        {/* Detailes del equipo */}
+         {/* Recomendaciones de uso */}
+
+         <div
+                // ref={featuresRef}
+                className="features-section"
+                >
+                <h3>Detalles del Equipo</h3>
+
+                <div className="feature-row">
+                    <span>Tipo de Bateria</span>
+                    <strong>{product.battery_details.battery_type}</strong>
+                </div>
+
+                <div className="feature-row">
+                    <span>Capacidad</span>
+                    <strong>{product.battery_details.capacity}</strong>
+                </div>
+
+                <div className="feature-row">
+                    <span>Carga Rapida</span>
+                    <strong>{product.battery_details.fast_charge}</strong>
+                </div>
+
+                <div className="feature-row">
+                    <span>Potencia de Salida</span>
+                    <strong>{product.battery_details.ac_output}</strong>
+                </div>
+
+                <div className="feature-row">
+                    <span>Conexion a Panel Solar</span>
+                    <strong>{product.battery_details.solar_compatible ? "Si" : "No"}</strong>
+                </div>
+
             </div>
 
-                                   <button className="buy-btn"
-                   onClick={(e) => {
-                         e.preventDefault();  //🔥 prevents link navigation
-                           setActiveProduct(product); 
-                        }}>Crear Orden</button>
+             <div  className="features-section">
+                    <h4>Dispositivos Compatibles que Puede Alimentar</h4>
+
+                        {product.battery_details.recommended_devices.map((a, i) => (
+                        <div key={i} className="feature-item">
+                            ✥ {a}
+                        </div>
+                        ))}
             </div>
+              
+
+                </>)  }
+
+            <div
+                // ref={featuresRef}
+                className="features-section"
+                >
+                                 <button className="buy-btn"
+                    style={{marginBottom: "50px"}}
+                    onClick={(e) => {
+                            e.preventDefault();  //🔥 prevents link navigation
+                            setActiveProduct(product); 
+                            }}>
+                                Crear Orden
+                </button>
+                </div>
 
 
 

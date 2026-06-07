@@ -16,7 +16,7 @@ export default function Login({ onAuth }) {
 
     try {
       // 🔐 1. TRY USER LOGIN
-      let res = await fetch(`${API_URL}/api/auth/login`, {
+      let res = await fetch(`${API_URL}/api/customers/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -73,7 +73,7 @@ export default function Login({ onAuth }) {
 
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Correo"
           onChange={(e) =>
             setForm({ ...form, email: e.target.value })
           }
@@ -81,7 +81,7 @@ export default function Login({ onAuth }) {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Contraseña"
           onChange={(e) =>
             setForm({ ...form, password: e.target.value })
           }

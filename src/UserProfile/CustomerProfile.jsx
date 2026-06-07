@@ -382,8 +382,9 @@ const CustomerProfile = ({ user, customers, setCustomers, logout }) => {
         <div className="profile-row">
           <span>Creada</span>
           <strong>
-            {user?.userCreate
-              ? new Date(user?.userCreate).toLocaleDateString()
+            {user?.user_create
+
+              ? new Date(user?.user_create).toLocaleDateString()
               : ""}
           </strong>
         </div>
@@ -464,13 +465,6 @@ const CustomerProfile = ({ user, customers, setCustomers, logout }) => {
           ))
         )}
       </div>
-
-      <button
-          className="logout-btn"
-          onClick={logout}
-        >
-          Cerrar Sesión
-        </button>
 
     </div>
   );

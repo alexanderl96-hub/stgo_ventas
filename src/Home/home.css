@@ -58,7 +58,7 @@
 .portal-top {
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 900;
   transition: all .3s ease;
 }
 
@@ -169,6 +169,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  /* color: #000; */
 }
 
 /* BUTTON OPTIONS */
@@ -199,6 +200,7 @@
   padding: 10px;
   border-radius: 6px;
   cursor: pointer;
+  color: #000;
 }
 
 .confirm:disabled {
@@ -348,7 +350,7 @@
   width: 75%;
 
   background: white;
-  z-index: 100;
+  z-index: 910;
 
   transform: translateX(0);
   transition: transform 0.3s ease;

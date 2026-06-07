@@ -1,7 +1,7 @@
 import API_URL from "./api_images";
 
 export const registerUser = async (data) => {
-  const res = await fetch(`${API_URL}/api/auth/register`, {
+  const res = await fetch(`${API_URL}/api/customers/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./adminStore.css"
 import { QrCode } from "lucide-react";
 import QRCode from "react-qr-code";
 
 
-const AdminStore = ({user, customers, setCustomers }) => {
+const AdminStore = ({user, customers, setCustomers, logout }) => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [expandedCustomerId, setExpandedCustomerId] = useState(null);
@@ -81,19 +83,19 @@ const AdminStore = ({user, customers, setCustomers }) => {
     };
 
 
-useEffect(() => {
-  const token = localStorage.getItem("token");
+// useEffect(() => {
+//   const token = localStorage.getItem("token");
 
-  fetch("http://localhost:5001/api/admin/dashboard", {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-    .then(res => res.json())
-    .then(data => {
-      setOrders(data.orders);
-    });
-}, []);
+//   fetch("http://localhost:5001/api/admin/dashboard", {
+//     headers: {
+//       Authorization: `Bearer ${token}`
+//     }
+//   })
+//     .then(res => res.json())
+//     .then(data => {
+//       setOrders(data.orders);
+//     });
+// }, []);
 
 
   return (
@@ -116,6 +118,18 @@ useEffect(() => {
           </div>
         ))}
       </div> */}
+
+        <button
+          className="logout-btn"
+          onClick={() => {
+              logout();
+              navigate("/login");
+            }}
+          // onClick={logout}
+        >
+          Cerrar Sesión
+        </button>
+
 
       {/* ORDERS */}
       <h3>Ordenes</h3>
