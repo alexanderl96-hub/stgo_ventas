@@ -39,7 +39,9 @@ export default function UpdateProduct() {
 
       const data = await response.json();
 
-      setProducts(data.products);
+      console.log(data[0])
+      // setProducts(data?.products);
+       setProducts([data[0]]);
     } catch (error) {
       console.log(error);
     }
@@ -89,7 +91,7 @@ export default function UpdateProduct() {
       setLoading(true);
 
       const response = await fetch(
-        `${API_URL}/api/products/${selectedProduct.id}`,
+        `${API_URL}/api/products/${selectedProduct?.id}`,
         {
           method: "PUT",
 
@@ -103,7 +105,7 @@ export default function UpdateProduct() {
 
       const data = await response.json();
 
-      if (data.success) {
+      if (data?.success) {
         setMessage("Product updated successfully");
 
         getProducts();
@@ -119,45 +121,25 @@ export default function UpdateProduct() {
     }
   };
 
+  console.log(products)
+
   return (
     <div className="update-product-page">
       <h1>Update Products</h1>
 
-      <div className="update-layout">
-        {/* PRODUCTS */}
-        <div className="product-list">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className={`product-card ${
-                selectedProduct?.id === product.id ? "active" : ""
-              }`}
-              onClick={() => handleSelectProduct(product)}
-            >
-              <img src={`${API_URL}${product.img?.[0]}`} alt={product.name} />
-
-              <div>
-                <h3>{product.name}</h3>
-
-                <p>${product.price}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* FORM */}
+        {/* FORM Update*/}
         <div className="update-form">
           <input
             type="text"
             name="name"
-            placeholder="Name"
+            placeholder={`Nombre: ${products.map(a => a.name)}`}
             value={formData.name}
             onChange={handleChange}
           />
 
           <textarea
             name="description"
-            placeholder="Description"
+            placeholder={`Description: ${products.map(a => a.description)}`}
             value={formData.description}
             onChange={handleChange}
           />
@@ -165,7 +147,7 @@ export default function UpdateProduct() {
           <input
             type="number"
             name="price"
-            placeholder="Price"
+            placeholder={`Precio: ${products.map(a => a.price)}`}
             value={formData.price}
             onChange={handleChange}
           />
@@ -173,7 +155,7 @@ export default function UpdateProduct() {
           <input
             type="number"
             name="original_price"
-            placeholder="Original Price"
+            placeholder={`Precio Original: ${products.map(a => a.original_price)}`}
             value={formData.original_price}
             onChange={handleChange}
           />
@@ -181,7 +163,7 @@ export default function UpdateProduct() {
           <input
             type="number"
             name="discount"
-            placeholder="Discount"
+            placeholder={`Descuento: ${products.map(a => a.discount)}`}
             value={formData.discount}
             onChange={handleChange}
           />
@@ -189,7 +171,7 @@ export default function UpdateProduct() {
           <input
             type="number"
             name="stock"
-            placeholder="Stock"
+            placeholder={`Almacen: ${products.map(a => a.stock)}`}
             value={formData.stock}
             onChange={handleChange}
           />
@@ -197,7 +179,7 @@ export default function UpdateProduct() {
           <input
             type="text"
             name="category"
-            placeholder="Category"
+            placeholder={`Categoria: ${products.map(a => a.category)}`}
             value={formData.category}
             onChange={handleChange}
           />
@@ -205,7 +187,7 @@ export default function UpdateProduct() {
           <input
             type="text"
             name="sub_category"
-            placeholder="Sub Category"
+            placeholder={`Sub Categoria: ${products.map(a => a.sub_category)}`}
             value={formData.sub_category}
             onChange={handleChange}
           />
@@ -213,7 +195,7 @@ export default function UpdateProduct() {
           <input
             type="text"
             name="brand"
-            placeholder="Brand"
+            placeholder={`Marca: ${products.map(a => a.brand)}`}
             value={formData.brand}
             onChange={handleChange}
           />
@@ -221,7 +203,7 @@ export default function UpdateProduct() {
           <input
             type="text"
             name="gender"
-            placeholder="Gender"
+            placeholder={`Genero: ${products.map(a => a.gender)}`}
             value={formData.gender}
             onChange={handleChange}
           />
@@ -229,7 +211,7 @@ export default function UpdateProduct() {
           <input
             type="text"
             name="age_group"
-            placeholder="Age Group"
+            placeholder={`Edad de grupo: ${products.map(a => a.age_group)}`}
             value={formData.age_group}
             onChange={handleChange}
           />
@@ -237,7 +219,7 @@ export default function UpdateProduct() {
           <input
             type="text"
             name="material"
-            placeholder="Material"
+            placeholder={`Materiales: ${products.map(a => a.material)}`}
             value={formData.material}
             onChange={handleChange}
           />
@@ -258,7 +240,6 @@ export default function UpdateProduct() {
 
           {message && <p className="message">{message}</p>}
         </div>
-      </div>
     </div>
   );
 }
