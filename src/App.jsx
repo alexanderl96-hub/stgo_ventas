@@ -16,7 +16,7 @@ import QrOrderPage from "./QRCodeOrder/QrOrderPage";
 import CheckoutGuess from "./CheckoutGuess/PyamentSelectorGuess";
 
 // import UpdateProduct from "./updateDB/Update/UpdateDBProduct";
-// import UpdateDBProduct from "./updateDB/Update/UpdateDBProduct.jsx";
+import UpdateDBProduct from "./updateDB/Update/UpdateDBProduct.jsx";
 import CreateProduct from "./updateDB/NewProduct.jsx";
 import { Product } from "./Product/Product.jsx";
 
@@ -322,7 +322,7 @@ function App() {
 
         <Route path="/order/:orderId" element={<QrOrderPage />} />
         <Route path="/product/:orderId" element={<QrOrderPage />} />
-        {/* <Route path="/update-products" element={<UpdateDBProduct />} /> */}
+        <Route path="/update-products" element={<UpdateDBProduct />} />
         <Route path="/create-product" 
                element={
                   <CreateProduct  
