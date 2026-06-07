@@ -15,8 +15,9 @@ import AdminLogin from "./Admin/AdminLogin";
 import QrOrderPage from "./QRCodeOrder/QrOrderPage";
 import CheckoutGuess from "./CheckoutGuess/PyamentSelectorGuess";
 
-import UpdateProduct from "./updateDB/Update/UpdateDBProduct.jsx";
-import CreateProduct from "./updateDB/NewProduct.jsx";
+// import UpdateProduct from "./updateDB/Update/UpdateDBProduct";
+import UpdateDBProduct from "./updateDB/Update/UpdateDBProduct";
+import CreateProduct from "./updateDB/NewProduct";
 import { Product } from "./Product/Product.jsx";
 
 function App() {
