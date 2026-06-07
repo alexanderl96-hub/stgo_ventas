@@ -321,7 +321,7 @@ function App() {
 
         <Route path="/order/:orderId" element={<QrOrderPage />} />
         <Route path="/product/:orderId" element={<QrOrderPage />} />
-        {/* <Route path="/update-products" element={<UpdateProduct />} /> */}
+        <Route path="/update-products" element={<UpdateProduct />} />
         <Route path="/create-product" 
                element={
                   <CreateProduct  
