@@ -105,7 +105,7 @@
 .main_subContainer_Portal{
   background: rgba(255, 255, 255, 0.435);
   border-radius: 20px;
-  padding: 4px 15px;
+  padding: 1px 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -708,6 +708,7 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  margin-left: -7px;
 }
 
 .logo-speed span{
@@ -737,10 +738,11 @@
   display: flex;
   align-items: center;
   gap: 3px;
+  margin-left: -7px;
 }
 
 .logo-cart{
-  height: 45px;
+  height: 50px;
   width: auto;
 }
 
