@@ -337,7 +337,6 @@ function App() {
           element={<AdminLogin onAuth={handleAuth} />}
         />
 
-        <Route path="/zzzz-test-route" element={<h1>WORKS</h1>} />
       </Routes>
       <Footer
         cart={cart}
