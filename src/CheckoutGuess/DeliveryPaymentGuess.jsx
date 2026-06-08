@@ -26,6 +26,7 @@ export default function DeliveryPaymentGuess ({
   const [fullName, setFullname] = useState("")
   const [step, setStep] = useState("idle");
   const [moneyType, setMoneyType] = useState("cup")
+  const [sellOrder, setSellOrder] = useState([])
 
   const person = amountOrder.map(a => a.person_in_charge)?.[0] || "";
 
@@ -181,6 +182,8 @@ export default function DeliveryPaymentGuess ({
     // -----------------------------
     const saveOrder = (order) => {
        const email = user?.email || `guest_${Date.now()}@local`;
+
+       console.log("email", email)
   
       setCustomers(prev => {
     
@@ -224,6 +227,8 @@ export default function DeliveryPaymentGuess ({
               sellerCash
             };
           }
+
+          console.log("customer", customer);
     
           return customer;
         });
@@ -249,10 +254,14 @@ export default function DeliveryPaymentGuess ({
             }
           ];
         }
+
+        console.log(updated)
     
         return updated;
       });
     };
+
+    console.log("customer out", customers)
 
   const handleConfirmInformation = () => {
     if (!fullName || !address || phone.length !== 8) return;
@@ -263,6 +272,7 @@ export default function DeliveryPaymentGuess ({
         saveOrder(newOrder);
 
         console.log("newOrder", newOrder)
+        setSellOrder(newOrder);
 
         if(formatPay === "Zelle"){
             setMoneyType("usd")
@@ -335,7 +345,8 @@ const filterAdmin2 = administratorDB.filter(
 
 
 const revenuesPayTotal = customers.flatMap(
-  c => (c.order || []).map(o => o.revenew_total)
+  c => (c.order || []).map(o => o.revenewTotal
+)
 )[0];
 
 const revenuesPayFormat = customers.flatMap(
@@ -343,12 +354,25 @@ const revenuesPayFormat = customers.flatMap(
 )[0];
 
 const revenuesSeller = customers.flatMap(
-  c => (c.order || []).map(o => o.seller_cash)
+  c => (c.order || []).map(o => o.sellerCash)
 )[0];
 
 const revenuesTienda = customers.flatMap(
   c => (c.order || []).map(o => o.tienda)
 )[0];
+
+  const revenuesOrder = customers?.flatMap(
+    c => (c.order || []).map(o => o.orders)
+  )[0]
+
+
+console.log("revenue Order", revenuesOrder)
+
+
+console.log("revenuesPayTotal", revenuesPayTotal);
+console.log("revenuesSeller", revenuesSeller);
+console.log("revenuesSeller", revenuesSeller);
+
 
 
 
@@ -448,6 +472,7 @@ const revenuesTienda = customers.flatMap(
                formatPay={formatPay}
                setMoneyType={setMoneyType}
                moneyType={moneyType}
+               revenuesOrder={revenuesOrder}
              
              />
 

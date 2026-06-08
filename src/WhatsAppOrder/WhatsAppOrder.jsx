@@ -23,7 +23,8 @@ export default function WhatsAppOrder({
   revenuesTienda,
   formatPay,
   setMoneyType,
-  moneyType
+  moneyType,
+  revenuesOrder
 }) {
   const {administrator, dataColors} = useDataProducts()
   const navigate = useNavigate();
@@ -37,6 +38,12 @@ export default function WhatsAppOrder({
   const ordersUser = customers?.flatMap(
     c => (c.order || []).map(o => o.orders)
   )[0]
+
+  //   const ordersUser = sellOrder?.flatMap(
+  //   c => (c.order || []).map(o => o.orders)
+  // )[0]
+
+  
 
 
 
@@ -68,7 +75,7 @@ export default function WhatsAppOrder({
   //   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(orderLink)}`;
 
 
-    let productsText = ordersUser?.map((item, index) => {
+    let productsText = revenuesOrder.map((item, index) => {
       return `Product: *${item.name}*
           Talla:     ${item.sizes || "N/A"}
           Color:     ${[item.colors][0]}
@@ -153,3 +160,9 @@ export default function WhatsAppOrder({
     </>
   );
 }
+
+//  <img
+//                   src="${item.img?.[0]?.image_path}"
+//                   width="120"
+//                   alt="${item.name}"
+//                 />
