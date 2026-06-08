@@ -258,7 +258,7 @@ const [message, setMessage] = useState("");
 
         
     
-        {/* {form.phone.length === 8 && (
+        {form.phone.length === 8 && (
           <input
             type="text"
             placeholder="Fecha de Nacimiento (Mes/Dia/Año)"
@@ -271,7 +271,7 @@ const [message, setMessage] = useState("");
               });
             }}
           />
-        )} */}
+        )}
         {/* {form.phone.length === 8 && (
   <BirthdayPicker
     form={form}
@@ -279,7 +279,7 @@ const [message, setMessage] = useState("");
   />
 )} */}
 
-        {form.phone.length === 8 && (
+        {/* {form.phone.length === 8 && (
             <DatePicker
               selected={
                 form.birthday
@@ -299,7 +299,7 @@ const [message, setMessage] = useState("");
               placeholderText="Fecha de Nacimiento"
               dateFormat="MM/dd/yyyy"
             />
-            )}
+            )} */}
  
           {form.birthday.length > 10 && (
             <input

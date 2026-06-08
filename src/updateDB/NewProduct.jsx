@@ -271,21 +271,21 @@ export default function NewProduct({categoryDB}) {
     }
   }, [formData.dollar_price, formData.current_dollar_price]);
 
-useEffect(() => {
-  if (categoryDB?.length > 0) {
-    setCategorias(categoryDB.map(a => a.name))
-    
-  }
-}, [categoryDB]);
+  useEffect(() => {
+    if (categoryDB?.length > 0) {
+      setCategorias(categoryDB.map(a => a.name))
+      
+    }
+  }, [categoryDB]);
 
-useEffect(() => {
-  if (formData.category !== "") {
-    setSub_Categorias(categoryDB.filter(a => a.name === formData.category)
-                          .map(a => a.sub_category)[0])
-  }
-}, [formData.category]);
-  // console.log("categorias", categorias )
-  // console.log("categoryDB", categoryDB )
+  useEffect(() => {
+    if (formData.category !== "") {
+      setSub_Categorias(categoryDB.filter(a => a.name === formData.category)
+                            .map(a => a.sub_category)[0])
+    }
+  }, [formData.category]);
+    // console.log("categorias", categorias )
+    // console.log("categoryDB", categoryDB )
 
   return (
     <div className="create-product-page">

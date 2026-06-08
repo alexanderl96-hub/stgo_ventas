@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../Checkout/paymentSelector.css";
 import InPersonPaymentGuess from "./InpersonPaymentGuess";
 import DeliveryPaymentGuess from "./DeliveryPaymentGuess";
+import "./inPersonGuess.css"
+
 
 export default function PaymentSelectorGuess({
   user,
@@ -17,6 +19,34 @@ export default function PaymentSelectorGuess({
   const [method, setMethod] = useState(null);
   const [formatPay, setFormatPay] = useState(null)
   const [selectPay, setSelectPay] = useState(null)
+  const [permision, setPermision] = useState(0)
+  const [checkAmount, setCheckAmount] = useState([])
+
+
+  useEffect(()=>{
+      setCheckAmount(amountOrder)
+  }, [amountOrder])
+
+  const zellePermitions = checkAmount.map(item => ({
+        price: (Number(item.price) * item.qty) || 0,
+        dollar_price: (Number(item.dollar_price) * item.qty) || 0,
+        current_dollar_price: item.current_dollar_price || 0,
+        qty: item.qty
+        })) 
+
+  const usdTotal = zellePermitions.reduce(
+        (sum, a) => sum + (Number(a.price) || 0),
+        0
+    );
+  
+  // const dollar = zellePermitions.reduce(
+  //       (sum, a) => sum + (Number(a.current_dollar_price) || 0),
+  //       0
+  //   )
+  const dollar = Number(zellePermitions.map(a => a.current_dollar_price)[0])
+  
+  const zelleBlocked =
+  formatPay === "Zelle" && Number(permision) < 50;
 
   return (
     <div className="checkout">
@@ -58,6 +88,7 @@ export default function PaymentSelectorGuess({
                 <button onClick={() => {
                 setFormatPay("Zelle");
                 setSelectPay("Zelle");
+                setPermision(usdTotal / dollar)
                 }}>
                 Zelle
                 </button>
@@ -72,11 +103,12 @@ export default function PaymentSelectorGuess({
 
         </div>
         )}
-            
-    
+
+
+
 
       {/* 👇 ONLY UI COMPONENTS */}
-      {(method === "En person" && formatPay !== null ) &&  (
+      {/* {(method === "En person" && formatPay !== null ) &&  (
         <InPersonPaymentGuess
           user={user}
           cart={cart}
@@ -102,7 +134,41 @@ export default function PaymentSelectorGuess({
           method={method}
           formatPay={formatPay}
         />
-      )}
+      )} */}
+
+      {zelleBlocked && (
+          <div className="zelle-warning">
+            ⚠️ Pago vía Zelle debe ser mayor a $50 USD
+          </div>
+        )}
+
+        {!zelleBlocked && method === "En person" && formatPay !== null && (
+          <InPersonPaymentGuess
+            user={user}
+            cart={cart}
+            setCart={setCart}
+            administratorDB={administratorDB}
+            amountOrder={amountOrder}
+            setCustomers={setCustomers}
+            customers={customers}
+            method={method}
+            formatPay={formatPay}
+          />
+        )}
+
+        {!zelleBlocked && method === "Domicilio" && formatPay !== null && (
+          <DeliveryPaymentGuess
+            user={user}
+            cart={cart}
+            setCart={setCart}
+            administratorDB={administratorDB}
+            amountOrder={amountOrder}
+            setCustomers={setCustomers}
+            customers={customers}
+            method={method}
+            formatPay={formatPay}
+          />
+        )}
 
     </div>
   );

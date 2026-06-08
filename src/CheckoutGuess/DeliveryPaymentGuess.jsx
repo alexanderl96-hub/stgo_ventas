@@ -4,6 +4,7 @@ import useDataProducts from "../api/dataProducts";
 import useDataOrders from "../api/useDataOrders";
 import { generateOrderQr } from "../utils/orderQrGenerator";
 import { calculateOrderPricing, calculateOrder } from "../utils/pricing";
+import {modifyOrderPricing, modifySalePrice } from "../utils/newSalePricing";
 import "../Checkout/delivery.css"
 import WhatsAppOrder from "../WhatsAppOrder/WhatsAppOrder";
 
@@ -109,19 +110,39 @@ export default function DeliveryPaymentGuess ({
 // };
   
     const createOrder = () => {
+
+      const ordersCalculation = amountOrder.map(item => ({
+        name: item.name,
+        qty: item.qty || 1,
+        img: item.img || "",
+        price: (Number(item.price) * item.qty) || 0,
+        colors: item.colors || "",
+        sizes: item.sizes || "",
+        dollar_price: (Number(item.dollar_price) * item.qty) || 0,
+        }))
   
-      const usdTotal = amountOrder.reduce(
-          (sum, a) => sum + (a.dollar_Price || 0),
-          0
-      );
+       console.log("ordersCalculation", ordersCalculation)
+
+    console.log("next step",
+
+      ordersCalculation.reduce(
+        (sum, a) => sum + (Number(a.dollar_price) || 0),
+        0
+    ) )
+
+    const usdTotal = ordersCalculation.reduce(
+        (sum, a) => sum + (Number(a.dollar_price) || 0),
+        0
+    );
   
       const exchangeRate = amountOrder[0]?.current_dollar_price ;
   
-      const pricing = calculateOrderPricing({
-          usdPrice: usdTotal,
-          exchangeRate,
-          formatPay
-      });
+
+        const pricing = modifyOrderPricing({
+        usdPrice: usdTotal,
+        exchangeRate,
+        formatPay
+    });
      
 
       return {
@@ -131,15 +152,16 @@ export default function DeliveryPaymentGuess ({
           admInCharge: person,
           gestorSell: "",
   
-          orders: amountOrder.map(item => ({
-          name: item.name,
-          qty: item.qty || 1,
-          img: item.img || "",
-          price: calculateOrder(item.dollar_price, exchangeRate, formatPay)  || 0,
-          colors: item.colors || "",
-          sizes: item.sizes || "",
-          dollar_price: item.dollar_price || 0,
-          })),
+          // orders: amountOrder.map(item => ({
+          // name: item.name,
+          // qty: item.qty || 1,
+          // img: item.img || "",
+          // price: modifySalePrice(calculateOrder(item.dollar_price, exchangeRate, formatPay))  || 0,
+          // colors: item.colors || "",
+          // sizes: item.sizes || "",
+          // dollar_price: item.dollar_price || 0,
+          // })),
+          orders: ordersCalculation,
   
           dollarPrice: usdTotal,
           cupPrice: pricing.cupPrice,
@@ -160,75 +182,77 @@ export default function DeliveryPaymentGuess ({
     const saveOrder = (order) => {
        const email = user?.email || `guest_${Date.now()}@local`;
   
-    setCustomers(prev => {
-  
-      let found = false;
-  
-      const updated = prev.map(customer => {
-  
-        if (customer.email === email) {
-          found = true;
-  
-          const newOrders = [...(customer.order || []), order];
-  
-          const dollarPrice = newOrders.reduce(
-            (sum, o) => sum + (o.dollar_price || 0),
-            0
-          );
-  
-          const cupPrice = newOrders.reduce(
-            (sum, o) => sum + (o.cup_price || 0),
-            0
-          );
-  
-          const revenewTotal = newOrders.reduce(
-            (sum, o) => sum + (o.revenew_total || 0),
-            0
-          );
-  
-          const sellerCash = newOrders.reduce(
-            (sum, o) => sum + (o.seller_cash || 0),
-            0
-          );
-  
-          return {
-            ...customer,
-            order: newOrders,
-            dollarPrice,
-            cupPrice,
-            revenewTotal,
-            sellerCash
-          };
-        }
-  
-        return customer;
-      });
-  
-      // 👻 CREATE GUEST IF NOT FOUND
-      if (!found) {
-        return [
-          ...updated,
-          {
-            customerId: Date.now(),
-            name: fullName,
-            email,
-            phone,
-            password: "",
-            birthday: "",
-            imagen: "",
-            address: address,
-            userCreate: new Date(),
-  
-            order: [order],
-            orderProccess: [],
-            delivered: []
+      setCustomers(prev => {
+    
+        let found = false;
+    
+        const updated = prev.map(customer => {
+    
+          if (customer.email === email) {
+            found = true;
+    
+            const newOrders = [...(customer.order || []), order];
+
+            console.log("newOrders inedes", newOrders)
+    
+            const dollarPrice = newOrders.reduce(
+              (sum, o) => sum + (o.dollar_price || 0),
+              0
+            );
+    
+            const cupPrice = newOrders.reduce(
+              (sum, o) => sum + (o.cup_price || 0),
+              0
+            );
+    
+            const revenewTotal = newOrders.reduce(
+              (sum, o) => sum + (o.revenew_total || 0),
+              0
+            );
+    
+            const sellerCash = newOrders.reduce(
+              (sum, o) => sum + (o.seller_cash || 0),
+              0
+            );
+    
+            return {
+              ...customer,
+              order: newOrders,
+              dollarPrice,
+              cupPrice,
+              revenewTotal,
+              sellerCash
+            };
           }
-        ];
-      }
-  
-      return updated;
-    });
-  };
+    
+          return customer;
+        });
+    
+        // 👻 CREATE GUEST IF NOT FOUND
+        if (!found) {
+          return [
+            ...updated,
+            {
+              customerId: Date.now(),
+              name: fullName,
+              email,
+              phone,
+              password: "",
+              birthday: "",
+              imagen: "",
+              address: address,
+              userCreate: new Date(),
+    
+              order: [order],
+              orderProccess: [],
+              delivered: []
+            }
+          ];
+        }
+    
+        return updated;
+      });
+    };
 
   const handleConfirmInformation = () => {
     if (!fullName || !address || phone.length !== 8) return;
@@ -240,33 +264,32 @@ export default function DeliveryPaymentGuess ({
 
         console.log("newOrder", newOrder)
 
-
         if(formatPay === "Zelle"){
             setMoneyType("usd")
         }
         };
 
-const handleConfirmDelivery = () => {
-  if (!fullName || !address || phone.length !== 8) return;
+  const handleConfirmDelivery = () => {
+    if (!fullName || !address || phone.length !== 8) return;
 
-    
-    // const newOrder = createOrder();
+      
+      // const newOrder = createOrder();
 
-    // saveOrder(newOrder);
+      // saveOrder(newOrder);
 
 
-    setAddress("");
-    setFullname("");
-    setPhone("") 
+      setAddress("");
+      setFullname("");
+      setPhone("") 
 
-    setStep("success");
-    // setCart([]);
+      setStep("success");
+      // setCart([]);
 
-    setTimeout(() => {
-      navigate("/");
-    }, 50000);
+      setTimeout(() => {
+        navigate("/");
+      }, 50000);
 
-    };
+      };
 
     const updateCustomerField = (field, value) => {
         setCustomers(prev =>

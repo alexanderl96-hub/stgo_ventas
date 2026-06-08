@@ -86,7 +86,7 @@ export const calculateOrder = (  usdPrice,
 //   let gananciaTienda = 0;
 
 
-    if (cupPrice > 5000 && formatPay === "Tranferencia") {
+    if (cupPrice > 5000 && formatPay === "Transferencia") {
 
         // ❗ FIX: totalEfectivo should NOT be 10% of totalVenta
         totalEfectivo = Math.round(totalVenta * (1 + feePercent));

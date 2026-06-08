@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import useDataProducts from "../api/dataProducts";
 import useDataOrders from "../api/useDataOrders";
 import { generateOrderQr } from "../utils/orderQrGenerator";
-import { calculateOrderPricing } from "../utils/pricing";
+import { calculateOrderPricing , calculateOrder} from "../utils/pricing";
+import {modifyOrderPricing, modifySalePrice } from "../utils/newSalePricing";
 
 export default function InPersonPaymentGuess({
   user,
@@ -46,18 +47,42 @@ export default function InPersonPaymentGuess({
 
   const createOrder = () => {
 
-    const usdTotal = amountOrder.reduce(
-        (sum, a) => sum + (a.dollar_price || 0),
+    const ordersCalculation = amountOrder.map(item => ({
+        name: item.name,
+        qty: item.qty || 1,
+        img: item.img || "",
+        price: (Number(item.price) * item.qty) || 0,
+        colors: item.colors || "",
+        sizes: item.sizes || "",
+        dollar_price: (Number(item.dollar_price) * item.qty) || 0,
+        }))
+
+    // console.log("ordersCalculation", ordersCalculation)
+
+    // console.log("next step",
+
+    //   ordersCalculation.reduce(
+    //     (sum, a) => sum + (Number(a.dollar_price) || 0),
+    //     0
+    // ) )
+
+    const usdTotal = ordersCalculation.reduce(
+        (sum, a) => sum + (Number(a.dollar_price) || 0),
         0
     );
 
+    console.log("usdTotal", usdTotal)
+    console.log("usdTotal", amountOrder[0]?.current_dollar_price )
+
     const exchangeRate = amountOrder[0]?.current_dollar_price ;
 
-    const pricing = calculateOrderPricing({
+    const pricing = modifyOrderPricing({
         usdPrice: usdTotal,
         exchangeRate,
         formatPay
     });
+
+
 
     return {
         id: Date.now(),
@@ -65,16 +90,7 @@ export default function InPersonPaymentGuess({
         qrcode: "",
         adm_in_charge: person,
         gestor_sell: "",
-
-        orders: amountOrder.map(item => ({
-        name: item.name,
-        qty: item.qty || 1,
-        img: item.img || "",
-        price: item.price || 0,
-        colors: item.colors || "",
-        sizes: item.sizes || "",
-        dollar_price: item.dollar_price || 0,
-        })),
+        orders: ordersCalculation,
 
         dollar_price: usdTotal,
         cup_price: pricing.cupPrice,
@@ -196,6 +212,7 @@ export default function InPersonPaymentGuess({
        a => normalize(a.name) === normalize(person)
     );
 
+    console.log("customers", customers)
 
 
   return (
