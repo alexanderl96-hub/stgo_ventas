@@ -69,8 +69,8 @@
 
 /* Product image */
 .qr-item img {
-  width: 55px;
-  height: 55px;
+  width: 75px;
+  height: 75px;
   object-fit: cover;
 
   border-radius: 10px;

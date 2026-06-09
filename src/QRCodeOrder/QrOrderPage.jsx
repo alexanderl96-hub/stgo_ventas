@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./qr-order.css";
+import API_URL from "../api/api_images";
 
 export default function QrOrderPage() {
   const { orderId } = useParams();
@@ -10,16 +11,21 @@ export default function QrOrderPage() {
 
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/orders/admin")
-      .then(res => res.json())
-      .then(data => {
+  fetch(`${API_URL}/api/guest-orders/${orderId}`)
+    .then(res => res.json())
+    .then(data => {
 
-        const found = data.filter(o => o.qrcode === orderId);
-        setOrder(found);
-        setPaymentProcess(found?.map(a => a.order)[0])
-        setOrderset(found?.map(a => a.order)[0].map(b => b.orders)[0])
-      });
-  }, [orderId]);
+      console.log("data order", data);
+
+      const found = data.order;
+
+      setOrder(found);
+
+      setPaymentProcess(found);
+
+      setOrderset(found.orders);
+    });
+}, [orderId]);
 
 
   if (!order) {
@@ -31,36 +37,39 @@ export default function QrOrderPage() {
       <h2>Order Details</h2>
 
       <div className="qr-order-card">
-        <p><strong>Order ID:</strong> {order.map(a => a.qrcode)}</p>
-        <p><strong>Estado:</strong> {order.map(a => a.order.map(b => b.statusSell))}</p>
-        <p><strong>Customer:</strong> {order.map(a => a.name)}</p>
-        <p><strong>Forma de pago:</strong> {paymentProcess.map(a => a.paymentOption)}</p>
+        <p><strong>Order ID:</strong> {order.id}</p>
+        <p><strong>Estado:</strong> {order.status_sell}</p>
+       {order.guest_name  && 
+         <p><strong>Customer:</strong> {order.guest_name}</p>}
+        <p><strong>Forma de pago:</strong> {paymentProcess.payment_option}</p>
 
         <div className="qr-items">
           {orderset?.map((item, i) => (
             <div className="qr-item" key={i}>
               <img
-                src={`http://localhost:5001${item.img?.[0]}`}
+                src={item.img?.[0]}
                 alt={item.name}
               />
 
               <div className="qr-item-info">
-                <span>{item.name}</span>
-                <span>Qty: {item.qty}</span>
-                <span>${item.price}</span>
+                <span>Nombre: {item.name}</span>
+                <span>Cantidad: {item.qty}</span>
+                <span>Precio: ${item.price}</span>
+                <span>Talla: {item.sizes}</span>
               </div>
             </div>
           ))}
         </div>
 
         <div className="qr-status">
-          {paymentProcess.map(a => a.paymentFormat)}
+          {paymentProcess.payment_format}
         </div>
 
-        <p><strong>Monto:</strong> ${paymentProcess.map(a => a.revenewTotal)} cup</p>
-        <p><strong>Porcentage:</strong> ${paymentProcess.map(a => a.sellerCash)} cup</p>
-        <p><strong>Gestor:</strong> {paymentProcess.map(a => a.gestorSell)}</p>
-        <p><strong>Dependiente:</strong> {paymentProcess.map(a => a.admInCharge)}</p>
+        <p><strong>Monto:</strong> ${paymentProcess.revenew_total} cup</p>
+        <p><strong>Porcentage:</strong> ${paymentProcess.seller_cash} cup</p>
+      {paymentProcess.gestor_sell !== "" && 
+      <p><strong>Gestor de Venta:</strong> {paymentProcess.gestor_sell}</p>}
+        <p><strong>Dependiente:</strong> {paymentProcess.adm_in_charge}</p>
 
       </div>
     </div>

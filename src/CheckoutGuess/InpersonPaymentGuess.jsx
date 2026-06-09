@@ -5,6 +5,8 @@ import useDataOrders from "../api/useDataOrders";
 import { generateOrderQr } from "../utils/orderQrGenerator";
 import { calculateOrderPricing , calculateOrder} from "../utils/pricing";
 import {modifyOrderPricing, modifySalePrice } from "../utils/newSalePricing";
+import { createNewOrderGuest } from "../api/auth"
+import API_URL from "../api/api_images";
 
 export default function InPersonPaymentGuess({
   user,
@@ -21,6 +23,7 @@ export default function InPersonPaymentGuess({
   const navigate = useNavigate();
   const [step, setStep] = useState("idle");
   const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
 
 
   const person = amountOrder.map(a => a.person_in_charge)?.[0] || "";
@@ -82,12 +85,11 @@ export default function InPersonPaymentGuess({
         formatPay
     });
 
-
+    const idQRcode = Date.now();
 
     return {
-        id: Date.now(),
-        // qrcode: generateOrderQr(ordersQR.map(c => c.qrcode)),
-        qrcode: "",
+        id: idQRcode,
+        qrcode: `${API_URL}/#/order/${idQRcode}`,
         adm_in_charge: person,
         gestor_sell: "",
         orders: ordersCalculation,
@@ -184,13 +186,25 @@ export default function InPersonPaymentGuess({
   // -----------------------------
   // 🚀 FINAL CONFIRMATION
   // -----------------------------
-  const handleSend = () => {
+  const handleSend = async () => {
 
     if (!phone || phone.length !== 8) return;
 
     const newOrder = createOrder();
 
     saveOrder(newOrder);
+
+    const data = await createNewOrderGuest(newOrder);
+
+       if (data.success) {
+        setMessage("Product created successfully");
+
+
+      } else {
+        setMessage(data.message || data.error);
+      }
+
+      console.log("message", message)
 
 
     setStep("success");

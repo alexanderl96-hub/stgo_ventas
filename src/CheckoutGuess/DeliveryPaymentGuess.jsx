@@ -7,6 +7,7 @@ import { calculateOrderPricing, calculateOrder } from "../utils/pricing";
 import {modifyOrderPricing, modifySalePrice } from "../utils/newSalePricing";
 import "../Checkout/delivery.css"
 import WhatsAppOrder from "../WhatsAppOrder/WhatsAppOrder";
+import API_URL from "../api/api_images";
 
 export default function DeliveryPaymentGuess ({ 
     user,
@@ -145,25 +146,14 @@ export default function DeliveryPaymentGuess ({
         formatPay
     });
      
+      const idQRcode = Date.now();
 
       return {
-          id: Date.now(),
-          // qrcode: generateOrderQr(ordersQR.map(c => c.qrcode)),
-          qrcode: "",
+          id: idQRcode,
+          qrcode: `${API_URL}/#/order/${idQRcode}`,
           admInCharge: person,
           gestorSell: "",
-  
-          // orders: amountOrder.map(item => ({
-          // name: item.name,
-          // qty: item.qty || 1,
-          // img: item.img || "",
-          // price: modifySalePrice(calculateOrder(item.dollar_price, exchangeRate, formatPay))  || 0,
-          // colors: item.colors || "",
-          // sizes: item.sizes || "",
-          // dollar_price: item.dollar_price || 0,
-          // })),
           orders: ordersCalculation,
-  
           dollarPrice: usdTotal,
           cupPrice: pricing.cupPrice,
           revenewTotal: pricing.totalEfectivo ,

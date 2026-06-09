@@ -66,9 +66,6 @@ export default function useDataProducts() {
     fetch(`${API_URL}/api/colors`)
       .then(res => res.json())
       .then(data => {
-
-        console.log("data colors", data)
-
           setDataColorsDB(data)
 
       });

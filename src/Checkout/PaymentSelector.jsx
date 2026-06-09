@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./paymentSelector.css";
 import InPersonPayment from "./InPersonPayment";
 import DeliveryPayment from "./DeliveryPayment";
@@ -22,94 +22,34 @@ export default function PaymentSelector({
   const [method, setMethod] = useState(null);
   const [formatPay, setFormatPay] = useState(null)
   const [selectPay, setSelectPay] = useState(null)
+  const [permision, setPermision] = useState(0)
+  const [checkAmount, setCheckAmount] = useState([])
 
-  const person = amountOrder.map(a => a.personInCharge)?.[0] || "";
+    useEffect(()=>{
+      setCheckAmount(amountOrder)
+  }, [amountOrder])
 
-  // -----------------------------
-  // 🧠 CREATE ORDER OBJECT
-  // -----------------------------
-  // const createOrderObject = () => {
-  //   return {
-  //     id: Date.now(),
-  //     qrcode: "",
-  //     admInCharge: person,
-  //     gestorSell: "",
-  //     orders: (amountOrder || []).map(item => ({
-  //       name: item.name,
-  //       qty: item.qty || 1,
-  //       img: item.img || "",
-  //       price: item.price || 0,
-  //       color: item.color || ""
-  //     })),
-  //     dollarPrice: 0,
-  //     cupPrice: 0,
-  //     revenewTotal: 0,
-  //     sellerCash: 0,
-  //     date: new Date(),
-  //     paymentFormat: "Pending",
-  //     paymentOption: method === "inperson" ? "En Persona" : "Domicilio",
-  //     statusSell: "Pending"
-  //   };
-  // };
 
-  // -----------------------------
-  // 🧠 UPDATE CUSTOMER OR GUEST
-  // -----------------------------
-  // const saveOrder = (order) => {
-  //   const email = user?.email;
+  const zellePermitions = checkAmount.map(item => ({
+        price: (Number(item.price) * item.qty) || 0,
+        dollar_price: (Number(item.dollar_price) * item.qty) || 0,
+        current_dollar_price: item.current_dollar_price || 0,
+        qty: item.qty
+        })) 
 
-  //   // 👤 CASE 1: REAL USER EXISTS
-  //   if (email) {
-  //     setCustomers(prev => {
-  //       let found = false;
+  const usdTotal = zellePermitions.reduce(
+        (sum, a) => sum + (Number(a.price) || 0),
+        0
+    );
+  
+  const dollar = Number(zellePermitions.map(a => a.current_dollar_price)[0])
+  
+  const zelleBlocked =
+         formatPay === "Zelle" && Number(permision) < 50;
 
-  //       const updated = prev.map(customer => {
-  //         if (customer.email === email) {
-  //           found = true;
 
-  //           return {
-  //             ...customer,
-  //             order: [...(customer.order || []), order]
-  //           };
-  //         }
-  //         return customer;
-  //       });
+  console.log("User", user)
 
-  //       return updated;
-  //     });
-
-  //     return;
-  //   }
-
-  //   // 👻 CASE 2: GUEST USER
-  //   setCustomers(prev => [
-  //     ...prev,
-  //     {
-  //       customerId: Date.now(),
-  //       name: "Guest",
-  //       email: "guest@local",
-  //       phone: "",
-  //       password: "",
-  //       birthday: "",
-  //       imagen: "",
-  //       address: "",
-  //       userCreate: new Date(),
-
-  //       order: [order],
-  //       orderProccess: [],
-  //       delivered: []
-  //     }
-  //   ]);
-
-  // };
-
-  // -----------------------------
-  // 🚀 HANDLE SEND
-  // -----------------------------
-  // const handleSend = () => {
-  //   const newOrder = createOrderObject();
-  //   saveOrder(newOrder);
-  // };
 
   return (
     <div className="checkout">
@@ -148,8 +88,9 @@ export default function PaymentSelector({
                 </button>
 
                 <button onClick={() => {
-                setFormatPay("Zelle");
-                setSelectPay("Zelle");
+                 setFormatPay("Zelle");
+                 setSelectPay("Zelle");
+                 setPermision(usdTotal / dollar)
                 }}>
                 Zelle
                 </button>
@@ -165,8 +106,16 @@ export default function PaymentSelector({
         </div>
         )}
 
+
+
+      {zelleBlocked && (
+          <div className="zelle-warning">
+            ⚠️ Pago vía Zelle debe ser mayor a $50 USD
+          </div>
+        )}
+
       {/* CONDITIONAL PAYMENT UI */}
-      {(method === "En person" && formatPay !== null ) &&   (
+      {!zelleBlocked && method === "En person" && formatPay !== null && (
         <InPersonPayment
           user={user}
           cart={cart}
@@ -181,7 +130,7 @@ export default function PaymentSelector({
         />
       )}
 
-      {(method === "Domicilio" && formatPay !==  null) &&  (
+      {!zelleBlocked && method === "Domicilio" && formatPay !== null && (
         <DeliveryPayment
            user={user}
           cart={cart}

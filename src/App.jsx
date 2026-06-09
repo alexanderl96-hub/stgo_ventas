@@ -219,7 +219,7 @@ function App() {
         <Route
           path="/checkout"
           element={
-            token && user?.role === "users" ? (
+            token && user?.role === "customer" ? (
               <Checkout
                 cart={cart}
                 setCart={setCart}
@@ -303,7 +303,7 @@ function App() {
 
         <Route
           path="/checkout-guess"
-          element={
+          element={ 
             <CheckoutGuess
               cart={cart}
               setCart={setCart}

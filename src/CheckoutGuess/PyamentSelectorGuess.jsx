@@ -39,10 +39,6 @@ export default function PaymentSelectorGuess({
         0
     );
   
-  // const dollar = zellePermitions.reduce(
-  //       (sum, a) => sum + (Number(a.current_dollar_price) || 0),
-  //       0
-  //   )
   const dollar = Number(zellePermitions.map(a => a.current_dollar_price)[0])
   
   const zelleBlocked =
@@ -105,36 +101,6 @@ export default function PaymentSelectorGuess({
         )}
 
 
-
-
-      {/* 👇 ONLY UI COMPONENTS */}
-      {/* {(method === "En person" && formatPay !== null ) &&  (
-        <InPersonPaymentGuess
-          user={user}
-          cart={cart}
-          setCart={setCart}
-          administratorDB={administratorDB}
-          amountOrder={amountOrder}
-          setCustomers={setCustomers}
-          customers={customers}
-          method={method}
-          formatPay={formatPay}
-        />
-      )}
-
-      {(method === "Domicilio" && formatPay !==  null) && (
-        <DeliveryPaymentGuess
-          user={user}
-          cart={cart}
-          setCart={setCart}
-          administratorDB={administratorDB}
-          amountOrder={amountOrder}
-          setCustomers={setCustomers}
-          customers={customers}
-          method={method}
-          formatPay={formatPay}
-        />
-      )} */}
 
       {zelleBlocked && (
           <div className="zelle-warning">

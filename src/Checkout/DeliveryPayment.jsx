@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./delivery.css"
 import WhatsAppOrder from "../WhatsAppOrder/WhatsAppOrder";
 import useDataProducts from "../api/dataProducts";
+import API_URL from "../api/api_images";
 
 export default function DeliveryPayment ({ cart, setCart, amountOrder,
    customers, setCustomers, administrator, administratorDB  }) {

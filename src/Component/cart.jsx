@@ -139,7 +139,7 @@ useEffect(()=>{
 
 
               // if cart has items → go to checkout
-              if(token && user.role === "users"){
+              if(token && user.role === "customer"){
                 navigate("/checkout");
               }else{
                  navigate("/checkout-guess");
