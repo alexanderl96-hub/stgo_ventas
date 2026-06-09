@@ -199,7 +199,6 @@ export default function InPersonPaymentGuess({
        if (data.success) {
         setMessage("Product created successfully");
 
-
       } else {
         setMessage(data.message || data.error);
       }
