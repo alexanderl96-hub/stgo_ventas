@@ -197,7 +197,7 @@ export default function InPersonPaymentGuess({
     const data = await createNewOrderGuest(newOrder);
 
        if (data.success) {
-        setMessage("Product created successfully");
+        setMessage("Solicitud Creada");
 
       } else {
         setMessage(data.message || data.error);

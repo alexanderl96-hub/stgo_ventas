@@ -4,6 +4,7 @@ import useDataProducts from "../api/dataProducts";
 
 
 export default function WhatsAppOrder({
+  // sellOrder,/
   fullName,
   address,
   phone,
@@ -24,7 +25,8 @@ export default function WhatsAppOrder({
   formatPay,
   setMoneyType,
   moneyType,
-  revenuesOrder
+  revenuesOrder,
+  handleConfirmDelivery
 }) {
   const {administrator, dataColors} = useDataProducts()
   const navigate = useNavigate();
@@ -55,6 +57,8 @@ export default function WhatsAppOrder({
 
     window.open(`https://wa.me/${MAIN_PHONE}?text=${message}`, "_blank");
 
+    handleConfirmDelivery();
+
     // ✅ reset state
     setFullname("");
     setAddress("");
@@ -75,7 +79,17 @@ export default function WhatsAppOrder({
   //   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(orderLink)}`;
 
 
-    let productsText = revenuesOrder.map((item, index) => {
+    // let productsText = sellOrder.map((item, index) => {
+    //   return `Product: *${item.name}*
+    //       Talla:     ${item.sizes || "N/A"}
+    //       Color:     ${[item.colors][0]}
+    //       Cantidad:  ${item.qty}
+    //       Precio:    $${item.price}`
+    //       ;
+
+    // }).join("\n\n");
+
+        let productsText = revenuesOrder.map((item, index) => {
       return `Product: *${item.name}*
           Talla:     ${item.sizes || "N/A"}
           Color:     ${[item.colors][0]}

@@ -8,6 +8,7 @@ import {modifyOrderPricing, modifySalePrice } from "../utils/newSalePricing";
 import "../Checkout/delivery.css"
 import WhatsAppOrder from "../WhatsAppOrder/WhatsAppOrder";
 import API_URL from "../api/api_images";
+import { createNewOrderGuest } from "../api/auth"
 
 export default function DeliveryPaymentGuess ({ 
     user,
@@ -28,6 +29,7 @@ export default function DeliveryPaymentGuess ({
   const [step, setStep] = useState("idle");
   const [moneyType, setMoneyType] = useState("cup")
   const [sellOrder, setSellOrder] = useState([])
+  const [message, setMessage] = useState("");
 
   const person = amountOrder.map(a => a.person_in_charge)?.[0] || "";
 
@@ -127,7 +129,7 @@ export default function DeliveryPaymentGuess ({
 
     console.log("next step",
 
-      ordersCalculation.reduce(
+    ordersCalculation.reduce(
         (sum, a) => sum + (Number(a.dollar_price) || 0),
         0
     ) )
@@ -151,63 +153,140 @@ export default function DeliveryPaymentGuess ({
       return {
           id: idQRcode,
           qrcode: `${API_URL}/#/order/${idQRcode}`,
-          admInCharge: person,
-          gestorSell: "",
+          adm_in_charge: person,
+          gestor_sell: "",
           orders: ordersCalculation,
-          dollarPrice: usdTotal,
-          cupPrice: pricing.cupPrice,
-          revenewTotal: pricing.totalEfectivo ,
-          sellerCash: pricing.gananciaVendedor ,
+          dollar_price: usdTotal,
+          cup_price: pricing.cupPrice,
+          revenew_total: pricing.totalEfectivo ,
+          seller_cash: pricing.gananciaVendedor ,
           tienda: pricing.gananciaTienda ,
           phone,
           date: new Date(),
-          paymentFormat: formatPay,
-          paymentOption: method,
-          statusSell: "Pendiente"
+          payment_format: formatPay,
+          payment_option: method,
+          status_sell: "Pendiente"
       };
       };
   
     // -----------------------------
     // 🧠 SAVE ORDER
     // -----------------------------
-    const saveOrder = (order) => {
-       const email = user?.email || `guest_${Date.now()}@local`;
+    // const saveOrder = (order) => {
+    //    const email = user?.email || `guest_${Date.now()}@local`;
 
-       console.log("email", email)
+    //    console.log("email", email)
   
+    //   setCustomers(prev => {
+    
+    //     let found = false;
+    
+    //     const updated = prev.map(customer => {
+    
+    //       if (customer.email === email) {
+    //         found = true;
+    
+    //         const newOrders = [...(customer.order || []), order];
+
+    //         console.log("newOrders inedes", newOrders)
+    
+    //         const dollarPrice = newOrders.reduce(
+    //           (sum, o) => sum + (o.dollar_price || 0),
+    //           0
+    //         );
+    
+    //         const cupPrice = newOrders.reduce(
+    //           (sum, o) => sum + (o.cup_price || 0),
+    //           0
+    //         );
+    
+    //         const revenewTotal = newOrders.reduce(
+    //           (sum, o) => sum + (o.revenew_total || 0),
+    //           0
+    //         );
+    
+    //         const sellerCash = newOrders.reduce(
+    //           (sum, o) => sum + (o.seller_cash || 0),
+    //           0
+    //         );
+    
+    //         return {
+    //           ...customer,
+    //           order: newOrders,
+    //           dollarPrice,
+    //           cupPrice,
+    //           revenewTotal,
+    //           sellerCash
+    //         };
+    //       }
+
+    //       console.log("customer", customer);
+    
+    //       return customer;
+    //     });
+    
+    //     // 👻 CREATE GUEST IF NOT FOUND
+    //     if (!found) {
+    //       return [
+    //         ...updated,
+    //         {
+    //           customerId: Date.now(),
+    //           name: fullName,
+    //           email,
+    //           phone,
+    //           password: "",
+    //           birthday: "",
+    //           imagen: "",
+    //           address: address,
+    //           userCreate: new Date(),
+    
+    //           order: [order],
+    //           orderProccess: [],
+    //           delivered: []
+    //         }
+    //       ];
+    //     }
+
+    //     console.log(updated)
+    
+    //     return updated;
+    //   });
+    // };
+
+    const saveOrder = (order) => {
+      const email = user?.email || `guest_${Date.now()}@local`;
+
       setCustomers(prev => {
-    
+
         let found = false;
-    
+
         const updated = prev.map(customer => {
-    
+
           if (customer.email === email) {
             found = true;
-    
+
             const newOrders = [...(customer.order || []), order];
 
-            console.log("newOrders inedes", newOrders)
-    
             const dollarPrice = newOrders.reduce(
               (sum, o) => sum + (o.dollar_price || 0),
               0
             );
-    
+
             const cupPrice = newOrders.reduce(
               (sum, o) => sum + (o.cup_price || 0),
               0
             );
-    
+
             const revenewTotal = newOrders.reduce(
               (sum, o) => sum + (o.revenew_total || 0),
               0
             );
-    
+
             const sellerCash = newOrders.reduce(
               (sum, o) => sum + (o.seller_cash || 0),
               0
             );
-    
+
             return {
               ...customer,
               order: newOrders,
@@ -218,26 +297,24 @@ export default function DeliveryPaymentGuess ({
             };
           }
 
-          console.log("customer", customer);
-    
           return customer;
         });
-    
+
         // 👻 CREATE GUEST IF NOT FOUND
         if (!found) {
           return [
             ...updated,
             {
               customerId: Date.now(),
-              name: fullName,
+              name: "Guest",
               email,
               phone,
               password: "",
               birthday: "",
               imagen: "",
-              address: address,
+              address: "",
               userCreate: new Date(),
-    
+
               order: [order],
               orderProccess: [],
               delivered: []
@@ -245,11 +322,12 @@ export default function DeliveryPaymentGuess ({
           ];
         }
 
-        console.log(updated)
-    
         return updated;
       });
     };
+
+
+
 
     console.log("customer out", customers)
 
@@ -267,15 +345,22 @@ export default function DeliveryPaymentGuess ({
         if(formatPay === "Zelle"){
             setMoneyType("usd")
         }
-        };
+  };
 
-  const handleConfirmDelivery = () => {
+  const handleConfirmDelivery = async () => {
     if (!fullName || !address || phone.length !== 8) return;
 
       
-      // const newOrder = createOrder();
-
-      // saveOrder(newOrder);
+      const data = await createNewOrderGuest(sellOrder);
+  
+          if (data.success) {
+          setMessage("Solicitud Creada");
+  
+        } else {
+          setMessage(data.message || data.error);
+        }
+  
+        console.log("message", message)
 
 
       setAddress("");
@@ -335,7 +420,7 @@ const filterAdmin2 = administratorDB.filter(
 
 
 const revenuesPayTotal = customers.flatMap(
-  c => (c.order || []).map(o => o.revenewTotal
+  c => (c.order || []).map(o => o.revenew_total
 )
 )[0];
 
@@ -344,7 +429,7 @@ const revenuesPayFormat = customers.flatMap(
 )[0];
 
 const revenuesSeller = customers.flatMap(
-  c => (c.order || []).map(o => o.sellerCash)
+  c => (c.order || []).map(o => o.seller_cash)
 )[0];
 
 const revenuesTienda = customers.flatMap(
@@ -441,12 +526,13 @@ console.log("revenuesSeller", revenuesSeller);
         Confirmar lugar de entrega
       </button> */}
        <WhatsAppOrder
+              //  sellOrder={sellOrder}
                fullName={fullName}
                address={address}
                phone={phone}
                formatPhone={formatPhone}
                cart={amountOrder}
-               onClick={handleConfirmDelivery}
+               handleConfirmDelivery={handleConfirmDelivery}
                setStep={setStep}
                setFullname={setFullname}
                setAddress={setAddress}

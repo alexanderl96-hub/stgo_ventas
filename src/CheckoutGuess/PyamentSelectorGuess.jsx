@@ -44,6 +44,18 @@ export default function PaymentSelectorGuess({
   const zelleBlocked =
   formatPay === "Zelle" && Number(permision) < 50;
 
+  useEffect(() => {
+  if (!zelleBlocked) return;
+
+  const timer = setTimeout(() => {
+    setSelectPay(null);
+    setFormatPay(null);
+    setPermision(0);
+  }, 3000);
+
+  return () => clearTimeout(timer);
+}, [zelleBlocked]);
+
   return (
     <div className="checkout">
 
@@ -91,7 +103,7 @@ export default function PaymentSelectorGuess({
             </>
             )}
 
-            {selectPay && (
+            {selectPay && !zelleBlocked && (
             <div className="selected-payment">
                 <button> ✔ {selectPay}</button>
              </div>
