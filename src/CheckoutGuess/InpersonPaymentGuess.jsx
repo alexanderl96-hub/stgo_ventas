@@ -208,6 +208,7 @@ export default function InPersonPaymentGuess({
 
     setStep("success");
     setCart([]);
+    setCustomers([])
 
     setTimeout(() => {
       navigate("/");

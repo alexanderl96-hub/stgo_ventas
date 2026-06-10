@@ -539,6 +539,7 @@ export default function InPersonPayment({
 
     setStep("success");
     setCart([]);
+    // setCustomers([])
 
     setTimeout(() => {
       navigate("/");

@@ -368,7 +368,8 @@ export default function DeliveryPaymentGuess ({
       setPhone("") 
 
       setStep("success");
-      // setCart([]);
+      setCart([]);
+      setCustomers([])
 
       setTimeout(() => {
         navigate("/");
