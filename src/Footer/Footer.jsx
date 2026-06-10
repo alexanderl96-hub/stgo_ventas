@@ -10,6 +10,8 @@ export default function BottomNav({
   const isAdmin = user?.role === "admin";
   const isLogged = !user;
 
+  
+
   return (
     <div className="main_Contianer_Portal">
       <nav className="bottom-nav">

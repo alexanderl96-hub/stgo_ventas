@@ -106,6 +106,8 @@ useEffect(()=>{
 }, [groupedCart, setAmountOrder])
 
 
+console.log("user", user)
+
   return (
     <div className="cart-page">
 
@@ -147,6 +149,7 @@ useEffect(()=>{
              
             }}
           >
+
             Enviar Solicitud
           </button>
 

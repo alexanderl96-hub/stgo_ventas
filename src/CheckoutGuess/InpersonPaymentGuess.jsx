@@ -47,7 +47,6 @@ export default function InPersonPaymentGuess({
   // -----------------------------
   // 🧠 CREATE ORDER (FINAL STEP ONLY)
   // -----------------------------
-
   const createOrder = () => {
 
     const ordersCalculation = amountOrder.map(item => ({
@@ -60,22 +59,10 @@ export default function InPersonPaymentGuess({
         dollar_price: (Number(item.dollar_price) * item.qty) || 0,
         }))
 
-    // console.log("ordersCalculation", ordersCalculation)
-
-    // console.log("next step",
-
-    //   ordersCalculation.reduce(
-    //     (sum, a) => sum + (Number(a.dollar_price) || 0),
-    //     0
-    // ) )
-
     const usdTotal = ordersCalculation.reduce(
         (sum, a) => sum + (Number(a.dollar_price) || 0),
         0
     );
-
-    console.log("usdTotal", usdTotal)
-    console.log("usdTotal", amountOrder[0]?.current_dollar_price )
 
     const exchangeRate = amountOrder[0]?.current_dollar_price ;
 
@@ -111,77 +98,77 @@ export default function InPersonPaymentGuess({
   // 🧠 SAVE ORDER
   // -----------------------------
   const saveOrder = (order) => {
-  const email = user?.email || `guest_${Date.now()}@local`;
+      const email = user?.email || `guest_${Date.now()}@local`;
 
-  setCustomers(prev => {
+      setCustomers(prev => {
 
-    let found = false;
+        let found = false;
 
-    const updated = prev.map(customer => {
+        const updated = prev.map(customer => {
 
-      if (customer.email === email) {
-        found = true;
+          if (customer.email === email) {
+            found = true;
 
-        const newOrders = [...(customer.order || []), order];
+            const newOrders = [...(customer.order || []), order];
 
-        const dollarPrice = newOrders.reduce(
-          (sum, o) => sum + (o.dollar_price || 0),
-          0
-        );
+            const dollarPrice = newOrders.reduce(
+              (sum, o) => sum + (o.dollar_price || 0),
+              0
+            );
 
-        const cupPrice = newOrders.reduce(
-          (sum, o) => sum + (o.cup_price || 0),
-          0
-        );
+            const cupPrice = newOrders.reduce(
+              (sum, o) => sum + (o.cup_price || 0),
+              0
+            );
 
-        const revenewTotal = newOrders.reduce(
-          (sum, o) => sum + (o.revenew_total || 0),
-          0
-        );
+            const revenewTotal = newOrders.reduce(
+              (sum, o) => sum + (o.revenew_total || 0),
+              0
+            );
 
-        const sellerCash = newOrders.reduce(
-          (sum, o) => sum + (o.seller_cash || 0),
-          0
-        );
+            const sellerCash = newOrders.reduce(
+              (sum, o) => sum + (o.seller_cash || 0),
+              0
+            );
 
-        return {
-          ...customer,
-          order: newOrders,
-          dollarPrice,
-          cupPrice,
-          revenewTotal,
-          sellerCash
-        };
-      }
+            return {
+              ...customer,
+              order: newOrders,
+              dollarPrice,
+              cupPrice,
+              revenewTotal,
+              sellerCash
+            };
+          }
 
-      return customer;
-    });
+          return customer;
+        });
 
-    // 👻 CREATE GUEST IF NOT FOUND
-    if (!found) {
-      return [
-        ...updated,
-        {
-          customerId: Date.now(),
-          name: "Guest",
-          email,
-          phone,
-          password: "",
-          birthday: "",
-          imagen: "",
-          address: "",
-          userCreate: new Date(),
+        // 👻 CREATE GUEST IF NOT FOUND
+        if (!found) {
+          return [
+            ...updated,
+            {
+              customerId: Date.now(),
+              name: "Guest",
+              email,
+              phone,
+              password: "",
+              birthday: "",
+              imagen: "",
+              address: "",
+              userCreate: new Date(),
 
-          order: [order],
-          orderProccess: [],
-          delivered: []
+              order: [order],
+              orderProccess: [],
+              delivered: []
+            }
+          ];
         }
-      ];
-    }
 
-    return updated;
-  });
-};
+        return updated;
+      });
+    };
 
   // -----------------------------
   // 🚀 FINAL CONFIRMATION

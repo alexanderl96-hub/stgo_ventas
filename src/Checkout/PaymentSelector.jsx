@@ -14,7 +14,8 @@ export default function PaymentSelector({
   customers,
   setCustomers,
   orderConfig,
-  administratorDB
+  administratorDB,
+  setUser
 }) {
 
   const { administrator } = useDataProducts();
@@ -46,6 +47,18 @@ export default function PaymentSelector({
   
   const zelleBlocked =
          formatPay === "Zelle" && Number(permision) < 50;
+
+  useEffect(() => {
+    if (!zelleBlocked) return;
+
+    const timer = setTimeout(() => {
+      setSelectPay(null);
+      setFormatPay(null);
+      setPermision(0);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [zelleBlocked]);
 
 
   console.log("User", user)
@@ -97,7 +110,7 @@ export default function PaymentSelector({
             </>
             )}
 
-            {selectPay && (
+            {selectPay && !zelleBlocked && (
             <div className="selected-payment">
                 <button> ✔ {selectPay}</button>
              </div>
@@ -127,6 +140,7 @@ export default function PaymentSelector({
           administrator={administrator}
           method={method}
           formatPay={formatPay}
+          setUser={setUser}
         />
       )}
 
@@ -142,6 +156,7 @@ export default function PaymentSelector({
           admin={administrator}
           method={method}
           formatPay={formatPay}
+          setUser={setUser}
         />
       )}
 

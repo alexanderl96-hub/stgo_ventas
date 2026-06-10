@@ -99,6 +99,27 @@ function App() {
       setUser(JSON.parse(savedUser));
     }
   }, []);
+//   useEffect(() => {
+//   const savedToken = localStorage.getItem("token");
+//   const savedUser = localStorage.getItem("user");
+
+//   if (savedToken) {
+//     setToken(savedToken);
+//   }
+
+//   if (
+//     savedUser &&
+//     savedUser !== "undefined" &&
+//     savedUser !== "null"
+//   ) {
+//     try {
+//       setUser(JSON.parse(savedUser));
+//     } catch (error) {
+//       console.error("Invalid user in localStorage");
+//       localStorage.removeItem("user");
+//     }
+//   }
+// }, []);
   
   console.log("CPM App", activeCategory);
 
@@ -233,6 +254,7 @@ function App() {
                 user={user}
                 token={token}
                 logout={logout}
+                setUser={setUser}
               />
             ) : (
               <Login onAuth={handleAuth} />

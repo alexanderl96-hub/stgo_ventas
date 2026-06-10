@@ -34,20 +34,6 @@ export const getProfile = async (token) => {
   return res.json();
 };
 
-// export const createNewOrderUser = async (data) => {
-//   const res = await fetch(`${API_URL}/api/orders/create`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify(data)
-//   });
-
-//   console.log("res", res.json())
-
-//   return res.json();
-// };
-
 export const createNewOrderUser = async (data) => {
   const res = await fetch(`${API_URL}/api/orders/create`, {
     method: "POST",
@@ -74,4 +60,52 @@ export const createNewOrderGuest = async (data) => {
   const result = await res.json();
 
   return result;
+};
+
+
+export const updateCustomerOrder = async (customerId, newOrders) => {
+
+  const res = await fetch(
+    `${API_URL}/api/customers/${customerId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        order: newOrders
+      })
+    }
+  );
+
+  const result = await res.json();
+
+  return result;
+};
+
+export const addCustomerOrder = async (customerId, newOrder) => {
+
+  const res = await fetch(
+    `${API_URL}/api/customers/${customerId}/orders`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        order: newOrder
+      })
+    }
+  );
+
+  return await res.json();
+};
+
+
+export const getCustomer = async (id) => {
+  const res = await fetch(
+    `${API_URL}/api/customers/${id}`
+  );
+
+  return await res.json();
 };
