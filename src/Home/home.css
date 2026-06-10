@@ -203,6 +203,12 @@
   color: white;
 }
 
+.disabled-option {
+  opacity: 0.35;
+  filter: grayscale(100%);
+  cursor: not-allowed;
+}
+
 /* ACTIONS */
 .modal-actions {
   display: flex;

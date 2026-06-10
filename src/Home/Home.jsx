@@ -150,6 +150,72 @@ useEffect(() => {
   console.log("visibleCount", visibleCount);
 console.log("filteredProducts", filteredProducts?.length);
 
+  // const getAvailableSizes = () => {
+
+  //   if (
+  //     !activeProduct?.colors_match ||
+  //     !orderConfig.color
+  //   ) {
+  //     return activeProduct?.sizes || [];
+  //   }
+
+  //   return (
+  //     activeProduct.colors_match[
+  //       orderConfig.color
+  //     ]?.matching_sizes || []
+  //   )
+  //     .filter(([size, qty]) => qty > 0)
+  //     .map(([size]) => size);
+  // };
+
+  // const getAvailableColors = () => {
+
+  //   if (
+  //     !activeProduct?.colors_match ||
+  //     !orderConfig.size
+  //   ) {
+  //     return activeProduct?.colors || [];
+  //   }
+
+  //   return Object.entries(
+  //     activeProduct.colors_match
+  //   )
+  //     .filter(([color, data]) =>
+  //       data.matching_sizes.some(
+  //         ([size, qty]) =>
+  //           size === orderConfig.size &&
+  //           qty > 0
+  //       )
+  //     )
+  //     .map(([color]) => color);
+  // };
+
+  const availableSizes = !orderConfig.color
+  ? activeProduct?.sizes || []
+  : (
+      activeProduct?.colors_match?.[
+        orderConfig.color
+      ]?.matching_sizes || []
+    )
+      .filter(([size, qty]) => qty > 0)
+      .map(([size]) => size);
+
+const availableColors = !orderConfig.size
+  ? activeProduct?.colors || []
+  : Object.entries(
+      activeProduct?.colors_match || {}
+    )
+      .filter(([color, data]) =>
+        data.matching_sizes.some(
+          ([size, qty]) =>
+            size === orderConfig.size &&
+            qty > 0
+        )
+      )
+      .map(([color]) => color);
+
+
+
 
   return (
     <div className="main_Contianer_Portal">
@@ -425,7 +491,7 @@ console.log("filteredProducts", filteredProducts?.length);
                 <h2>{activeProduct.name}</h2>
 
                 {/* COLOR */}
-                <div className="section">
+                {/* <div className="section">
                   <p>Color</p>
                   <div className="options">
                     {activeProduct.colors.map((c) => (
@@ -453,7 +519,7 @@ console.log("filteredProducts", filteredProducts?.length);
 
                         }}
                       >
-                        {/* {c.split("_")[0]} */}
+
                            <div className="color-details">
                                   <span className="color-dot-details"
                                       style={{
@@ -463,10 +529,10 @@ console.log("filteredProducts", filteredProducts?.length);
                       </button>
                     ))}
                   </div>
-                </div>
+                </div> */}
 
                 {/* SIZE */}
-                {activeProduct.sizes.length > 0 &&
+                {/* {activeProduct.sizes.length > 0 &&
                 <div className="section">
                   <p>Talla</p>
                   <div className="options">
@@ -483,7 +549,119 @@ console.log("filteredProducts", filteredProducts?.length);
                     ))}
                   </div>
                 </div>
-                  } 
+                  }  */}
+                
+                {/* COLOR */}
+                <div className="section">
+                  <p>Color</p>
+
+                  <div className="options">
+
+                    {activeProduct.colors.map((c) => {
+
+                      const colorName = c.split("_")[0];
+
+                      const disabled =
+                        orderConfig.size &&
+                        !availableColors.includes(colorName);
+
+                      return (
+                        <button
+                          key={c}
+                          disabled={disabled}
+                          className={`
+                            ${orderConfig.color === colorName ? "active" : ""}
+                            ${disabled ? "disabled-option" : ""}
+                          `}
+                          onClick={() => {
+
+                            if (disabled) return;
+
+                            const normalize = str =>
+                              str
+                                ?.normalize("NFD")
+                                .replace(/[\u0300-\u036f]/g, "")
+                                .trim()
+                                .toLowerCase();
+
+                            const categoryActi =
+                              categoryDB.find(
+                                a =>
+                                  normalize(a.name) ===
+                                  normalize(activeProduct.category)
+                              );
+
+                            setOrderConfig(prev => ({
+                              ...prev,
+                              color: colorName,
+                              person_in_charge:
+                                categoryActi?.person_in_charge || "",
+                              img:
+                                filteringImgColor(
+                                  activeProduct.img,
+                                  colorName
+                                ) || []
+                            }));
+                          }}
+                        >
+                          <div className="color-details">
+                            <span
+                              className="color-dot-details"
+                              style={{
+                                background:
+                                  getColorStyle(colorName)
+                              }}
+                            />
+                          </div>
+                        </button>
+                      );
+                    })}
+
+                  </div>
+                </div>
+
+
+                {/* SIZE */}
+                {activeProduct.sizes.length > 0 && (
+                  <div className="section">
+
+                    <p>Talla</p>
+
+                    <div className="options">
+
+                      {activeProduct.sizes.map((s) => {
+
+                        const disabled =
+                          orderConfig.color &&
+                          !availableSizes.includes(s);
+
+                        return (
+                          <button
+                            key={s}
+                            disabled={disabled}
+                            className={`
+                              ${orderConfig.size === s ? "active" : ""}
+                              ${disabled ? "disabled-option" : ""}
+                            `}
+                            onClick={() => {
+
+                              if (disabled) return;
+
+                              setOrderConfig(prev => ({
+                                ...prev,
+                                size: s
+                              }));
+                            }}
+                          >
+                            {s}
+                          </button>
+                        );
+                      })}
+
+                    </div>
+
+                  </div>
+                )}
 
                 {/* GENERO */}
                 <div className="section">

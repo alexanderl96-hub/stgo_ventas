@@ -71,7 +71,7 @@ export default function PaymentSelector({
 
       <div className="payment-options">
 
-        <button onClick={() => setMethod("En person")}>
+        <button onClick={() => setMethod("En persona")}>
           💵 En Persona
         </button>
 
@@ -128,7 +128,7 @@ export default function PaymentSelector({
         )}
 
       {/* CONDITIONAL PAYMENT UI */}
-      {!zelleBlocked && method === "En person" && formatPay !== null && (
+      {!zelleBlocked && method === "En persona" && formatPay !== null && (
         <InPersonPayment
           user={user}
           cart={cart}
