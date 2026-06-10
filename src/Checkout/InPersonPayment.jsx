@@ -526,20 +526,29 @@ export default function InPersonPayment({
   // -----------------------------
   // 🚀 FINAL CONFIRMATION
   // -----------------------------
-  const handleSend = () => {
+  const handleSend = async () => {
 
     if (!user.phone  || user.phone.length !== 8) return;
 
     const newOrder = createOrder();
-
-    console.log(newOrder)
-
-    saveOrder(newOrder);
+   
+       saveOrder(newOrder);
+   
+       const data = await createNewOrderGuest(newOrder);
+   
+          if (data.success) {
+           setMessage("Solicitud Creada");
+   
+         } else {
+           setMessage(data.message || data.error);
+         }
+   
+         console.log("message", message)
 
 
     setStep("success");
     setCart([]);
-    // setCustomers([])
+    setCustomers([])
 
     setTimeout(() => {
       navigate("/");
