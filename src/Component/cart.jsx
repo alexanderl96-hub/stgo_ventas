@@ -210,7 +210,7 @@ console.log("user", user)
               {/* COLORS */}
               <div className="colors">
                 <strong>Color:</strong> 
-                {item.colors}
+                {/* {item.colors} */}
                  <span className="color-dot"
                        style={{
       background: getColorStyle(item.colors)

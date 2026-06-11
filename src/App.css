@@ -1,4 +1,4 @@
-
+/* 
 .bottom-nav{
   position: fixed;
   bottom: 0;
@@ -14,7 +14,6 @@
 
   padding: 10px 0;
 
-  /* ✨ subtle depth */
   box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
 }
 .nav-item{
@@ -55,7 +54,7 @@
 
 
 .main_Header_Portal{
-  margin: 0 15px 10px; /* same as search */
+  margin: 0 15px 10px; 
 }
 
 .main_subContainer_Portal{
@@ -66,13 +65,12 @@
   justify-content: space-between;
   align-items: center;
 
-  /* ✨ REAL DESIGN */
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   border: none;
 }
 
 .cart-container{
-  position: relative; /* 🔥 needed for badge positioning */
+  position: relative; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,10 +97,8 @@
 
   border-radius: 50%;
 
-  /* 🔥 IMPORTANT */
   z-index: 10;
 
-  /* ✨ clean border ring */
   border: 1px solid white;
 }
 
@@ -149,7 +145,7 @@
 }
 .sidenav-scroll{
   overflow-y: auto;
-  height: calc(100vh - 60px); /* 🔥 subtract header height */
+  height: calc(100vh - 60px); 
   -webkit-overflow-scrolling: touch;
 }
 
@@ -204,8 +200,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
+} */
+/* 
 
 
 .open_sideNav{
@@ -223,7 +219,6 @@
 
   box-shadow: 4px 0 25px rgba(0,0,0,0.1);
 
-  /* 🔥 ADD THIS */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -256,10 +251,9 @@
   padding: 0 16px 8px;
   overflow-x: auto;
 
-  scroll-snap-type: x mandatory; /* 🔥 smooth snap */
+  scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
 
-  /* ❌ hide scrollbar */
   scrollbar-width: none;
 }
 
@@ -282,20 +276,20 @@
 .category-pill.active{
   background: black;
   color: white;
-  transform: scale(1.05); /* 🔥 subtle pop */
-}
+  transform: scale(1.05); 
+} */
 
 /* 🧩 GRID */
-.product-grid{
+/* .product-grid{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   padding: 0 16px 50px;
-}
+} */
 
 /* 🛍 CARD */
-.product-card{
-  position: relative; /* 🔥 THIS FIXES IT */
+/* .product-card{
+  position: relative; 
   display: flex;
   flex-direction: column;
 
@@ -304,17 +298,17 @@
   overflow: hidden;
 
   box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-}
+} */
 
 /* 📸 IMAGE */
-.product-img{
+/* .product-img{
   width: 100%;
   height: 180px;
   object-fit: cover;
-}
+} */
 
 /* ❤️ WISHLIST */
-.wishlist{
+/* .wishlist{
   position: absolute;
   top: 8px;
   right: 8px;
@@ -336,60 +330,17 @@
   cursor: pointer;
 
   transition: all 0.2s ease;
-}
+} */
 
 /* ❤️ ACTIVE */
-.wishlist.active{
+/* .wishlist.active{
   color: #ff4d6d;
   transform: scale(0.85);
-}
+} */
 
-/* 📦 INFO */
-.product-info{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  flex: 1; /* 🔥 fills remaining space */
-  padding: 10px;
-}
-
-.product-info h2{
- font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 2px;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 1; /* max 2 lines */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-
-
-/* 💰 PRICE */
-.price-container{
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 4px;
-  margin-bottom: 6px;
-}
-
-.price{
-  font-size: 14px;
-  font-weight: 700;
-  color: #111;
-}
-
-.old-price{
-  font-size: 12px;
-  color: #9ca3af;
-  text-decoration: line-through;
-}
 
 /* 🛒 BUTTON */
-.add-btn{
+/* .add-btn{
   margin-top: 2px;
   width: 100%;
 
@@ -405,10 +356,10 @@
   font-weight: 600;
 
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-}
+} */
 
 /* ✨ TAP EFFECT */
-.product-card:active{
+/* .product-card:active{
   transform: scale(0.97);
 }
 
@@ -440,7 +391,6 @@
   font-size: 10px;
   padding: 4px 6px;
   border-radius: 8px;
-  /* z-index: 2; */
 }
 
 .pagination-container{
@@ -449,37 +399,37 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-}
+} */
 
 /* 📄 Text */
-.pagination-info{
+/* .pagination-info{
   font-size: 12px;
   color: #6b7280;
-}
+} */
 
 /* 🔘 Dots */
-.pagination-dots{
+/* .pagination-dots{
   display: flex;
   gap: 6px;
-}
+} */
 
 /* ⚪ Dot */
-.dot{
+/* .dot{
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: #d1d5db;
 
   transition: all 0.2s ease;
-}
+} */
 
 /* 🔥 Active dot */
-.dot.active{
+/* .dot.active{
   width: 18px;
   border-radius: 10px;
   background: linear-gradient(135deg, #ff4d6d, #7c3aed);
 }
-
+ */
 
 
 /* Phones */

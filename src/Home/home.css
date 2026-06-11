@@ -501,7 +501,7 @@
 }
 
 /* 📦 INFO */
-.product-info{
+.product-info-home{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -510,7 +510,7 @@
   padding: 10px;
 }
 
-.product-info h2{
+.product-info-home h2{
  font-size: 13px;
   font-weight: 600;
   margin-bottom: 2px;
@@ -532,7 +532,7 @@
   margin-bottom: 6px;
 }
 
-.price{
+.home-price{
   font-size: 14px;
   font-weight: 700;
   color: #111;
@@ -596,7 +596,6 @@
   font-size: 10px;
   padding: 4px 6px;
   border-radius: 8px;
-  /* z-index: 2; */
 }
 
 .pagination-container{
@@ -770,3 +769,114 @@
   -webkit-text-fill-color: transparent;
 }
 
+
+
+
+
+/* Extra Small Phones */
+@media screen and (max-width: 320px) {
+
+}
+
+/* Small Phones */
+@media screen and (min-width: 321px) and (max-width: 375px) {
+    
+   .product-grid{
+      gap: 12px;
+      padding: 0 13px 50px;
+   }
+
+   .product-card:active{
+      transform: scale(0.87);
+    }
+
+    .wishlist{
+      font-size: 13px;
+    }
+
+    .product-img{
+      height: 110px;
+    }
+
+    .product-info-home{
+      padding: 4px 8px;
+    }
+
+    .product-info-home h2{
+      font-size: 13px;
+      margin-bottom: -2px;
+    }
+
+    .stars{
+      font-size: 11.5px;
+      gap: 2px;
+    }
+    
+    .price-container{
+      gap: 3px;
+      margin-top: -2px;
+      margin-bottom: 3px;
+    }
+
+    .home-price{
+      font-size: 12.5px;
+    }
+
+    .old-price{
+      font-size: 12px;
+    }
+
+    .add-btn{
+      margin-top: 1px;
+      padding: 8px;
+
+      border: none;
+      border-radius: 14px;
+
+      background: linear-gradient(135deg, #ff4d6d, #7c3aed);
+      color: white;
+
+      font-size: 12px;
+      font-weight: 600;
+
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+
+
+}
+
+/* Large Phones */
+@media screen and (min-width: 376px) and (max-width: 480px) {
+
+}
+
+/* Small Tablets / Large Phones Landscape */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+
+}
+
+/* Tablets */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+
+}
+
+/* Small Laptops */
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+
+}
+
+/* Desktops */
+@media screen and (min-width: 1281px) and (max-width: 1440px) {
+
+}
+
+/* Large Desktops */
+@media screen and (min-width: 1441px) and (max-width: 1920px) {
+
+}
+
+/* 2K+ Monitors */
+@media screen and (min-width: 1921px) {
+
+}

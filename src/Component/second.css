@@ -57,6 +57,7 @@ body {
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
+  color: #000000;
 }
 
 /* =========================
@@ -403,13 +404,13 @@ body {
     }
 
     .brand {
-      font-size: 11.5px;
+      font-size: 12.5px;
     }
 
     .image-meta {
       text-align: left;
       margin-top: 3px;
-      font-size: 11.5px;
+      font-size: 12.5px;
     }
 
     .cart-info h4 {
@@ -418,30 +419,30 @@ body {
     }
 
     .desc {
-      font-size: 11.5px;
+      font-size: 12.5px;
       margin: 3px 0;
     }
 
     .meta {
-      font-size: 11.5px;
+      font-size: 12.5px;
       height: 5px;
     }
 
     .colors {
       gap: 2px;
       margin: 3px 0;
-      font-size: 11.5px;
+      font-size: 12.5px;
     }
 
     .color-dot {
       width: 13px;
       height: 13px;
-      margin-top: -0.5px;
+      margin-top: 1px;
     }
 
     .product-price {
       margin-top: 3px;
-      font-size: 11.5px;
+      font-size: 12.5px;
     }
     .actions {
       flex-direction: column;
@@ -466,7 +467,7 @@ body {
     }
 
     .qty span {
-      font-size: 11.5px;
+      font-size: 12.5px;
       padding: 0 8px;
     }
 

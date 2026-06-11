@@ -405,7 +405,7 @@ const availableColors = !orderConfig.size
 
                         <img src={p.img[0].image_path} alt={p.name} className="product-img" />
 
-                        <div className="product-info">
+                        <div className="product-info-home">
                           <h2>{p.name}</h2>
 
                           <div className="stars">
@@ -418,7 +418,7 @@ const availableColors = !orderConfig.size
                           </div>
 
                           <div className="price-container">
-                            <span className="price">${p.price}</span>
+                            <span className="home-price">${p.price}</span>
 
                             {Number(p.price) !== Number(p.original_price)&& (
                               <span className="old-price">${p.original_price}</span>
@@ -451,67 +451,6 @@ const availableColors = !orderConfig.size
 
                 <h2>{activeProduct.name}</h2>
 
-                {/* COLOR */}
-                {/* <div className="section">
-                  <p>Color</p>
-                  <div className="options">
-                    {activeProduct.colors.map((c) => (
-                      <button
-                        key={c}
-                        className={orderConfig.color === c.split("_")[0] ? "active" : ""}
-                        onClick={() =>{
-                          const normalize = str =>
-                                  str
-                                    ?.normalize("NFD")
-                                    .replace(/[\u0300-\u036f]/g, "")
-                                    .trim()
-                                    .toLowerCase();
-
-                                const categoryActi = categoryDB.find(
-                                  a => normalize(a.name) === normalize(activeProduct.category)
-                                );
-
-                                setOrderConfig((prev) => ({
-                                    ...prev,
-                                    color: c.split("_")[0],
-                                    person_in_charge: categoryActi?.person_in_charge || "",
-                                    img: filteringImgColor(activeProduct.img, c.split("_")[0]) || []
-                                }));
-
-                        }}
-                      >
-
-                           <div className="color-details">
-                                  <span className="color-dot-details"
-                                      style={{
-                                          background: getColorStyle(c.split("_")[0])
-                                          }} />
-                          </div> 
-                      </button>
-                    ))}
-                  </div>
-                </div> */}
-
-                {/* SIZE */}
-                {/* {activeProduct.sizes.length > 0 &&
-                <div className="section">
-                  <p>Talla</p>
-                  <div className="options">
-                    {activeProduct.sizes.map((s) => (
-                      <button
-                        key={s}
-                        className={orderConfig.size === s ? "active" : ""}
-                        onClick={() =>
-                          setOrderConfig((prev) => ({ ...prev, size: s }))
-                        }
-                      >
-                        {s}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                  }  */}
-                
                 {/* COLOR */}
                 <div className="section">
                   <p>Color</p>
