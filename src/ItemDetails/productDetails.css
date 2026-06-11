@@ -83,7 +83,10 @@
   font-size: 15px;
   color: #4b5563;
   line-height: 1.4;
-   text-align: justify;
+  text-align: justify;
+  letter-spacing: -0.2px;
+  /* hyphens: auto;
+  -webkit-hyphens: auto; */
 }
 
 .detail-footer{
@@ -457,6 +460,9 @@
   margin-top: -10px;
   font-size: 15px;
    text-align: justify;
+   letter-spacing: -0.2px;
+       hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .color-details{

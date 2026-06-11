@@ -135,6 +135,10 @@ body {
   color: #555;
   margin: 5px 0;
   text-align: justify;
+  letter-spacing: -0.2px;
+  
+    hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .meta {
@@ -148,6 +152,7 @@ body {
   display: flex;
   gap: 5px;
   margin: 5px 0;
+  color: #666;
 }
 
 .color-dot {
@@ -159,9 +164,10 @@ body {
 }
 
 /* PRICE */
-.price {
+.product-price {
   font-weight: bold;
   margin-top: 5px;
+  color: #666;
 }
 
 .old {
@@ -296,7 +302,6 @@ body {
 
   .cart-row {
     display: flex;
-    /* flex-direction: column; */
     gap: 15px;
     padding: 15px 0;
   }
@@ -329,4 +334,175 @@ body {
   text-align: center;
 
   animation: fadeIn 0.3s ease;
+}
+
+
+
+
+
+/* Extra Small Phones */
+@media screen and (max-width: 320px) {
+
+}
+
+/* Small Phones */
+@media screen and (min-width: 321px) and (max-width: 375px) {
+    .cart-page {
+      padding: 12px;
+    }
+
+    .cart-top-summary {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      padding: 8px 15px;
+      margin-bottom: 15px;
+    }
+
+    .cart-top-summary > h3 {
+      font-size: 16px;
+    }
+
+    .summary-line {
+      gap: 10px;
+    }
+
+    .summary-line > span{
+      font-size: 13.5px;
+    }
+
+    .total {
+      font-size: 13.5px;
+    }
+
+    .checkout-btn {
+      padding: 10px 15px;
+      margin-top: 4px;
+    }
+
+    .cart-left {
+      padding: 12px;
+    }
+
+    .cart-left > h2 {
+      font-size: 16px;
+    }
+
+    .cart-row {
+      gap: 10px;
+      padding: 8px 0;
+    }
+
+    .cart-left-block {
+      align-items: flex-start;
+    }
+
+    .cart-left-block img {
+      width: 85px;
+      height: 85px;
+    }
+
+    .brand {
+      font-size: 11.5px;
+    }
+
+    .image-meta {
+      text-align: left;
+      margin-top: 3px;
+      font-size: 11.5px;
+    }
+
+    .cart-info h4 {
+      margin-top: -1px;
+      font-size: 13.5px;
+    }
+
+    .desc {
+      font-size: 11.5px;
+      margin: 3px 0;
+    }
+
+    .meta {
+      font-size: 11.5px;
+      height: 5px;
+    }
+
+    .colors {
+      gap: 2px;
+      margin: 3px 0;
+      font-size: 11.5px;
+    }
+
+    .color-dot {
+      width: 13px;
+      height: 13px;
+      margin-top: -0.5px;
+    }
+
+    .product-price {
+      margin-top: 3px;
+      font-size: 11.5px;
+    }
+    .actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap:10px;
+    }
+
+    .qr-icon {
+      margin-left: 140px;
+      margin-top: -70px;
+    }
+
+   .resize-qr {
+      width: 50px;
+      height: 50px;
+
+    }
+
+    .qty button {
+      width: 25px;
+      height: 25px;
+    }
+
+    .qty span {
+      font-size: 11.5px;
+      padding: 0 8px;
+    }
+
+}
+
+/* Large Phones */
+@media screen and (min-width: 376px) and (max-width: 480px) {
+
+}
+
+/* Small Tablets / Large Phones Landscape */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+
+}
+
+/* Tablets */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+
+}
+
+/* Small Laptops */
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+
+}
+
+/* Desktops */
+@media screen and (min-width: 1281px) and (max-width: 1440px) {
+
+}
+
+/* Large Desktops */
+@media screen and (min-width: 1441px) and (max-width: 1920px) {
+
+}
+
+/* 2K+ Monitors */
+@media screen and (min-width: 1921px) {
+
 }

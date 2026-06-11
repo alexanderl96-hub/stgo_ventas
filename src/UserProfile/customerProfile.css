@@ -270,7 +270,13 @@
 
     .product-info {
       font-size: 11.5px;
-      gap:2px;
+      gap:4px;
+    }
+
+    .product-info > div:first-child > span{
+      display: block;
+      text-align: justify;
+      letter-spacing: -0.2px;
     }
 
 

@@ -222,7 +222,7 @@ console.log("user", user)
               </div>
 
               {/* PRICE */}
-              <p className="price">
+              <p className="product-price">
                 ${item.price}
               </p>
 
@@ -250,7 +250,7 @@ console.log("user", user)
                               className="qr-icon"
                               onClick={() => setActiveQR(item.qrcode)}
                             >
-                              <QrCode   size={56} />
+                              <QrCode   size={56} className="resize-qr" />
                             </div>
                           )}
                           </div>
