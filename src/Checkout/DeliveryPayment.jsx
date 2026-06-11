@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import "./delivery.css"
-import {modifyOrderPricing, modifySalePrice } from "../utils/newSalePricing";
+import { modifyOrderPricing } from "../utils/newSalePricing";
 import WhatsAppOrder from "../WhatsAppOrder/WhatsAppOrder";
 import useDataProducts from "../api/dataProducts";
 import API_URL from "../api/api_images";

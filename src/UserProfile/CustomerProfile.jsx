@@ -133,7 +133,11 @@ const CustomerProfile = ({ user, customers, setCustomers, logout }) => {
   return (
     <div className="profile-page">
 
-      <h2 className="profile-title">👤 Mi Cuenta</h2>
+      <div className="profile_state">
+
+      <div className="profile-title">
+          <h2 >👤 Mi Cuenta</h2>
+      </div>
 
       {/* USER INFO */}
       <div className="profile-box">
@@ -162,18 +166,24 @@ const CustomerProfile = ({ user, customers, setCustomers, logout }) => {
           </strong>
         </div>
 
-             <button
+        <button
           className="logout-btn"
           onClick={logout}
         >
           Cerrar Sesión
         </button>
 
+      </div >
+
+      <div className="orders-title">
+            <h3 className="orders-title">📦 Mis Ordenes</h3>
+      </div>
+
+            
       </div>
 
       {/* ORDERS */}
-      <h3 className="orders-title">📦 Mis Ordenes</h3>
-
+  
       <div className="orders">
         {user?.order.length === 0 ? (
           <p className="no-orders">No ordenes todavía</p>
@@ -209,11 +219,15 @@ const CustomerProfile = ({ user, customers, setCustomers, logout }) => {
                         </div>
 
                         <div className="product-info">
-                          <span>{item.name}</span>
-                          <span>x{item.qty}</span>
-                        </div>
-                        <div className="product-info">
-                          <span>$ {item.price} cup</span>
+                          <div >
+                            <span>{item.name}</span>
+                          </div>
+                          <div >
+                            <span>x{item.qty}</span>
+                          </div>
+                          <div >
+                            <span>$ {item.price} cup</span>
+                          </div>
                         </div>
 
                       </div>

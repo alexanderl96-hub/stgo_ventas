@@ -4,7 +4,7 @@ import useDataProducts from "../api/dataProducts";
 import useDataOrders from "../api/useDataOrders";
 import { generateOrderQr } from "../utils/orderQrGenerator";
 import { calculateOrderPricing, calculateOrder } from "../utils/pricing";
-import {modifyOrderPricing, modifySalePrice } from "../utils/newSalePricing";
+import { modifyOrderPricing } from "../utils/newSalePricing";
 import "../Checkout/delivery.css"
 import WhatsAppOrder from "../WhatsAppOrder/WhatsAppOrder";
 import API_URL from "../api/api_images";

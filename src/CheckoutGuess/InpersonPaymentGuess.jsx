@@ -4,7 +4,7 @@ import useDataProducts from "../api/dataProducts";
 import useDataOrders from "../api/useDataOrders";
 import { generateOrderQr } from "../utils/orderQrGenerator";
 import { calculateOrderPricing , calculateOrder} from "../utils/pricing";
-import {modifyOrderPricing, modifySalePrice } from "../utils/newSalePricing";
+import { modifyOrderPricing } from "../utils/newSalePricing";
 import { createNewOrderGuest } from "../api/auth"
 import API_URL from "../api/api_images";
 import APP_URL from "../api/endPoint"

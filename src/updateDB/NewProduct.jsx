@@ -379,7 +379,8 @@ export default function NewProduct({categoryDB}) {
 
     const totalVenta = dollar_price * current_dollar_price * (1 + feeTotal);
 
-    return Math.round(totalVenta / 500) * 500;
+    return dollar_price > 1 ? 
+         Math.round(totalVenta / 500) * 500 : Math.round(totalVenta);
   };
 
   const arrayToString = (text) => {
@@ -483,7 +484,7 @@ export default function NewProduct({categoryDB}) {
           type="number"
           name="dollar_price"
           min="0"
-          step="0.01"
+          step="0.1"
           placeholder="Price del Dollar"
           value={
             formData.dollar_price > 0 ? formData.dollar_price : "Precio del Dollar"
@@ -1071,7 +1072,7 @@ export default function NewProduct({categoryDB}) {
 
         <input
           type="text"
-          
+
           placeholder="Recomendaciones del Equipo (separado por coma)"
           onChange={(e) =>
             setFormData(prev => ({

@@ -28,7 +28,7 @@ import useDataProducts from "../api/dataProducts";
 import useDataOrders from "../api/useDataOrders";
 import { generateOrderQr } from "../utils/orderQrGenerator";
 import { calculateOrderPricing } from "../utils/pricing";
-import {modifyOrderPricing, modifySalePrice } from "../utils/newSalePricing";
+import { modifyOrderPricing } from "../utils/newSalePricing";
 import { createNewOrderUser, 
          updateCustomerOrder, 
          addCustomerOrder, 

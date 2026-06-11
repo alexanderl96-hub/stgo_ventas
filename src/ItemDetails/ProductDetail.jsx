@@ -625,7 +625,7 @@ const availableColors = !orderConfig.size
                 ref={featuresRef}
                 className="features-section"
                 >
-                <h2>Características</h2>
+                <h3>Características</h3>
 
                 <div className="feature-row-20">
                         {product.
@@ -639,7 +639,7 @@ const availableColors = !orderConfig.size
                 // ref={featuresRef}
                 className="features-section"
                 >
-                <h2>Materiales</h2>
+                <h3>Materiales</h3>
 
                 <div className="feature-row-20">
                         {product.
@@ -654,7 +654,7 @@ const availableColors = !orderConfig.size
                 // ref={recommendationsRef}
                 className="features-section"
                 >
-                <h2>Recomendacion de uso</h2>
+                <h3>Recomendacion de uso</h3>
 
                 <div className="feature-row-20">
                     {product.
@@ -674,7 +674,7 @@ const availableColors = !orderConfig.size
                 // ref={featuresRef}
                 className="features-section"
                 >
-                <h2>Detalles del Equipo</h2>
+                <h3>Detalles del Equipo</h3>
 
                 <div className="feature-row">
                     <span>Tipo de Bateria</span>
@@ -704,7 +704,7 @@ const availableColors = !orderConfig.size
             </div>
 
              <div  className="features-section">
-                    <h2>Dispositivos Compatibles que Puede Alimentar</h2>
+                    <h3>Dispositivos Compatibles que Puede Alimentar</h3>
 
                         {product.battery_details.recommended_devices.map((a, i) => (
                         <div key={i} className="feature-item">
