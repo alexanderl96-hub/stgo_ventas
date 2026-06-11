@@ -176,7 +176,7 @@ const CustomerProfile = ({ user, customers, setCustomers, logout }) => {
       </div >
 
       <div className="orders-title">
-            <h3 className="orders-title">📦 Mis Ordenes</h3>
+            <h3 >📦 Mis Ordenes</h3>
       </div>
 
             
