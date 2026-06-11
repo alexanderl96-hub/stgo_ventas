@@ -8,6 +8,7 @@ import {modifyOrderPricing, modifySalePrice } from "../utils/newSalePricing";
 import "../Checkout/delivery.css"
 import WhatsAppOrder from "../WhatsAppOrder/WhatsAppOrder";
 import API_URL from "../api/api_images";
+import APP_URL from "../api/endPoint"
 import { createNewOrderGuest } from "../api/auth"
 
 export default function DeliveryPaymentGuess ({ 
@@ -152,7 +153,7 @@ export default function DeliveryPaymentGuess ({
 
       return {
           id: idQRcode,
-          qrcode: `${API_URL}/#/order/${idQRcode}`,
+          qrcode: `${APP_URL}/#/order/${idQRcode}`,
           adm_in_charge: person,
           gestor_sell: "",
           orders: ordersCalculation,

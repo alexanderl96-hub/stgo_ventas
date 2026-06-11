@@ -482,6 +482,8 @@ export default function NewProduct({categoryDB}) {
         <input
           type="number"
           name="dollar_price"
+          min="0"
+          step="0.01"
           placeholder="Price del Dollar"
           value={
             formData.dollar_price > 0 ? formData.dollar_price : "Precio del Dollar"
@@ -492,6 +494,7 @@ export default function NewProduct({categoryDB}) {
         <input
           type="number"
           name="current_dollar_price"
+          min="0"
           placeholder="Precio del Dollar en el Toque"
           value={
             formData.current_dollar_price > 0
@@ -504,6 +507,7 @@ export default function NewProduct({categoryDB}) {
         <input
           type="number"
           name="price"
+          min="0"
           placeholder="Precio"
           value={formData.price > 0 
             ? formData.price 
@@ -526,6 +530,8 @@ export default function NewProduct({categoryDB}) {
 
          <input
           type="number"
+          min="0"
+          step="0.01"
           name="original_store_price"
           placeholder="Precio original de tienda"
           value={formData.original_store_price > 0 
@@ -1065,6 +1071,7 @@ export default function NewProduct({categoryDB}) {
 
         <input
           type="text"
+          
           placeholder="Recomendaciones del Equipo (separado por coma)"
           onChange={(e) =>
             setFormData(prev => ({

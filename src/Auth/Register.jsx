@@ -52,6 +52,8 @@ const [message, setMessage] = useState("");
             role: "customer"
         });
 
+        navigate("/login");
+
         // setImages([]);
       } else {
         setMessage(data.message || data.error);
@@ -111,6 +113,60 @@ const [message, setMessage] = useState("");
     return () => clearTimeout(timer);
   }
 }, [passwordVerification, form.password]);
+
+//  const formatDate = (value) => {
+
+//   const numbers = value.replace(/\D/g, "");
+
+//   if (numbers.length <= 2) {
+//     return numbers;
+//   }
+
+//   if (numbers.length <= 4) {
+//     return `${numbers.slice(0, 2)}/${numbers.slice(2)}`;
+//   }
+
+//   return `${numbers.slice(0, 2)}/${numbers.slice(2, 4)}/${numbers.slice(4, 8)}`;
+// };
+
+const formatDate = (value) => {
+
+  let numbers = value.replace(/\D/g, "");
+
+  let month = numbers.slice(0, 2);
+  let day = numbers.slice(2, 4);
+  let year = numbers.slice(4, 8);
+
+  if (month.length === 2) {
+    month = Math.min(
+      Math.max(Number(month), 1),
+      12
+    )
+      .toString()
+      .padStart(2, "0");
+  }
+
+  if (day.length === 2) {
+    day = Math.min(
+      Math.max(Number(day), 1),
+      31
+    )
+      .toString()
+      .padStart(2, "0");
+  }
+
+  let result = month;
+
+  if (numbers.length > 2) {
+    result += `/${day}`;
+  }
+
+  if (numbers.length > 4) {
+    result += `/${year}`;
+  }
+
+  return result;
+};
 
   return (
     <div className="auth-container">
@@ -263,7 +319,7 @@ const [message, setMessage] = useState("");
             type="text"
             placeholder="Fecha de Nacimiento (Mes/Dia/Año)"
             onChange={(e) => {
-              const formatted = formatBirthday(e.target.value);
+              const formatted = formatDate(e.target.value);
 
               setForm({
                 ...form,
@@ -301,7 +357,7 @@ const [message, setMessage] = useState("");
             />
             )} */}
  
-          {form.birthday.length > 10 && (
+          {form.birthday.length === 10 && (
             <input
               type="text"
               placeholder="Direccion"

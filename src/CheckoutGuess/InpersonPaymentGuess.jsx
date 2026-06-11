@@ -7,6 +7,7 @@ import { calculateOrderPricing , calculateOrder} from "../utils/pricing";
 import {modifyOrderPricing, modifySalePrice } from "../utils/newSalePricing";
 import { createNewOrderGuest } from "../api/auth"
 import API_URL from "../api/api_images";
+import APP_URL from "../api/endPoint"
 
 export default function InPersonPaymentGuess({
   user,
@@ -76,7 +77,7 @@ export default function InPersonPaymentGuess({
 
     return {
         id: idQRcode,
-        qrcode: `${API_URL}/#/order/${idQRcode}`,
+        qrcode: `${APP_URL}/#/order/${idQRcode}`,
         adm_in_charge: person,
         gestor_sell: "",
         orders: ordersCalculation,

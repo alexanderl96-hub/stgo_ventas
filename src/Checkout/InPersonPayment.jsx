@@ -35,6 +35,7 @@ import { createNewOrderUser,
          getCustomer 
         } from "../api/auth"
 import API_URL from "../api/api_images";
+import APP_URL from "../api/endPoint"
 
 export default function InPersonPayment({ 
   user,
@@ -109,7 +110,7 @@ export default function InPersonPayment({
 
     return {
         id: idQRcode,
-        qrcode: `${API_URL}/#/order/${idQRcode}`,
+        qrcode: `${APP_URL}/#/order/${idQRcode}`,
         adm_in_charge: person,
         gestor_sell: "",
         orders: ordersCalculation,

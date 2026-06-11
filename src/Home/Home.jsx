@@ -150,45 +150,6 @@ useEffect(() => {
   console.log("visibleCount", visibleCount);
 console.log("filteredProducts", filteredProducts?.length);
 
-  // const getAvailableSizes = () => {
-
-  //   if (
-  //     !activeProduct?.colors_match ||
-  //     !orderConfig.color
-  //   ) {
-  //     return activeProduct?.sizes || [];
-  //   }
-
-  //   return (
-  //     activeProduct.colors_match[
-  //       orderConfig.color
-  //     ]?.matching_sizes || []
-  //   )
-  //     .filter(([size, qty]) => qty > 0)
-  //     .map(([size]) => size);
-  // };
-
-  // const getAvailableColors = () => {
-
-  //   if (
-  //     !activeProduct?.colors_match ||
-  //     !orderConfig.size
-  //   ) {
-  //     return activeProduct?.colors || [];
-  //   }
-
-  //   return Object.entries(
-  //     activeProduct.colors_match
-  //   )
-  //     .filter(([color, data]) =>
-  //       data.matching_sizes.some(
-  //         ([size, qty]) =>
-  //           size === orderConfig.size &&
-  //           qty > 0
-  //       )
-  //     )
-  //     .map(([color]) => color);
-  // };
 
   const availableSizes = !orderConfig.color
   ? activeProduct?.sizes || []
