@@ -199,6 +199,95 @@
 
 /* Extra Small Phones */
 @media screen and (max-width: 320px) {
+     .profile-page {
+      padding: 13px;
+    }
+
+    .profile-title {
+      height: 30px;
+    }
+
+    .profile-title > h2{
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .profile-box {
+      padding: 12px;
+    }
+
+    .profile-row {
+      padding: 6px 0;
+      font-size: 12.5px;
+    }
+
+    .logout-btn {
+      margin-top: 12px;
+      padding: 8px;
+      font-size: 12.5px;
+    }
+
+    .orders-title{
+      height: 37px;
+      margin-top: -2px;
+    }
+
+    .orders-title > h3{
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .orders {
+      gap: 10px;
+    }
+
+    .order-card {
+      padding: 8px;
+    }
+
+    .order-header {
+      margin-bottom: 6px;
+    }
+
+    .order-header > span:first-child {
+      margin-top: 2.5px;
+      font-size: 12.5px;
+    }
+
+    .status {
+      font-size: 12.5px;
+      padding: 3px 7px;
+    }
+
+    .order-body p {
+      font-size: 12.5px;
+      margin: 3px 0;
+    }
+
+    .order-products {
+      margin-top: 8px;
+      padding-top: 6px;
+    }
+
+    .product-row {
+      gap: 8px;
+    }
+
+    .product-left img {
+      width: 65px;
+      height: 65px;
+    }
+
+    .product-info {
+      font-size: 12.5px;
+      gap:4px;
+    }
+
+    .product-info > div:first-child > span{
+      display: block;
+      text-align: justify;
+      letter-spacing: -0.2px;
+      font-size: 12.5px;
+    }
 
 }
 
@@ -265,7 +354,7 @@
     }
 
     .order-body p {
-      font-size: 12.5px;
+      font-size: 13.5px;
       margin: 3px 0;
     }
 
@@ -292,6 +381,7 @@
       display: block;
       text-align: justify;
       letter-spacing: -0.2px;
+      font-size: 12.5px;
     }
 
 
@@ -299,6 +389,99 @@
 
 /* Large Phones */
 @media screen and (min-width: 376px) and (max-width: 480px) {
+    .profile-page {
+      padding: 15px;
+    }
+
+    .profile-title {
+      height: 45px;
+    }
+
+    .profile-title > h2{
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+    .profile-box {
+      padding: 12px;
+    }
+
+    .profile-row {
+      padding: 6px 0;
+      font-size: 13.5px;
+    }
+
+    .logout-btn {
+      margin-top: 12px;
+      padding: 8px;
+      font-size: 13.5px;
+    }
+
+    .orders-title{
+      height: 40px;
+      margin-top: -2px;
+    }
+
+    .orders-title > h3{
+      font-size: 14.5px;
+      margin-bottom: 7px;
+    }
+
+    .orders {
+      gap: 10px;
+    }
+
+    .order-card {
+      padding: 10px;
+    }
+
+    .order-body  p {
+      font-size: 16px;
+    }
+
+    .order-header {
+      margin-bottom: 6px;
+    }
+
+    .order-header > span:first-child {
+      margin-top: 2.5px;
+      font-size: 13.5px;
+    }
+
+    .status {
+      font-size: 13.5px;
+      padding: 3px 7px;
+    }
+
+    .order-body p {
+      font-size: 13.5px;
+      margin: 3px 0;
+    }
+
+    .order-products {
+      margin-top: 8px;
+      padding-top: 6px;
+    }
+
+    .product-row {
+      gap: 8px;
+    }
+
+    .product-left img {
+      width: 65px;
+      height: 65px;
+    }
+
+    .product-info {
+      font-size: 13.5px;
+      gap:4px;
+    }
+
+    .product-info > div:first-child > span{
+      display: block;
+      text-align: justify;
+      letter-spacing: -0.2px;
+      font-size: 13.5px;
+    }
 
 }
 

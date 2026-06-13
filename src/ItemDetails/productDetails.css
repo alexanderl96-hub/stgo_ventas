@@ -686,13 +686,332 @@
 
 /* Small Phones (LG) */
 @media screen and (min-width: 321px) and (max-width: 375px) {
-  
+    .product-header {
+      padding: 12px;
+      height: 90px;
+    }
+
+    .header-top {
+      gap: 10px;
+    }
+
+    .main_inputContainer_PortalDetails {
+      margin: 0 14px 8px;
+      padding: 10px 14px;
+      gap: 8px;
+    }
+
+    .main_inputContainer_PortalDetails input{
+      font-size: 13.5px;
+    }
+
+    .details-icon{
+      width: 13.5px;
+      height: auto;
+    }
+
+    .header-tabs {
+        gap: 17px;
+    }
+
+    .tab {
+      padding: 3px 12px;
+      font-size: 13.5px;
+    }
+    
+    .image-slider{
+      margin-top: -10px;
+    }
+
+    .arrow{
+      width: 30px;
+      height: 30px;
+      font-size: 17px;
+    }
+
+    .arrow.left{
+      left: 8px;
+    }
+
+    .arrow.right{
+      right: 8px;
+    }
+
+    
+    .detail-img{
+      max-height: 240px; /* prevents it from getting too big */
+      min-height: 300px; /* prevents it from getting too small */
+    }
+    
+    .close-modal{
+      top:10px;
+      right:10px;
+      width:30px;
+      height:30px;
+      font-size:17px;
+    }
+
+    .modal-arrow{
+      width:30px;
+      height:30px;
+      font-size:18px;
+    }
+
+    .modal-arrow.left{
+      left:5px;
+    }
+
+    .modal-arrow.right{
+      right:5px;
+    }
+
+    .modal-image{
+      max-height:75vh;
+    }
+
+    .dots{
+      gap: 6px;
+    }
+
+    .dot{
+      width: 5.5px;
+      height: 5.5px;
+    }
+
+    .success-toast {
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 13.5px;
+    }
+
+    .detail-info h2{
+      font-size: 13.8px;
+    }
+
+    .stars .product{
+      font-size: 13.5px;
+    }
+
+    .stars .product2{
+      font-size: 13.5px;
+    }
+
+    .price-details{
+      font-size: 15px;
+    }
+
+    .old-price-details{
+      font-size: 12.5px;
+    }
+
+
+    .description{
+      margin-top: 10px;
+      font-size: 13.5px;
+    }
+
+    .features-section {
+      padding: 15px;
+    }
+
+    .features-section > h3{
+      font-size: 15px;
+    }
+
+    .feature-row {
+      padding: 8px 0;
+      font-size: 13.5px;
+    }
+
+    .feature-row-20 {
+      margin-top: -10px;
+      font-size: 13.5px;
+    }
+
+    .color-details{
+      gap: 4px;
+    }
+
+    .color-dot-details {
+      width: 14.5px;
+      height: 14.5px;
+    }
+
+    .buy-btn{
+      padding: 13px;
+      border-radius: 13px;
+      font-size: 13.5px;
+    }
+
+    .feature-item{
+      font-size: 13.5px;
+    }
+
   
 }
 
 /* Large Phones (iPhone 12)*/
 @media screen and (min-width: 376px) and (max-width: 480px) {
-   
+     .product-header {
+      padding: 13px;
+      height: 95px;
+    }
+
+    .header-top {
+      gap: 12px;
+    }
+
+    .main_inputContainer_PortalDetails {
+      margin: 0 16px 10px;
+      padding: 12px 16px;
+      gap: 10px;
+    }
+
+    .main_inputContainer_PortalDetails input{
+      font-size: 14.5px;
+    }
+
+    .details-icon{
+      width: 14.5px;
+    }
+
+    .header-tabs {
+        gap: 18px;
+    }
+
+    .tab {
+      padding: 3px 12px;
+      font-size: 14.5px;
+    }
+    
+    .image-slider{
+      margin-top: -10px;
+    }
+
+    .arrow{
+      width: 30px;
+      height: 30px;
+      font-size: 18px;
+    }
+
+    .arrow.left{
+      left: 8px;
+    }
+
+    .arrow.right{
+      right: 8px;
+    }
+
+    
+    .detail-img{
+      max-height: 280px; /* prevents it from getting too big */
+      min-height: 350px; /* prevents it from getting too small */
+    }
+    
+    .close-modal{
+      top:12px;
+      right:13px;
+      width:35px;
+      height:35px;
+      font-size:18px;
+    }
+
+    .modal-arrow{
+      width:32px;
+      height:32px;
+      font-size:18px;
+    }
+
+    .modal-arrow.left{
+      left:5px;
+    }
+
+    .modal-arrow.right{
+      right:5px;
+    }
+
+    .modal-image{
+      max-height:85vh;
+    }
+
+    .dots{
+      gap: 6px;
+    }
+
+    .dot{
+      width: 6px;
+      height: 6px;
+    }
+
+    .success-toast {
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 14.5px;
+    }
+
+    .detail-info h2{
+      font-size: 14.8px;
+    }
+
+    .stars .product{
+      font-size: 14.5px;
+    }
+
+    .stars .product2{
+      font-size: 14.5px;
+    }
+
+    .price-details{
+      font-size: 16px;
+    }
+
+    .old-price-details{
+      font-size: 14.5px;
+    }
+
+
+    .description{
+      margin-top: 10px;
+      font-size: 14.5px;
+    }
+
+    .features-section {
+      padding: 15px;
+    }
+
+    .features-section > h3{
+      font-size: 15px;
+    }
+
+    .feature-row {
+      padding: 8px 0;
+      font-size: 14.5px;
+    }
+
+    .feature-row-20 {
+      margin-top: -10px;
+      font-size: 14.5px;
+    }
+
+    .color-details{
+      gap: 4px;
+    }
+
+    .color-dot-details {
+      width: 15px;
+      height: 15px;
+    }
+
+    .buy-btn{
+      padding: 14px;
+      border-radius: 13px;
+      font-size: 14.5px;
+    }
+
+    .feature-item{
+      font-size: 14.5px;
+    }
+
 }
 
 /* Small Tablets / Large Phones Landscape (Samsung Galaxy Z Fold 6) */

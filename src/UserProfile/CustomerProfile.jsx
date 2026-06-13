@@ -200,7 +200,7 @@ const CustomerProfile = ({ user, customers, setCustomers, logout }) => {
 
               <div className="order-body">
 
-                 <p><strong>Fecha:</strong> {new Date(order.date).toLocaleString()}</p>
+                <p><strong>Fecha:</strong> {new Date(order.date).toLocaleString()}</p>
                 <p><strong>Pago:</strong> {order.payment_option}</p>
                 <p><strong>Metodo:</strong> {order.payment_format}</p>
                 <p><strong>Monto:</strong> ${order.revenew_total}
