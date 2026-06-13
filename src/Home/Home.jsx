@@ -187,7 +187,9 @@ const availableColors = !orderConfig.size
           <header   className="main_Header_Portal">
             <div className="main_subContainer_Portal">
               <div >
-                <Menu onClick={() => setOpen(true)} size={20}  />
+                <Menu onClick={() => setOpen(true)} 
+                      size={20} 
+                      className="menu_icon"  />
 
                 <div className="logo-container">
                     <img
@@ -209,7 +211,7 @@ const availableColors = !orderConfig.size
               </div>
               <Link to="/cart" className="cart-link">
               <div className="cart-container">
-                  <ShoppingCart size={18} />
+                  <ShoppingCart size={18} className="shoppiCart-rezise" />
 
                   {cart.length > 0 && (
                     <span className="cart-count">{cart.length}</span>
@@ -220,15 +222,15 @@ const availableColors = !orderConfig.size
           </header>
               {/* 🔍 Search */}
           <div className="main_inputContainer_Portal">
-              <Search size={14} />
+              <Search size={14} className="search-icon" />
               <input
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Busqueda..."
               />
-              <QrCode size={14} />
+              <QrCode size={14} className="qrcode-icon" />
               {searchTerm && (
-              <XCircle size={14} 
+              <XCircle size={14} className="qrcode-icon" 
                       onClick={() => {setSearchTerm(""); 
                                       setOpenCategory(null);
                                       setActiveCategory(categoryDB)}} />
@@ -268,6 +270,7 @@ const availableColors = !orderConfig.size
                 setOpenCategory(null);
 
               }}
+              className="X-icon" 
             />
           </div>
    
@@ -402,6 +405,7 @@ const availableColors = !orderConfig.size
 
                         {/* 🔥 Badge */}
                         {discount > 0 && <div className="badge">-{discount}%</div>}
+                        {/* <div className="badge">-{discount}%</div> */}
 
                         <img src={p.img[0].image_path} alt={p.name} className="product-img" />
 
@@ -640,7 +644,7 @@ const availableColors = !orderConfig.size
                   )}
 
             {orderSuccess && (
-                <div className="success-toast">
+                <div className="success-toast-home">
                   ✅ Orden Creada
                 </div>
               )}

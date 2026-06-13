@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Home, ShoppingCart, User, Store } from "lucide-react";
+import "./footer.css"
 
 export default function BottomNav({
   cart,
@@ -14,7 +15,7 @@ export default function BottomNav({
 
   return (
     <div className="main_Contianer_Portal">
-      <nav className="bottom-nav">
+      <nav className="bottom-nav-footer">
 
         {/* 🏠 HOME */}
         <div
@@ -22,7 +23,7 @@ export default function BottomNav({
           onClick={() => setActiveTab("home")}
         >
           <Link to="/" className="cart-link">
-            <Home size={20} />
+            <Home size={20} className="footers-icon" />
           </Link>
           <span>Home</span>
         </div>
@@ -37,7 +38,7 @@ export default function BottomNav({
           )}
 
           <Link to="/cart" className="cart-link">
-            <ShoppingCart size={20} />
+            <ShoppingCart size={20} className="footers-icon" />
           </Link>
 
           <span>Cart</span>
@@ -50,15 +51,15 @@ export default function BottomNav({
         >
           {isLogged ? (
             <Link to="/login" className="cart-link">
-              <User size={20} />
+              <User size={20} className="footers-icon" />
             </Link>
           ) : (
             <Link to="/Customer" className="cart-link">
-              <User size={20} />
+              <User size={20} className="footers-icon" />
             </Link>
           )}
 
-          <span>Profile</span>
+          <span>Usuario</span>
         </div>
 
         {/* 🛠 ADMIN (ONLY FOR ADMIN USERS) */}
@@ -68,7 +69,7 @@ export default function BottomNav({
             onClick={() => setActiveTab("admin")}
           >
             <Link to="/Admin" className="cart-link">
-              <Store size={20} />
+              <Store size={20} className="footers-icon" />
             </Link>
             <span>Admin</span>
           </div>

@@ -236,6 +236,7 @@
   border: none;
   padding: 10px;
   border-radius: 6px;
+  color: #000000;
 }
 
 
@@ -282,6 +283,7 @@
 
   border-bottom: 1px solid #eee;
 }
+
 .sidenav-scroll{
   overflow-y: auto;
   height: calc(80vh - 60px); /* 🔥 subtract header height */
@@ -313,6 +315,7 @@
   font-size: 18px;
   color: #9ca3af;
 }
+
 .sub-group{
   font-size: 14px;
   /* margin-left: 15px; */
@@ -771,15 +774,272 @@
 }
 
 
+.success-toast-home {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: #2ecc71;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 12px;
+
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+
+  animation: fadeInUp 0.3s ease;
+  z-index: 9999;
+}
 
 
 
-/* Extra Small Phones */
+
+/* Extra Small Phones (iPhone SE)*/
 @media screen and (max-width: 320px) {
+   .main_subContainer_Portal{
+      padding: 1px 12px;
+   }
+   
+   .menu_icon{
+      width: 18px;
+      height: 18px;
+   }
+
+   .logo-container{
+      gap: 2.5px;
+      margin-left: -11px;
+    }
+
+    .logo-cart{
+      height: 42px;
+    }
+
+    .logo-speed span{
+        height: 1.9px;
+    }
+
+    .logo-speed span:nth-child(1){
+      width: 6px;
+    }
+
+    .logo-speed span:nth-child(2){
+      width: 12px;
+    }
+
+    .logo-speed span:nth-child(3){
+      width: 18px;
+    }
+
+    .logo-express{
+      font-size: 14px;
+    }
+
+    .shoppiCart-rezise {
+      width: 16px;
+      height: 16px;
+      margin-right: -10px;
+    }
+
+    .cart-count{
+      right: 10px;
+      width: 13px;
+      height: 13px;
+      font-size: 8px;
+    }
+
+    .main_inputContainer_Portal{
+      padding: 8px 12px;
+      gap: 6px;
+    }
+
+    .main_inputContainer_Portal input{
+      font-size: 12.5px;
+    }
+
+    .search-icon{
+      width: 12px;
+      height: auto;
+    }
+
+    .qrcode-icon{
+      width: 12px;
+      height: auto;
+    }
+
+    .modal-box {
+      padding: 20px;
+      width: 270px;
+    }
+
+    .modal-box > h2 {
+      font-size: 17px;
+    }
+
+    .section > p {
+      font-size: 13.7px;
+    }
+
+    .options {
+      gap: 8px;
+    }
+
+    .options button {
+      padding: 2px 6px;
+      font-size: 13px;
+    }
+
+    .confirm {
+      padding: 8px;
+      font-size: 13px;
+    }
+
+    .cancel {
+      padding: 8px;
+      font-size: 13px;
+    }
+
+    .success-toast-home {
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+    
+    .load-more-btn{
+      padding: 8px 20px;
+      font-size: 12.8px;
+    }
+
+    .loader {
+      width: 40px;
+      height: 40px;
+    }
+
+    .category-scroll{
+      gap: 6px;
+      padding: 0 14px 6px;
+    }
+
+    .category-pill{
+      padding: 6px 12px;
+      font-size: 12.5px;
+    }
+
+    .product-grid{
+      gap: 10px;
+      padding: 0 8px 50px;
+    }
+
+    .wishlist{
+      width: 20px;
+      height: 20px;
+      font-size: 13px;
+    }
+
+    .badge{
+      top: 9px;
+      font-size: 10px;
+      padding: 3px 5px;
+    }
+
+    .product-img{
+      height: 140px;
+      object-fit: fill;
+    }
+
+    .product-info-home{
+      padding: 8px;
+    }
+
+    .product-info-home > h2{
+      font-size: 12.5px;
+    }
+
+    .stars{
+      font-size: 12px;
+      gap: 3px;
+      height: 6px;
+    }
+
+    .stars > span{
+      font-size: 10px;
+    }
+
+    .price-container{
+      gap: 4px;
+      margin-top: 2px;
+      margin-bottom: 4px;
+    }
+
+    .home-price{
+      font-size: 13px;
+    }
+
+    .old-price{
+      font-size: 11px;
+    }
+
+    .add-btn{
+      margin-top: 0.5px;
+      padding: 8px;
+      border-radius: 11px;
+      font-size: 11.5px;
+    }
+
+    .sidenav-header{
+      padding: 12px;
+    }
+
+    .sidenav-header > h3{
+      font-size: 15px;
+    }
+
+    .X-icon{
+      width: 18px;
+      height: auto;
+    }
+
+    .sidenav-scroll{
+      height: calc(80vh - 45px); /* 🔥 subtract header height */
+    }
+
+    .sidenav-item{
+      padding: 10px 14px;
+      font-size: 12.7px;
+    }
+
+    .plus{
+      font-size: 15px;
+    }
+
+    .sub-group{
+      font-size: 12.5px;
+      padding: 0px 18px;
+    }
+
+    .sub-items{
+      padding-left: 10px;
+      font-size: 12.5px;
+    }
+
+    .sub-items span{
+      padding: 4px 0;
+    }
+
+    .sub-item  div{
+      padding: 2px 4px;
+      gap: 4px;
+    }
+
+    .sub-item-div{
+      height: 30px;
+      font-size: 12.5px;
+    }
+  
 
 }
 
-/* Small Phones */
+/* Small Phones (LG) */
 @media screen and (min-width: 321px) and (max-width: 375px) {
     
    .product-grid{
@@ -830,29 +1090,19 @@
     .add-btn{
       margin-top: 1px;
       padding: 8px;
-
-      border: none;
-      border-radius: 14px;
-
-      background: linear-gradient(135deg, #ff4d6d, #7c3aed);
-      color: white;
-
       font-size: 12px;
-      font-weight: 600;
-
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     }
 
 
 
 }
 
-/* Large Phones */
+/* Large Phones (iPhone 12)*/
 @media screen and (min-width: 376px) and (max-width: 480px) {
 
 }
 
-/* Small Tablets / Large Phones Landscape */
+/* Small Tablets / Large Phones Landscape (Samsung Galaxy Z Fold 6) */
 @media screen and (min-width: 481px) and (max-width: 767px) {
 
 }
