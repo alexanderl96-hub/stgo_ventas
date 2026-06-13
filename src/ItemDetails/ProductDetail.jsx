@@ -346,7 +346,7 @@ const availableColors = !orderConfig.size
 
         <div className="image-slider">
 
-  <Swiper
+  {/* <Swiper
     modules={[Pagination]}
     slidesPerView={1}
     pagination={{ clickable: true }}
@@ -367,7 +367,40 @@ const availableColors = !orderConfig.size
         />
       </SwiperSlide>
     ))}
-  </Swiper>
+  </Swiper> */}
+
+  <Swiper
+  modules={[Zoom]}
+  zoom={true}
+  initialSlide={modalImgIndex}
+  slidesPerView={1}
+  onSlideChange={(swiper) =>
+    setModalImgIndex(swiper.activeIndex)
+  }
+>
+  {product.img.map((img, index) => (
+    <SwiperSlide key={index}>
+      <div className="swiper-zoom-container">
+        <img
+          src={img.image_path}
+          className="modal-image"
+          alt={product.name}
+        />
+      </div>
+    </SwiperSlide>
+  ))}
+</Swiper>
+
+<div className="dots modal-dots">
+  {product.img.map((_, i) => (
+    <span
+      key={i}
+      className={`dot ${
+        i === modalImgIndex ? "active" : ""
+      }`}
+    />
+  ))}
+</div>
 
   {showImageModal && (
     <div
