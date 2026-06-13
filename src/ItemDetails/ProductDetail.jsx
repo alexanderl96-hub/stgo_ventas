@@ -139,7 +139,7 @@ const availableColors = !orderConfig.size
 
 
             <div className="main_inputContainer_PortalDetails">
-                <Search size={14} />
+                <Search size={14} className="details-icon" />
 
                 <input
                 value={searchTerm}
@@ -147,7 +147,7 @@ const availableColors = !orderConfig.size
                 placeholder="Busqueda..."
                 />
 
-                <QrCode size={14} />
+                <QrCode size={14} className="details-icon"  />
 
                 {searchTerm && (
                 <XCircle
@@ -157,6 +157,7 @@ const availableColors = !orderConfig.size
                     setOpenCategory(null);
                     setActiveCategory(categoryDB);
                     }}
+                    className="details-icon" 
                 />
                 )}
             </div>
@@ -551,10 +552,11 @@ const availableColors = !orderConfig.size
             </div>
 
             <div className="price-container">
-            <span className="price">${product.price}</span>
+            <span className="price-details">${product.price}</span>
             {Number(product.price) !== Number(product.original_price) && (
-                <span className="old-price">${product.original_price}</span>
+                <span className="old-price-details">${product.original_price}</span>
             )}
+            {/* <span className="old-price-details">${product.original_price}</span> */}
             </div>
 
             <p className="description">

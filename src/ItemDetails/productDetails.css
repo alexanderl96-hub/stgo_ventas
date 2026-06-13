@@ -1,23 +1,10 @@
 .detail-page{
   display: flex;
   flex-direction: column;
-
   width: 100%;
   max-width: 100vw;
-
-  /* background: #fff; */
   background: #f6f6f7;;
 }
-
-/* .detail-img{
-  width: 100%;
-  height: 300px;
-
-  object-fit: cover;
-
-  🔥 responsive height
-  max-height: 50vh;
-} */
 
 .detail-img{
   width: 100%;
@@ -67,12 +54,12 @@
   margin-top: 8px;
 }
 
-.price{
+.price-details{
   font-size: 18px;
   font-weight: bold;
 }
 
-.old-price{
+.old-price-details{
   font-size: 14px;
   text-decoration: line-through;
   color: #9ca3af;
@@ -290,13 +277,9 @@
   z-index:10;
 }
 
-
-
 .modal-arrow.left{
   left:10px;
 }
-
-
 
 .modal-arrow.right{
   right:10px;
@@ -366,7 +349,6 @@
 
 .product-header-active {
   background: white;
-
   box-shadow:
     0 2px 10px rgba(0, 0, 0, 0.08);
 }
@@ -529,4 +511,216 @@
 }
 .main_inputContainer_PortalDetails:focus-within{
   box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+}
+
+
+
+
+
+
+/* Extra Small Phones (iPhone SE)*/
+@media screen and (max-width: 320px) {
+  .product-header {
+    padding: 10px;
+    height: 80px;
+  }
+
+  .header-top {
+    gap: 8px;
+  }
+
+  .main_inputContainer_PortalDetails {
+    margin: 0 14px 8px;
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  .main_inputContainer_PortalDetails input{
+    font-size: 12.5px;
+  }
+
+  .details-icon{
+    width: 12px;
+    height: auto;
+  }
+
+  .header-tabs {
+      gap: 15px;
+  }
+
+  .tab {
+    padding: 3px 12px;
+    font-size: 12.5px;
+  }
+  
+  .image-slider{
+    margin-top: -10px;
+  }
+
+  .arrow{
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+
+  .arrow.left{
+    left: 10px;
+  }
+
+  .arrow.right{
+    right: 10px;
+  }
+
+  
+  .detail-img{
+    max-height: 200px; /* prevents it from getting too big */
+    min-height: 270px; /* prevents it from getting too small */
+  }
+  
+  .close-modal{
+    top:10px;
+    right:10px;
+    width:30px;
+    height:30px;
+    font-size:17px;
+  }
+
+  .modal-arrow{
+    width:30px;
+    height:30px;
+    font-size:18px;
+  }
+
+  .modal-arrow.left{
+    left:5px;
+  }
+
+  .modal-arrow.right{
+    right:5px;
+  }
+
+  .modal-image{
+    max-height:70vh;
+  }
+
+  .dots{
+    gap: 5px;
+  }
+
+  .dot{
+    width: 5px;
+    height: 5px;
+  }
+
+  .success-toast {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+  }
+
+  .detail-info h2{
+    font-size: 13px;
+  }
+
+  .stars .product{
+    font-size: 12.5px;
+  }
+
+  .stars .product2{
+    font-size: 12.5px;
+  }
+
+  .price-details{
+    font-size: 14px;
+  }
+
+  .old-price-details{
+    font-size: 11.5px;
+  }
+
+
+  .description{
+    margin-top: 10px;
+    font-size: 12.5px;
+  }
+
+  .features-section {
+    padding: 15px;
+  }
+
+  .features-section > h3{
+    font-size: 14px;
+  }
+
+  .feature-row {
+    padding: 8px 0;
+    font-size: 12.5px;
+  }
+
+  .feature-row-20 {
+    margin-top: -10px;
+    font-size: 12.5px;
+  }
+
+  .color-details{
+    gap: 3px;
+  }
+
+  .color-dot-details {
+    width: 14px;
+    height: 14px;
+  }
+
+  .buy-btn{
+    padding: 13px;
+    border-radius: 13px;
+    font-size: 13px;
+  }
+
+  .feature-item{
+    font-size: 12.5px;
+  }
+
+
+}
+
+/* Small Phones (LG) */
+@media screen and (min-width: 321px) and (max-width: 375px) {
+  
+  
+}
+
+/* Large Phones (iPhone 12)*/
+@media screen and (min-width: 376px) and (max-width: 480px) {
+   
+}
+
+/* Small Tablets / Large Phones Landscape (Samsung Galaxy Z Fold 6) */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    
+}
+
+/* Tablets */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+
+}
+
+/* Small Laptops */
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+
+}
+
+/* Desktops */
+@media screen and (min-width: 1281px) and (max-width: 1440px) {
+
+}
+
+/* Large Desktops */
+@media screen and (min-width: 1441px) and (max-width: 1920px) {
+
+}
+
+/* 2K+ Monitors */
+@media screen and (min-width: 1921px) {
+
 }

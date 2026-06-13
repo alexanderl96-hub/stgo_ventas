@@ -158,12 +158,27 @@
   border-radius: 8px;
 }
 
-.product-info {
+.product-info{
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  width: 100%;
-  font-size: 13px;
+
+  flex: 1; /* 🔥 fills remaining space */
+  padding: 10px;
 }
+
+.product-info h2{
+ font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* max 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
 
 .register-box input {
   width: 100%;

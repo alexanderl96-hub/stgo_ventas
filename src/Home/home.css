@@ -1430,8 +1430,8 @@
     }
 
    .product-grid{
-      gap: 13px;
-      padding: 0 16px 50px;
+      gap: 12px;
+      padding: 0 14px 50px;
    }
 
    .product-card:active{
@@ -1451,7 +1451,7 @@
     }
 
     .product-img{
-      height: 145px;
+      height: 150px;
 
     }
 
@@ -1471,6 +1471,10 @@
     }
 
     .stars > span{
+      font-size: 12.8px;
+    }
+
+    .reviews{
       font-size: 12.8px;
     }
 
@@ -1552,7 +1556,7 @@
 
 /* Small Tablets / Large Phones Landscape (Samsung Galaxy Z Fold 6) */
 @media screen and (min-width: 481px) and (max-width: 767px) {
-
+    
 }
 
 /* Tablets */

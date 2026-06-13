@@ -341,12 +341,134 @@ body {
 
 
 
-/* Extra Small Phones */
+
+/* Extra Small Phones (iPhone SE)*/
 @media screen and (max-width: 320px) {
+   .cart-page {
+      padding: 12px;
+    }
+
+    .cart-top-summary {
+      gap: 1px;
+      padding: 6px 13px;
+      margin-bottom: 12px;
+    }
+
+    .cart-top-summary > h3 {
+      font-size: 13.5px;
+    }
+
+    .summary-line {
+      gap: 8px;
+    }
+
+    .summary-line > span{
+      font-size: 12.5px;
+    }
+
+    .total {
+      font-size: 12.5px;
+    }
+
+    .checkout-btn {
+      padding: 8px 13px;
+      margin-top: 1px;
+      font-size: 12px;
+    }
+
+    .cart-left {
+      padding: 10px;
+    }
+
+    .cart-left > h2 {
+      font-size: 13.5px;
+    }
+
+    .cart-row {
+      gap: 8px;
+      padding: 4px 2px;
+    }
+
+    .cart-left-block {
+      align-items: flex-start;
+    }
+
+    .cart-left-block img {
+      width: 65px;
+      height: 65px;
+    }
+
+    .brand {
+      font-size: 12.5px;
+    }
+
+    .image-meta {
+      text-align: left;
+      margin-top: 3px;
+      font-size: 12.5px;
+    }
+
+    .cart-info h4 {
+      margin-top: -1px;
+      font-size: 12.7px;
+    }
+
+    .desc {
+      font-size: 12.5px;
+      margin: 3px 0;
+    }
+
+    .meta {
+      font-size: 12.5px;
+      height: 5px;
+    }
+
+    .colors {
+      gap: 2px;
+      margin: 3px 0;
+      font-size: 12.5px;
+    }
+
+    .color-dot {
+      width: 12px;
+      height: 12px;
+      margin-top: 1px;
+    }
+
+    .product-price {
+      margin-top: 3px;
+      font-size: 12.5px;
+    }
+    .actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap:8px;
+    }
+
+    .qr-icon {
+      margin-left: 130px;
+      margin-top: -60px;
+    }
+
+   .resize-qr {
+      width: 40px;
+      height: 40px;
+
+    }
+
+    .qty button {
+      width: 20px;
+      height: 20px;
+    }
+
+    .qty span {
+      font-size: 12.5px;
+      padding: 0 8px;
+    }
 
 }
 
-/* Small Phones */
+/* Small Phones (LG) */
 @media screen and (min-width: 321px) and (max-width: 375px) {
     .cart-page {
       padding: 12px;
@@ -470,17 +592,136 @@ body {
       font-size: 12.5px;
       padding: 0 8px;
     }
-
+  
 }
 
-/* Large Phones */
+/* Large Phones (iPhone 12)*/
 @media screen and (min-width: 376px) and (max-width: 480px) {
+     .cart-page {
+      padding: 12px;
+    }
 
+    .cart-top-summary {
+      gap: 4px;
+      padding: 10px 16px;
+      margin-bottom: 15px;
+    }
+
+    .cart-top-summary > h3 {
+      font-size: 17px;
+    }
+
+    .summary-line {
+      gap: 10px;
+    }
+
+    .summary-line > span{
+      font-size: 14px;
+    }
+
+    .total {
+      font-size: 14px;
+    }
+
+    .checkout-btn {
+      padding: 11px 16px;
+      margin-top: 4px;
+      font-size: 14px;
+    }
+
+    .cart-left {
+      padding: 12px;
+    }
+
+    .cart-left > h2 {
+      font-size: 17px;
+    }
+
+    .cart-row {
+      gap: 8px;
+      padding: 8px 4px;
+    }
+
+    .cart-left-block {
+      align-items: flex-start;
+    }
+
+    .cart-left-block img {
+      width: 110px;
+      height: 110px;
+    }
+
+    .brand {
+      font-size: 13px;
+    }
+
+    .image-meta {
+      text-align: left;
+      margin-top: 3px;
+      font-size: 13px;
+    }
+
+    .cart-info h4 {
+      margin-top: -1px;
+      font-size: 14.5px;
+    }
+
+    .desc {
+      font-size: 14px;
+      margin: 3px 0;
+    }
+
+    .meta {
+      font-size: 14px;
+      height: 5px;
+    }
+
+    .colors {
+      gap: 2px;
+      margin: 3px 0;
+      font-size: 14px;
+    }
+
+    .color-dot {
+      width: 14px;
+      height: 14px;
+      margin-top: 1px;
+    }
+
+    .product-price {
+      margin-top: 3px;
+      font-size: 14px;
+    }
+    .actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap:12px;
+    }
+
+    .qr-icon {
+      margin-left: 160px;
+      margin-top: -70px;
+    }
+
+   .resize-qr {
+      width: 55px;
+      height: 55px;
+    }
+
+    .qty button {
+      width: 25px;
+      height: 25px;
+    }
+
+    .qty span {
+      font-size: 14px;
+      padding: 0 8px;
+    }
 }
 
-/* Small Tablets / Large Phones Landscape */
+/* Small Tablets / Large Phones Landscape (Samsung Galaxy Z Fold 6) */
 @media screen and (min-width: 481px) and (max-width: 767px) {
-
+    
 }
 
 /* Tablets */
