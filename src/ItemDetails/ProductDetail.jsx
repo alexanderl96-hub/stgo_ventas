@@ -6,6 +6,12 @@ import { filteringImgColor } from "../utils/filteringImgColor.jsx"
 import { getColorStyle } from "../utils/filterColorSet.jsx";
 import { ShoppingCart, Menu, X, Search, QrCode,
    XCircle, ArrowLeft } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Zoom } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/zoom";
 
 import useDataProducts from "../api/dataProducts";
 import API_URL from "../api/api_images";
@@ -200,9 +206,9 @@ const availableColors = !orderConfig.size
 
             </header>
 
-        <div className="image-slider">
+        {/* <div className="image-slider">
 
-        {/* ⬅️ LEFT ARROW */}
+        ⬅️ LEFT ARROW
         {product.img.length > 1 &&
         <div
             className="arrow left"
@@ -215,10 +221,9 @@ const availableColors = !orderConfig.size
             ‹
         </div>}
 
-        {/* 📸 IMAGE */}
+        📸 IMAGE
         <img
             src={product.img[currentImg].image_path}
-            // src={`${API_URL}${product.img[currentImg]}`}
             className="detail-img"
             alt={product.name}
 
@@ -251,7 +256,7 @@ const availableColors = !orderConfig.size
                     }
                 >
 
-                    {/* CLOSE */}
+                    CLOSE
                     <button
                     className="close-modal"
 
@@ -264,7 +269,7 @@ const availableColors = !orderConfig.size
 
 
 
-                    {/* LEFT */}
+                    LEFT
                     {
                     product.img.length > 1 && (
 
@@ -280,7 +285,7 @@ const availableColors = !orderConfig.size
 
 
 
-                    {/* IMAGE */}
+                    IMAGE
                     <img
                     src={
                         product.img[modalImgIndex]
@@ -294,7 +299,7 @@ const availableColors = !orderConfig.size
 
 
 
-                    {/* RIGHT */}
+                    RIGHT
                     {
                     product.img.length > 1 && (
 
@@ -311,10 +316,12 @@ const availableColors = !orderConfig.size
                 </div>
 
                 </div>
+
+               
             )
             }
 
-        {/* ➡️ RIGHT ARROW */}
+        ➡️ RIGHT ARROW
         {product.img.length > 1 &&
         <div
             className="arrow right"
@@ -335,7 +342,78 @@ const availableColors = !orderConfig.size
             ))}
             </div>
 
-        </div>
+        </div> */}
+
+        <div className="image-slider">
+
+  <Swiper
+    modules={[Pagination]}
+    slidesPerView={1}
+    pagination={{ clickable: true }}
+    onSlideChange={(swiper) =>
+      setCurrentImg(swiper.activeIndex)
+    }
+  >
+    {product.img.map((img, index) => (
+      <SwiperSlide key={index}>
+        <img
+          src={img.image_path}
+          className="detail-img"
+          alt={product.name}
+          onClick={() => {
+            setModalImgIndex(index);
+            setShowImageModal(true);
+          }}
+        />
+      </SwiperSlide>
+    ))}
+  </Swiper>
+
+  {showImageModal && (
+    <div
+      className="image-modal-overlay"
+      onClick={() => setShowImageModal(false)}
+    >
+      <div
+        className="image-modal-content"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          className="close-modal"
+          onClick={() => setShowImageModal(false)}
+        >
+          ✕
+        </button>
+
+        <Swiper
+          modules={[Pagination, Zoom]}
+          zoom={true}
+          pagination={{ clickable: true }}
+          initialSlide={modalImgIndex}
+          slidesPerView={1}
+          onSlideChange={(swiper) =>
+            setModalImgIndex(swiper.activeIndex)
+          }
+        >
+          {product.img.map((img, index) => (
+            <SwiperSlide key={index}>
+              <div className="swiper-zoom-container">
+                <img
+                  src={img.image_path}
+                  className="modal-image"
+                  alt={product.name}
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </div>
+  )}
+
+</div>
+
+
 
          {activeProduct && (
             <div className="modal-overlay">
