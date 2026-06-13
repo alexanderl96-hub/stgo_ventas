@@ -60,7 +60,6 @@
 
 
 .main_Contianer_Portal{
-  /* background: #f6f6f7; */
   display:flex;
   flex-direction: column;
   font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
@@ -799,6 +798,7 @@
 @media screen and (max-width: 320px) {
    .main_subContainer_Portal{
       padding: 1px 12px;
+      border-radius: 13px;
    }
    
    .menu_icon{
@@ -1018,6 +1018,10 @@
       padding: 0px 18px;
     }
 
+    .sub-group > span{
+      font-size: 12.5px;
+    }
+
     .sub-items{
       padding-left: 10px;
       font-size: 12.5px;
@@ -1042,10 +1046,139 @@
 
 /* Small Phones (LG) */
 @media screen and (min-width: 321px) and (max-width: 375px) {
+     .main_subContainer_Portal{
+      padding: 2px 14px;
+      border-radius: 15px;
+   }
+   
+   .menu_icon{
+      width: 19px;
+      height: 19px;
+   }
+
+   .logo-container{
+      gap: 3px;
+      margin-left: -9px;
+    }
+
+    .logo-cart{
+      height: 45px;
+    }
+
+    .logo-speed span{
+        height: 2px;
+    }
+
+    .logo-speed span:nth-child(1){
+      width: 7px;
+    }
+
+    .logo-speed span:nth-child(2){
+      width: 13px;
+    }
+
+    .logo-speed span:nth-child(3){
+      width: 19px;
+    }
+
+    .logo-express{
+      font-size: 15px;
+    }
+
+    .shoppiCart-rezise {
+      width: 17px;
+      height: 17px;
+      margin-right: -10px;
+    }
+
+    .cart-count{
+      top: -4px;
+      right: 7px;
+      width: 14px;
+      height: 14px;
+      font-size: 9px;
+    }
+
+    .main_inputContainer_Portal{
+      padding: 9px 13px;
+      gap: 7px;
+    }
+
+    .main_inputContainer_Portal input{
+      font-size: 13px;
+    }
+
+    .search-icon{
+      width: 13px;
+      height: auto;
+    }
+
+    .qrcode-icon{
+      width: 13px;
+      height: auto;
+    }
+
+    .modal-box {
+      padding: 20px;
+      width: 285px;
+    }
+
+    .modal-box > h2 {
+      font-size: 18px;
+    }
+
+    .section > p {
+      font-size: 14.5px;
+    }
+
+    .options {
+      gap: 9px;
+    }
+
+    .options button {
+      padding: 3px 7px;
+      font-size: 13.7px;
+    }
+
+    .confirm {
+      padding: 9px;
+      font-size: 13.7px;
+    }
+
+    .cancel {
+      padding: 9px;
+      font-size: 13.7px;
+    }
+
+    .success-toast-home {
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 13.8px;
+    }
     
+    .load-more-btn{
+      padding: 9px 21px;
+      font-size: 13.8px;
+    }
+
+    .loader {
+      width: 45px;
+      height: 45px;
+    }
+
+    .category-scroll{
+      gap: 7px;
+      padding: 0 15px 7px;
+    }
+
+    .category-pill{
+      padding: 7px 13px;
+      font-size: 13px;
+    }
+
    .product-grid{
-      gap: 12px;
-      padding: 0 13px 50px;
+      gap: 13px;
+      padding: 0 14px 50px;
    }
 
    .product-card:active{
@@ -1053,54 +1186,368 @@
     }
 
     .wishlist{
-      font-size: 13px;
+      width: 21px;
+      height: 21px;
+      font-size: 13.5px;
+    }
+
+    .badge{
+      top: 10px;
+      font-size: 11px;
+      padding: 3px 5px;
     }
 
     .product-img{
-      height: 110px;
+      height: 130px;
     }
 
     .product-info-home{
-      padding: 4px 8px;
+      padding: 5px 8.5px;
     }
 
     .product-info-home h2{
-      font-size: 13px;
-      margin-bottom: -2px;
+      font-size: 13.5px;
+      margin-bottom: -3px;
+      margin-top: -1px;
     }
 
     .stars{
-      font-size: 11.5px;
-      gap: 2px;
-    }
-    
-    .price-container{
       gap: 3px;
-      margin-top: -2px;
-      margin-bottom: 3px;
+      height: 10px;
+    }
+
+    .stars > span{
+      font-size: 11.8px;
+    }
+
+    .price-container{
+      gap: 4px;
+      margin-top: 2px;
+      margin-bottom: 4px;
     }
 
     .home-price{
-      font-size: 12.5px;
+      font-size: 13px;
     }
 
     .old-price{
-      font-size: 12px;
+      font-size: 13px;
     }
 
     .add-btn{
-      margin-top: 1px;
-      padding: 8px;
-      font-size: 12px;
+      padding: 9px;
+      border-radius: 11px;
+      font-size: 13px;
     }
 
 
+    .sidenav-header{
+      padding: 13px;
+    }
 
+    .sidenav-header > h3{
+      font-size: 16px;
+    }
+
+    .X-icon{
+      width: 19px;
+      height: auto;
+    }
+
+    .sidenav-scroll{
+      height: calc(80vh - 45px); /* 🔥 subtract header height */
+    }
+
+    .sidenav-item{
+      padding: 11px 15px;
+      font-size: 13.5px;
+    }
+
+    .plus{
+      font-size: 16px;
+    }
+
+    .sub-group{
+      font-size: 13px;
+      padding: 0px 18px;
+    }
+
+    .sub-group > span{
+      font-size: 13px;
+    }
+
+    .sub-items{
+      padding-left: 10px;
+      font-size: 13px;
+    }
+
+    .sub-items span{
+      padding: 5px 0;
+    }
+
+    .sub-item  div{
+      padding: 2px 4px;
+      gap: 5px;
+    }
+
+    .sub-item-div{
+      height: 35px;
+      font-size: 13px;
+    }
+  
 }
 
 /* Large Phones (iPhone 12)*/
 @media screen and (min-width: 376px) and (max-width: 480px) {
+   .main_subContainer_Portal{
+      padding: 4px 15px;
+      border-radius: 15px;
+   }
+   
+   .menu_icon{
+      width: 20px;
+      height: 20px;
+   }
 
+   .logo-container{
+      gap: 4px;
+      margin-left: -7px;
+    }
+
+    .logo-cart{
+      height: 50px;
+    }
+
+    .logo-speed span{
+        height: 2px;
+    }
+
+    .logo-speed span:nth-child(1){
+      width: 9px;
+    }
+
+    .logo-speed span:nth-child(2){
+      width: 15px;
+    }
+
+    .logo-speed span:nth-child(3){
+      width: 21px;
+    }
+
+    .logo-express{
+      font-size: 16.5px;
+    }
+
+    .shoppiCart-rezise {
+      width: 18px;
+      height: 18px;
+      margin-right: -10px;
+    }
+
+    .cart-count{
+      top: -6px;
+      right: 7px;
+      width: 16px;
+      height: 16px;
+      font-size: 10px;
+    }
+
+    .main_inputContainer_Portal{
+      padding: 10px 14px;
+      gap: 8px;
+    }
+
+    .main_inputContainer_Portal input{
+      font-size: 13.9px;
+    }
+
+    .search-icon{
+      width: 13.9px;
+      height: auto;
+    }
+
+    .qrcode-icon{
+      width: 13.9px;
+      height: auto;
+    }
+
+    .modal-box {
+      padding: 22px;
+      width: 310px;
+    }
+
+    .modal-box > h2 {
+      font-size: 19px;
+    }
+
+    .section > p {
+      font-size: 15.5px;
+    }
+
+    .options {
+      gap: 10px;
+    }
+
+    .options button {
+      padding: 4px 8px;
+      font-size: 14.5px;
+    }
+
+    .confirm {
+      padding: 10px;
+      font-size: 14.5px;
+    }
+
+    .cancel {
+      padding: 10px;
+      font-size: 14.5px;
+    }
+
+    .success-toast-home {
+      padding: 11px 21px;
+      border-radius: 10px;
+      font-size: 14.5px;
+    }
+    
+    .load-more-btn{
+      padding: 10px 22px;
+      font-size: 14.5px;
+    }
+
+    .loader {
+      width: 50px;
+      height: 50px;
+    }
+
+    .category-scroll{
+      gap: 8px;
+      padding: 0 16px 8px;
+    }
+
+    .category-pill{
+      padding: 8px 14px;
+      font-size: 14px;
+    }
+
+   .product-grid{
+      gap: 13px;
+      padding: 0 16px 50px;
+   }
+
+   .product-card:active{
+      transform: scale(0.87);
+    }
+
+    .wishlist{
+      width: 22px;
+      height: 22px;
+      font-size: 14.5px;
+    }
+
+    .badge{
+      top: 10px;
+      font-size: 11.7px;
+      padding: 4px 6px;
+    }
+
+    .product-img{
+      height: 145px;
+
+    }
+
+    .product-info-home{
+      padding: 6px 10px;
+    }
+
+    .product-info-home h2{
+      font-size: 14px;
+      margin-bottom: -2px;
+      margin-top: -0.5px;
+    }
+
+    .stars{
+      gap: 4px;
+      height: 12px;
+    }
+
+    .stars > span{
+      font-size: 12.8px;
+    }
+
+    .price-container{
+      gap: 4px;
+      margin-top: 2px;
+      margin-bottom: 4px;
+    }
+
+    .home-price{
+      font-size: 14px;
+    }
+
+    .old-price{
+      font-size: 14px;
+    }
+
+    .add-btn{
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+
+    .sidenav-header{
+      padding: 14px;
+    }
+
+    .sidenav-header > h3{
+      font-size: 18px;
+    }
+
+    .X-icon{
+      width: 20px;
+      height: auto;
+    }
+
+    .sidenav-scroll{
+      height: calc(80vh - 45px); /* 🔥 subtract header height */
+    }
+
+    .sidenav-item{
+      padding: 12px 16px;
+      font-size: 14px;
+    }
+
+    .plus{
+      font-size: 17px;
+    }
+
+    .sub-group{
+      font-size: 14px;
+      padding: 0px 18px;
+    }
+
+    .sub-group > span{
+      font-size: 14px;
+    }
+
+    .sub-items{
+      padding-left: 10px;
+      font-size: 14px;
+    }
+
+    .sub-items span{
+      padding: 6px 0;
+    }
+
+    .sub-item  div{
+      padding: 2px 4px;
+      gap: 6px;
+    }
+
+    .sub-item-div{
+      height: 40px;
+      font-size: 14px;
+    }
 }
 
 /* Small Tablets / Large Phones Landscape (Samsung Galaxy Z Fold 6) */

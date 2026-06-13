@@ -77,13 +77,37 @@
 
 /* Small Phones (LG) */
 @media screen and (min-width: 321px) and (max-width: 375px) {
-   
+     .bottom-nav-footer{
+        padding: 9px 0;
+      }
+
+      .nav-item{
+        gap: 3px;
+        font-size: 11px;
+      }
+
+      .footers-icon{
+        width: 19px;
+        height: auto;
+      }
 
 }
 
 /* Large Phones (iPhone 12)*/
 @media screen and (min-width: 376px) and (max-width: 480px) {
+      .bottom-nav-footer{
+        padding: 10px 0;
+      }
 
+      .nav-item{
+        gap: 4px;
+        font-size: 11.7px;
+      }
+
+      .footers-icon{
+        width: 20px;
+        height: auto;
+      }
 }
 
 /* Small Tablets / Large Phones Landscape (Samsung Galaxy Z Fold 6) */

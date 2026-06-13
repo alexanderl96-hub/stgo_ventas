@@ -405,7 +405,7 @@ const availableColors = !orderConfig.size
 
                         {/* 🔥 Badge */}
                         {discount > 0 && <div className="badge">-{discount}%</div>}
-                        {/* <div className="badge">-{discount}%</div> */}
+                        <div className="badge">-{discount}%</div>
 
                         <img src={p.img[0].image_path} alt={p.name} className="product-img" />
 
