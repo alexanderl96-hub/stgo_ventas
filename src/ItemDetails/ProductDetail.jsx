@@ -759,7 +759,9 @@ const availableColors = !orderConfig.size
                 <div className="feature-row">
                     { (product.category === "Ropa" 
                         || product.category === "Joyería" ) && <span>Tallas</span>}
-                     { product.category === "Zapatos" && <span>Medidas</span>}
+                     { (product.category === "Zapatos" ||
+                        product.category === "Hogar"
+                      )&& <span>Medidas</span>}
                      { (product.category === "Electrónicos" 
                         || product.category === "Electrodomésticos" 
                         || product.category === "Equipos" ) && <span>Dimenciones</span>}
