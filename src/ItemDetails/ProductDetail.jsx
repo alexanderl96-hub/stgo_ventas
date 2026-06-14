@@ -451,7 +451,11 @@ const availableColors = !orderConfig.size
 
                     <Swiper
                         modules={[Zoom]}
-                        zoom={true}
+                        // zoom={true}
+                        zoom={{
+                            maxRatio: 4,
+                            minRatio: 1
+                        }}
                         initialSlide={modalImgIndex}
                         slidesPerView={1}
                         onSlideChange={(swiper) =>
