@@ -564,7 +564,7 @@
 @media screen and (max-width: 320px) {
   .product-header {
     padding: 13px;
-    /* height: 90px; */
+    height: 95px;
   }
 
   .header-top {
@@ -738,7 +738,7 @@
 @media screen and (min-width: 321px) and (max-width: 375px) {
     .product-header {
       padding: 13px;
-      /* height: 90px; */
+      height: 95px;
     }
 
     .header-top {
@@ -909,7 +909,7 @@
 @media screen and (min-width: 376px) and (max-width: 480px) {
      .product-header {
       padding: 13px;
-      /* height: 95px; */
+      height: 95px;
     }
 
     .header-top {
