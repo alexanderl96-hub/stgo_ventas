@@ -347,6 +347,8 @@ const availableColors = !orderConfig.size
         <div className="image-slider">
 
            <Swiper
+            modules={[Zoom]}
+            zoom={true}
             slidesPerView={1}
             onSlideChange={(swiper) =>
                 setCurrentImg(swiper.activeIndex)
