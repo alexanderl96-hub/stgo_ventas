@@ -25,7 +25,10 @@ export default function NewProduct({categoryDB}) {
 
   const [images, setImages] = useState([]);
 
-  const [storeName, setStoresName] = useState(["Temu", "Alibaba", "Zhein", "Amazon", "Walmart", "Google", "Harusaki"])
+  const [storeName, setStoresName] = useState(
+    ["Temu", "Alibaba", "Zhein", "Amazon", 
+     "Walmart", "Google", "Harusaki", "eBay", 
+     "Holiday Time", "ESR", "FNTCASE", "Speck"])
   const [showStore, setShowStore] = useState(false)
 
   const [formData, setFormData] = useState({
