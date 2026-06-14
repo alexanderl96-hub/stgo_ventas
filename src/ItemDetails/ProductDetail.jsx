@@ -346,106 +346,143 @@ const availableColors = !orderConfig.size
 
         <div className="image-slider">
 
-  {/* <Swiper
-    modules={[Pagination]}
-    slidesPerView={1}
-    pagination={{ clickable: true }}
-    onSlideChange={(swiper) =>
-      setCurrentImg(swiper.activeIndex)
-    }
-  >
-    {product.img.map((img, index) => (
-      <SwiperSlide key={index}>
-        <img
-          src={img.image_path}
-          className="detail-img"
-          alt={product.name}
-          onClick={() => {
-            setModalImgIndex(index);
-            setShowImageModal(true);
-          }}
-        />
-      </SwiperSlide>
-    ))}
-  </Swiper> */}
-
-  <Swiper
-  modules={[Zoom]}
-  zoom={true}
-  initialSlide={modalImgIndex}
-  slidesPerView={1}
-  onSlideChange={(swiper) =>
-    setModalImgIndex(swiper.activeIndex)
-  }
->
-  {product.img.map((img, index) => (
-    <SwiperSlide key={index}>
-      <div className="swiper-zoom-container">
-        <img
-          src={img.image_path}
-          className="modal-image"
-          alt={product.name}
-        />
-      </div>
-    </SwiperSlide>
-  ))}
-</Swiper>
-
-<div className="dots modal-dots">
-  {product.img.map((_, i) => (
-    <span
-      key={i}
-      className={`dot ${
-        i === modalImgIndex ? "active" : ""
-      }`}
-    />
-  ))}
-</div>
-
-  {showImageModal && (
-    <div
-      className="image-modal-overlay"
-      onClick={() => setShowImageModal(false)}
-    >
-      <div
-        className="image-modal-content"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          className="close-modal"
-          onClick={() => setShowImageModal(false)}
-        >
-          ✕
-        </button>
-
-        <Swiper
-          modules={[Pagination, Zoom]}
-          zoom={true}
-          pagination={{ clickable: true }}
-          initialSlide={modalImgIndex}
-          slidesPerView={1}
-          onSlideChange={(swiper) =>
-            setModalImgIndex(swiper.activeIndex)
-          }
-        >
-          {product.img.map((img, index) => (
-            <SwiperSlide key={index}>
-              <div className="swiper-zoom-container">
+           <Swiper
+            slidesPerView={1}
+            onSlideChange={(swiper) =>
+                setCurrentImg(swiper.activeIndex)
+            }
+            >
+            {product.img.map((img, index) => (
+                <SwiperSlide key={index}>
                 <img
-                  src={img.image_path}
-                  className="modal-image"
-                  alt={product.name}
+                    src={img.image_path}
+                    className="detail-img"
+                    alt={product.name}
+                    onClick={() => {
+                    setModalImgIndex(index);
+                    setShowImageModal(true);
+                    }}
                 />
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-    </div>
-  )}
+                </SwiperSlide>
+            ))}
+            </Swiper>
 
-</div>
+            <div className="dots">
+            {product.img.map((_, i) => (
+                <span
+                key={i}
+                className={`dot ${
+                    i === currentImg ? "active" : ""
+                }`}
+                />
+            ))}
+            </div>
 
+
+            {/* {showImageModal && (
+                <div
+                className="image-modal-overlay"
+                onClick={() => setShowImageModal(false)}
+                >
+                <div
+                    className="image-modal-content"
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <button
+                    className="close-modal"
+                    onClick={() => setShowImageModal(false)}
+                    >
+                    ✕
+                    </button>
+
+                    <Swiper
+                    modules={[Zoom]}
+                    zoom={true}
+                    pagination={{ clickable: true }}
+                    initialSlide={modalImgIndex}
+                    slidesPerView={1}
+                    onSlideChange={(swiper) =>
+                        setModalImgIndex(swiper.activeIndex)
+                    }
+                    >
+                    {product.img.map((img, index) => (
+                        <SwiperSlide key={index}>
+                        <div className="swiper-zoom-container">
+                            <img
+                            src={img.image_path}
+                            className="modal-image"
+                            alt={product.name}
+                            />
+                        </div>
+                        </SwiperSlide>
+                    ))}
+                    </Swiper>
+                    <div className="dots modal-dots">
+                        {product.img.map((_, i) => (
+                            <span
+                            key={i}
+                            className={`dot ${
+                                i === modalImgIndex ? "active" : ""
+                            }`}
+                            />
+                        ))}
+                    </div>
+                </div>
+                </div>
+            )} */}
+
+            {showImageModal && (
+                <div
+                    className="image-modal-overlay"
+                    onClick={() => setShowImageModal(false)}
+                >
+                    <div
+                    className="image-modal-content"
+                    onClick={(e) => e.stopPropagation()}
+                    >
+                    <button
+                        className="close-modal"
+                        onClick={() => setShowImageModal(false)}
+                    >
+                        ✕
+                    </button>
+
+                    <Swiper
+                        modules={[Zoom]}
+                        zoom={true}
+                        initialSlide={modalImgIndex}
+                        slidesPerView={1}
+                        onSlideChange={(swiper) =>
+                        setModalImgIndex(swiper.activeIndex)
+                        }
+                    >
+                        {product.img.map((img, index) => (
+                        <SwiperSlide key={index}>
+                            <div className="swiper-zoom-container">
+                            <img
+                                src={img.image_path}
+                                className="modal-image"
+                                alt={product.name}
+                            />
+                            </div>
+                        </SwiperSlide>
+                        ))}
+                    </Swiper>
+
+                    <div className="dots modal-dots">
+                        {product.img.map((_, i) => (
+                        <span
+                            key={i}
+                            className={`dot-in ${
+                            i === modalImgIndex ? "active" : ""
+                            }`}
+                        />
+                        ))}
+                    </div>
+                    </div>
+                </div>
+                )}
+        </div>
 
 
          {activeProduct && (

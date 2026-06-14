@@ -149,15 +149,30 @@
   margin-top: 6px;
 }
 
-.dot{
+.dot, .dot-in{
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: #d1d5db;
+
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .dot.active{
-  background: black;
+  background: rgb(0, 0, 0);
+}
+
+.dot-in.active{
+  background: rgb(20, 70, 233);
+}
+
+.modal-dots{
+  position:absolute;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:10000;
 }
 
 .success-toast {
