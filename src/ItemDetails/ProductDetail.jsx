@@ -458,8 +458,13 @@ const availableColors = !orderConfig.size
                     >
                         {product.img.map((img, index) => (
                         <SwiperSlide key={index}>
-                            {/* */}
-                            <div className="swiper-zoom-container" >
+                            {/* className="swiper-zoom-container" */}
+                            <div style={{
+                                // border: "1px solid white",
+                                height: "75vh",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center"}}>
                             <img
                                 src={img.image_path}
                                 className="modal-image"

@@ -521,7 +521,7 @@
 
 .swiper-zoom-container{
     border: 1px solid white;
-    height: 75vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -550,6 +550,10 @@
   background:rgba(255,255,255,.15);
   color:white;
   cursor:pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   z-index:10000;
 }
@@ -639,7 +643,10 @@
 
   .swiper-zoom-container{
     /* border: 1px solid white; */
-    height: 70vh;
+    /* border: 1px solid rgb(167, 12, 12); */
+    /* height: 100vh; */
+    /* height: 300px; */
+    padding: 5px;
   }
 
   .modal-image {
@@ -810,7 +817,7 @@
 
     .swiper-zoom-container{
       /* border: 1px solid white; */
-      height: 75vh;
+      /* height: 75vh; */
     }
 
     .modal-image{
@@ -980,7 +987,7 @@
 
     .swiper-zoom-container{
       /* border: 1px solid white; */
-      height: 85vh;
+      /* height: 85vh; */
     }
 
     .modal-image{
