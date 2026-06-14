@@ -528,32 +528,6 @@
 }
 
 
-/* .image-slider{
-  width:100%;
-}
-
-.detail-img{
-  width:100%;
-  display:block;
-  object-fit:contain;
-  cursor:pointer;
-} */
-
-/* .image-modal-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.95);
-  z-index:9999;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-} */
-
-/* .image-modal-content{
-  width:100%;
-  height:100%;
-} */
 
 .modal-image{
   width:100%;
