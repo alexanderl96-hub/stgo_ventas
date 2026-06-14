@@ -563,7 +563,7 @@
 /* Extra Small Phones (iPhone SE)*/
 @media screen and (max-width: 320px) {
   .product-header {
-    padding: 10px;
+    padding: 13px;
     /* height: 90px; */
   }
 
@@ -737,7 +737,7 @@
 /* Small Phones (LG) */
 @media screen and (min-width: 321px) and (max-width: 375px) {
     .product-header {
-      padding: 12px;
+      padding: 13px;
       /* height: 90px; */
     }
 
