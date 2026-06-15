@@ -102,13 +102,9 @@ useEffect(() => {
 }, [categoryDB]);
 
 
-  // useEffect(() => {
-  //   setCurrentPage(1);
-  // }, [searchTerm]);
-
 useEffect(() => {
-  console.log("filteredProducts changed");
-  setVisibleCount(10);
+
+  setVisibleCount(20);
 }, [searchTerm]);
 
   useEffect(() => {
@@ -497,6 +493,7 @@ const availableColors = !orderConfig.size
 
                             setOrderConfig(prev => ({
                               ...prev,
+                              productId: activeProduct.id,
                               color: colorName,
                               person_in_charge:
                                 categoryActi?.person_in_charge || "",
@@ -517,6 +514,7 @@ const availableColors = !orderConfig.size
                               }}
                             />
                           </div>
+                         
                         </button>
                       );
                     })}
@@ -606,7 +604,8 @@ const availableColors = !orderConfig.size
                         sizes: orderConfig.size,
                         gender: orderConfig.gender,
                         person_in_charge: orderConfig.person_in_charge,
-                        img: orderConfig.img,
+                        img: orderConfig.img, 
+                        productId: orderConfig.productId,
 
                         status: "create",
                         date: new Date().toLocaleDateString()
@@ -615,7 +614,7 @@ const availableColors = !orderConfig.size
                       setCart((prev) => [...prev, newOrder]);
 
                       setActiveProduct(null);
-                      setOrderConfig({ color: "", size: "", gender: "", person_in_charge: "", img: [] });
+                      setOrderConfig({ color: "", size: "", gender: "", person_in_charge: "", img: [], productId: "" });
 
                         // ✅ show success message
                         setOrderSuccess(true);
@@ -631,7 +630,7 @@ const availableColors = !orderConfig.size
                     className="cancel"
                     onClick={() => {
                       setActiveProduct(null);
-                      setOrderConfig({ color: "", size: "", gender: "", person_in_charge: "", img: [] });
+                      setOrderConfig({ color: "", size: "", gender: "", person_in_charge: "", img: [], productId: "" });
                     }}
                   >
                     Cancelar

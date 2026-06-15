@@ -13,7 +13,9 @@ export default function PaymentSelectorGuess({
   setAmountOrder,
   customers,
   setCustomers,
-  administratorDB
+  administratorDB,
+  productsDB,
+  triggerProductsRefresh
 }) {
 
   const [method, setMethod] = useState(null);
@@ -22,6 +24,7 @@ export default function PaymentSelectorGuess({
   const [permision, setPermision] = useState(0)
   const [checkAmount, setCheckAmount] = useState([])
 
+  console.log("amountOrder", amountOrder)
 
   useEffect(()=>{
       setCheckAmount(amountOrder)
@@ -31,7 +34,8 @@ export default function PaymentSelectorGuess({
         price: (Number(item.price) * item.qty) || 0,
         dollar_price: (Number(item.dollar_price) * item.qty) || 0,
         current_dollar_price: item.current_dollar_price || 0,
-        qty: item.qty
+        qty: item.qty,
+        product_id: item.productId
         })) 
 
   const usdTotal = zellePermitions.reduce(
@@ -131,6 +135,8 @@ export default function PaymentSelectorGuess({
             customers={customers}
             method={method}
             formatPay={formatPay}
+            productsDB={productsDB}
+            triggerProductsRefresh={triggerProductsRefresh}
           />
         )}
 
@@ -145,6 +151,8 @@ export default function PaymentSelectorGuess({
             customers={customers}
             method={method}
             formatPay={formatPay}
+            productsDB={productsDB}
+            triggerProductsRefresh={triggerProductsRefresh}
           />
         )}
 

@@ -36,6 +36,8 @@ import { createNewOrderUser,
         } from "../api/auth"
 import API_URL from "../api/api_images";
 import APP_URL from "../api/endPoint"
+import { updateInventory } from "../utils/inventory";
+import { updateProduct } from "../api/auth";
 
 export default function InPersonPayment({ 
   user,
@@ -48,7 +50,9 @@ export default function InPersonPayment({
   formatPay,
   administrator,
   administratorDB,
-  setUser
+  setUser,
+  productsDB,
+  triggerProductsRefresh
 }) {
 
     // console.log("amountOrder", amountOrder)
@@ -90,6 +94,7 @@ export default function InPersonPayment({
         colors: item.colors || "",
         sizes: item.sizes || "",
         dollar_price: (Number(item.dollar_price) * item.qty) || 0,
+         product_id: item.productId
         }))
 
 
@@ -218,7 +223,8 @@ export default function InPersonPayment({
        saveOrder(newOrder);
    
        const data = await createNewOrderUser(newOrder);
-       await addCustomerOrder( user.customer_id, newOrder);
+
+          await addCustomerOrder( user.customer_id, newOrder);
 
        const updatedCustomer =
         await getCustomer(user.customer_id);
@@ -236,8 +242,28 @@ export default function InPersonPayment({
         }
 
         setUser(updatedCustomer);
-       
-       
+
+        for (const orderItem of newOrder.orders) {
+
+          const product = productsDB.find(
+            p => p.id === orderItem.product_id
+          );
+
+          if (!product) continue;
+
+          const inventoryData = updateInventory(
+            product,
+            orderItem
+          );
+
+          await updateProduct(
+            product.id,
+            inventoryData
+          );
+        }
+
+        triggerProductsRefresh()
+      
    
           if (data.success) {
            setMessage("Solicitud Creada");

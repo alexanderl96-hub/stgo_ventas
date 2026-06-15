@@ -9,10 +9,13 @@ import APP_URL from "../api/endPoint"
 import { createNewOrderUser,          
          addCustomerOrder, 
          getCustomer  } from "../api/auth"
+         import { updateInventory } from "../utils/inventory";
+         import { updateProduct } from "../api/auth";
 
-export default function DeliveryPayment ({user, setUser, cart, setCart, amountOrder,
+export default function DeliveryPayment ({
+  user, setUser, cart, setCart, amountOrder,
    customers, setCustomers, administrator, administratorDB, method,
-    formatPay ,  }) {
+    formatPay , productsDB, triggerProductsRefresh }) {
 
   const { products, filtered, search, setSearch, category, } = useDataProducts();
   const navigate = useNavigate();
@@ -39,6 +42,7 @@ export default function DeliveryPayment ({user, setUser, cart, setCart, amountOr
       colors: item.colors || "",
       sizes: item.sizes || "",
       dollar_price: (Number(item.dollar_price) * item.qty) || 0,
+      product_id: item.productId
       }))
 
       console.log("ordersCalculation", ordersCalculation)
@@ -253,7 +257,27 @@ export default function DeliveryPayment ({user, setUser, cart, setCart, amountOr
         }
 
         setUser(updatedCustomer);
-       
+
+        for (const orderItem of sellOrder.orders) {
+
+          const product = productsDB.find(
+            p => p.id === orderItem.product_id
+          );
+
+          if (!product) continue;
+
+          const inventoryData = updateInventory(
+            product,
+            orderItem
+          );
+
+          await updateProduct(
+            product.id,
+            inventoryData
+          );
+        }
+
+       triggerProductsRefresh()
        
    
           if (data.success) {

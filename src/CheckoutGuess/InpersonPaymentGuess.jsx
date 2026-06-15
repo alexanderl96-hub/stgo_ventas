@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useDataProducts from "../api/dataProducts";
 import useDataOrders from "../api/useDataOrders";
 import { generateOrderQr } from "../utils/orderQrGenerator";
 import { calculateOrderPricing , calculateOrder} from "../utils/pricing";
 import { modifyOrderPricing } from "../utils/newSalePricing";
-import { createNewOrderGuest } from "../api/auth"
+import { createNewOrderGuest, updateProduct, createGuestCustomer } from "../api/auth"
 import API_URL from "../api/api_images";
 import APP_URL from "../api/endPoint"
+import { updateInventory } from "../utils/inventory";
 
 export default function InPersonPaymentGuess({
   user,
@@ -18,13 +19,24 @@ export default function InPersonPaymentGuess({
   setCustomers,
   method,
   formatPay,
-  administratorDB
+  administratorDB,
+  productsDB,
+  triggerProductsRefresh
 }) {
+
 
   const navigate = useNavigate();
   const [step, setStep] = useState("idle");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    guestId: "",
+    order: []
+  });
 
 
   const person = amountOrder.map(a => a.person_in_charge)?.[0] || "";
@@ -58,6 +70,7 @@ export default function InPersonPaymentGuess({
         colors: item.colors || "",
         sizes: item.sizes || "",
         dollar_price: (Number(item.dollar_price) * item.qty) || 0,
+        product_id: item.productId
         }))
 
     const usdTotal = ordersCalculation.reduce(
@@ -99,7 +112,11 @@ export default function InPersonPaymentGuess({
   // 🧠 SAVE ORDER
   // -----------------------------
   const saveOrder = (order) => {
-      const email = user?.email || `guest_${Date.now()}@local`;
+      // const email = user?.email || `guest_${Date.now()}@local`;
+      const email =  user?.role !== "admin"
+                        ? user?.email || `guest_${Date.now()}@local`
+                        : `guest_${Date.now()}@local`
+
 
       setCustomers(prev => {
 
@@ -169,6 +186,7 @@ export default function InPersonPaymentGuess({
 
         return updated;
       });
+
     };
 
   // -----------------------------
@@ -183,6 +201,36 @@ export default function InPersonPaymentGuess({
     saveOrder(newOrder);
 
     const data = await createNewOrderGuest(newOrder);
+
+    
+   for (const orderItem of newOrder.orders) {
+
+        const product = productsDB.find(
+          p => p.id === orderItem.product_id
+        );
+
+        console.log("product", product)
+
+        if (!product) continue;
+
+        const inventoryData = updateInventory(
+          product,
+          orderItem
+        );
+
+        console.log("inventoryData", inventoryData)
+
+        await updateProduct(
+          product.id,
+          inventoryData
+        );
+
+      }
+
+            //  Rerefresh Data after create product
+        triggerProductsRefresh()
+
+
 
        if (data.success) {
         setMessage("Solicitud Creada");
@@ -214,7 +262,63 @@ export default function InPersonPaymentGuess({
        a => normalize(a.name) === normalize(person)
     );
 
+    useEffect(() => {
+
+      if (!customers.length) return;
+
+      const customer = customers[0];
+
+      console.log("check inside of useeffect", customer)
+
+      const guestData = {
+
+        name: customer.name || "",
+
+        email: customer.email || "",
+
+        phone: customer.phone || "",
+
+        address: customer.address || "",
+
+        guestId:
+          customer.customer_id ||
+          customer.customerId ||
+          "",
+
+        order:
+          customer.order || []
+      };
+
+      setForm(guestData);
+
+      const createGuest = async () => {
+
+        try {
+
+          const result =
+            await createGuestCustomer(
+              guestData
+            );
+
+          console.log(
+            "Guest created:",
+            result
+          );
+
+        } catch (error) {
+
+          console.error(error);
+
+        }
+
+      };
+
+      createGuest();
+
+    }, [customers]);
+
     console.log("customers", customers)
+    console.log("form", form)
 
 
   return (

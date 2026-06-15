@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import useDataProducts from "./api/dataProducts.jsx";
+import { getCustomer } from "./api/auth.jsx"
 
 import Home from "./Home/Home.jsx";
 import Cart from "./Component/cart";
@@ -30,7 +31,8 @@ function App() {
     search,
     setSearch,
     categoryDB,
-    dataColorsDB } = useDataProducts();
+    dataColorsDB,
+    triggerProductsRefresh } = useDataProducts();
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -58,6 +60,7 @@ function App() {
     person_in_charge: "",
     img: [],
     statusVenta: "",
+    productId: ""
   });
 
   // 🔐 HANDLE LOGIN / REGISTER
@@ -99,6 +102,40 @@ function App() {
       setUser(JSON.parse(savedUser));
     }
   }, []);
+
+
+  useEffect(() => {
+
+    if (!user?.customer_id) return;
+
+    const fetchUser = async () => {
+
+      const updatedUser =
+        await getCustomer(
+          user.customer_id
+        );
+
+      setUser(updatedUser);
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(updatedUser)
+      );
+
+    };
+
+    fetchUser();
+
+    const interval =
+      setInterval(
+        fetchUser,
+        5000
+      );
+
+    return () =>
+      clearInterval(interval);
+
+  }, [user?.customer_id]);
 //   useEffect(() => {
 //   const savedToken = localStorage.getItem("token");
 //   const savedUser = localStorage.getItem("user");
@@ -164,6 +201,7 @@ function App() {
             <Cart
               cart={cart}
               setCart={setCart}
+              productsDB={productsDB}
 
               activeTab={activeTab}
               setActiveTab={setActiveTab}
@@ -255,6 +293,8 @@ function App() {
                 token={token}
                 logout={logout}
                 setUser={setUser}
+                productsDB={productsDB}
+                triggerProductsRefresh={triggerProductsRefresh}
               />
             ) : (
               <Login onAuth={handleAuth} />
@@ -338,6 +378,8 @@ function App() {
               setCustomers={setCustomers}
               user={user}
               token={token}
+              productsDB={productsDB}
+              triggerProductsRefresh={triggerProductsRefresh}
             />
           }
         />

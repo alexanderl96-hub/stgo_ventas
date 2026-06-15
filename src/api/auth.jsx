@@ -35,7 +35,7 @@ export const getProfile = async (token) => {
 };
 
 export const createNewOrderUser = async (data) => {
-  const res = await fetch(`${API_URL}/api/orders/create`, {
+  const res = await fetch(`http://localhost:5001/api/orders/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -108,4 +108,98 @@ export const getCustomer = async (id) => {
   );
 
   return await res.json();
+};
+
+
+export const updateProduct = async (
+  id,
+  productData
+) => {
+
+  const payload = {
+    ...productData,
+
+    colors_match:
+      productData.colors_match
+        ? JSON.stringify(
+            productData.colors_match
+          )
+        : null
+  };
+
+  const response = await fetch(
+    `${API_URL}/api/products/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    console.log(data);
+    throw new Error(
+      data.error || "Failed to update product"
+    );
+  }
+
+  return data;
+};
+
+export const updateOrder = async (
+  orderId,
+  orderData
+) => {
+
+  const response = await fetch(
+    `${API_URL}/api/orders/${orderId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(orderData)
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      data.message || "Failed to update order"
+    );
+  }
+
+  return data;
+};
+
+export const createGuestCustomer = async (
+  guestData
+) => {
+
+  const response = await fetch(
+    `${API_URL}/api/customers/create-guest`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(guestData)
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      data.message ||
+      "Failed to create guest"
+    );
+  }
+
+  return data;
 };

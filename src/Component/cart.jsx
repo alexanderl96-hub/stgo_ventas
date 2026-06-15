@@ -107,6 +107,7 @@ useEffect(()=>{
 
 
 console.log("user", user)
+console.log("caret", cart)
 
   return (
     <div className="cart-page">

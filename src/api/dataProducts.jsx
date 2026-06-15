@@ -8,18 +8,53 @@ export default function useDataProducts() {
   const [categoryDB, setCategoryDB] = useState();
   const [administratorDB , setAdministratorDB] = useState([])
   const [dataColorsDB, setDataColorsDB] = useState([])
+  const [refreshProducts, setRefreshProducts] = useState(false);
+
+  const triggerProductsRefresh = () => {
+    setRefreshProducts(prev => !prev);
+  };
 
   // console.log("search", search)
   // console.log("path to back end", API_URL)
 
   // 🔥 FETCH FROM BACKEND PRODUCTS
+useEffect(() => {
+
+  fetch(`${API_URL}/api/products`)
+    .then(res => res.json())
+    .then(data => {
+      setProductsDB(data);
+      setFilteredDB(data);
+    })
+    .catch(console.error);
+
+}, [refreshProducts]);
+
   useEffect(() => {
-    fetch(`${API_URL}/api/products`)
-      .then(res => res.json())
-      .then(data => {
+
+    const fetchProducts = () => {
+      fetch(`${API_URL}/api/products`)
+        .then(res => res.json())
+        .then(data => {
           setProductsDB(data);
           setFilteredDB(data);
-      });
+        })
+        .catch(err =>
+          console.error(err)
+        );
+    };
+
+    // Initial load
+    fetchProducts();
+
+    // Refresh every 30 seconds
+    const interval = setInterval(
+      fetchProducts,
+      5000
+    );
+
+    return () => clearInterval(interval);
+
   }, []);
 
     // 🔥 FETCH FROM BACKEND CATEGORY
@@ -31,6 +66,32 @@ export default function useDataProducts() {
       });
   }, []);
 
+  //  useEffect(() => {
+
+  //   const fetchProducts = () => {
+  //     fetch(`${API_URL}/api/categories`)
+  //       .then(res => res.json())
+  //       .then(data => {
+  //            setCategoryDB(data.categories)
+  //       })
+  //       .catch(err =>
+  //         console.error(err)
+  //       );
+  //   };
+
+  //   // Initial load
+  //   fetchProducts();
+
+  //   // Refresh every 30 seconds
+  //   const interval = setInterval(
+  //     fetchProducts,
+  //     30000
+  //   );
+
+  //   return () => clearInterval(interval);
+
+  // }, []);
+
       // 🔥 FETCH FROM BACKEND ADMIN
   useEffect(() => {
     fetch(`${API_URL}/api/admin`)
@@ -39,6 +100,32 @@ export default function useDataProducts() {
            setAdministratorDB(data)
       });
   }, []);
+
+  // useEffect(() => {
+
+  //   const fetchProducts = () => {
+  //     fetch(`${API_URL}/api/admin`)
+  //       .then(res => res.json())
+  //       .then(data => {
+  //            setAdministratorDB(data)
+  //       })
+  //       .catch(err =>
+  //         console.error(err)
+  //       );
+  //   };
+
+  //   // Initial load
+  //   fetchProducts();
+
+  //   // Refresh every 30 seconds
+  //   const interval = setInterval(
+  //     fetchProducts,
+  //     30000
+  //   );
+
+  //   return () => clearInterval(interval);
+
+  // }, []);
 
   // 🔍 SEARCH + CATEGORY FILTER
   useEffect(() => {
@@ -71,6 +158,32 @@ export default function useDataProducts() {
       });
   }, []);
 
+  //  useEffect(() => {
+
+  //   const fetchProducts = () => {
+  //     fetch(`${API_URL}/api/colors`)
+  //       .then(res => res.json())
+  //       .then(data => {
+  //            setDataColorsDB(data)
+  //       })
+  //       .catch(err =>
+  //         console.error(err)
+  //       );
+  //   };
+
+  //   // Initial load
+  //   fetchProducts();
+
+  //   // Refresh every 30 seconds
+  //   const interval = setInterval(
+  //     fetchProducts,
+  //     30000
+  //   );
+
+  //   return () => clearInterval(interval);
+
+  // }, []);
+
   return {
     productsDB,
     administratorDB,
@@ -78,7 +191,8 @@ export default function useDataProducts() {
     search,
     setSearch,
     categoryDB,
-    dataColorsDB
+    dataColorsDB,
+    triggerProductsRefresh
     // setCategoryDB
   };
 }

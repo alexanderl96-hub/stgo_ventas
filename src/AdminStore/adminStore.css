@@ -70,6 +70,7 @@ thead {
 th, td {
   padding: 12px;
   text-align: left;
+  min-width: 100px; 
 }
 
 tr:nth-child(even) {

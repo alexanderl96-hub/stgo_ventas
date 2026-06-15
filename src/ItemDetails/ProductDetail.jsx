@@ -547,6 +547,7 @@ const availableColors = !orderConfig.size
 
                             setOrderConfig(prev => ({
                               ...prev,
+                              productId: activeProduct.id,
                               color: colorName,
                               person_in_charge:
                                 categoryActi?.person_in_charge || "",
@@ -657,6 +658,7 @@ const availableColors = !orderConfig.size
                         gender: orderConfig.gender,
                         person_in_charge: orderConfig.person_in_charge,
                         img: orderConfig.img,
+                        productId: orderConfig.productId,
 
                         status: "create",
                         date: new Date().toLocaleDateString()
@@ -665,7 +667,7 @@ const availableColors = !orderConfig.size
                         setCart((prev) => [...prev, newOrder]);
 
                         setActiveProduct(null);
-                        setOrderConfig({ color: "", size: "", genero: "", person_in_charge: "", img: [] });
+                        setOrderConfig({ color: "", size: "", genero: "", person_in_charge: "", img: [], productId: "" });
 
                         // ✅ show success message
                         setOrderSuccess(true);
@@ -681,7 +683,7 @@ const availableColors = !orderConfig.size
                     className="cancel"
                     onClick={() => {
                         setActiveProduct(null);
-                        setOrderConfig({ color: "", size: "", gender: "", person_in_charge: "", img: [] });
+                        setOrderConfig({ color: "", size: "", gender: "", person_in_charge: "", img: [], productId: "" });
                     }}
                     >
                     Cancelar
@@ -760,7 +762,8 @@ const availableColors = !orderConfig.size
                     { (product.category === "Ropa" 
                         || product.category === "Joyería" ) && <span>Tallas</span>}
                      { (product.category === "Zapatos" ||
-                        product.category === "Hogar"
+                        product.category === "Hogar" ||
+                        product.category === "Oficina y Escuela"
                       )&& <span>Medidas</span>}
                      { (product.category === "Electrónicos" 
                         || product.category === "Electrodomésticos" 

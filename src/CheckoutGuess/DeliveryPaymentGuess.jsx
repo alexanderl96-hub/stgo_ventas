@@ -9,7 +9,9 @@ import "../Checkout/delivery.css"
 import WhatsAppOrder from "../WhatsAppOrder/WhatsAppOrder";
 import API_URL from "../api/api_images";
 import APP_URL from "../api/endPoint"
-import { createNewOrderGuest } from "../api/auth"
+import { createNewOrderGuest, updateProduct } from "../api/auth"
+import { updateInventory } from "../utils/inventory";
+
 
 export default function DeliveryPaymentGuess ({ 
     user,
@@ -20,7 +22,9 @@ export default function DeliveryPaymentGuess ({
     setCustomers, 
     method,
     formatPay ,
-    administratorDB
+    administratorDB,
+    productsDB,
+    triggerProductsRefresh
 }) {
   const navigate = useNavigate();
 
@@ -124,6 +128,7 @@ export default function DeliveryPaymentGuess ({
         colors: item.colors || "",
         sizes: item.sizes || "",
         dollar_price: (Number(item.dollar_price) * item.qty) || 0,
+        product_id: item.productId
         }))
   
        console.log("ordersCalculation", ordersCalculation)
@@ -353,6 +358,28 @@ export default function DeliveryPaymentGuess ({
 
       
       const data = await createNewOrderGuest(sellOrder);
+
+      for (const orderItem of sellOrder.orders) {
+
+          const product = productsDB.find(
+            p => p.id === orderItem.product_id
+          );
+
+          if (!product) continue;
+
+          const inventoryData = updateInventory(
+            product,
+            orderItem
+          );
+
+          await updateProduct(
+            product.id,
+            inventoryData
+          );
+        }
+
+        triggerProductsRefresh()
+
   
           if (data.success) {
           setMessage("Solicitud Creada");

@@ -15,7 +15,9 @@ export default function PaymentSelector({
   setCustomers,
   orderConfig,
   administratorDB,
-  setUser
+  setUser,
+  productsDB,
+  triggerProductsRefresh
 }) {
 
   const { administrator } = useDataProducts();
@@ -141,6 +143,8 @@ export default function PaymentSelector({
           method={method}
           formatPay={formatPay}
           setUser={setUser}
+          productsDB={productsDB}
+          triggerProductsRefresh={triggerProductsRefresh}
         />
       )}
 
@@ -157,6 +161,8 @@ export default function PaymentSelector({
           method={method}
           formatPay={formatPay}
           setUser={setUser}
+          productsDB={productsDB}
+          triggerProductsRefresh={triggerProductsRefresh}
         />
       )}
 
