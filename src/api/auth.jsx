@@ -35,7 +35,7 @@ export const getProfile = async (token) => {
 };
 
 export const createNewOrderUser = async (data) => {
-  const res = await fetch(`http://localhost:5001/api/orders/create`, {
+  const res = await fetch(`${API_URL}/api/orders/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -177,6 +177,7 @@ export const updateOrder = async (
   return data;
 };
 
+
 export const createGuestCustomer = async (
   guestData
 ) => {
@@ -203,3 +204,59 @@ export const createGuestCustomer = async (
 
   return data;
 };
+
+
+export const updateOrderStatus = async (
+  customerId,
+  orderId,
+  status_sell
+) => {
+  const response = await fetch(
+    `${API_URL}/api/customers/${customerId}/orders/${orderId}/status`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        status_sell
+      })
+    }
+  );
+
+  return response.json();
+};
+
+export const deleteOrderAndUpdateUser = async (
+  customerId,
+  orderId
+) => {
+
+  const response = await fetch(
+    `${API_URL}/api/orders/${customerId}/orders/${orderId}`,
+    {
+      method: "DELETE"
+    }
+  );
+
+  return response.json();
+};
+
+export const restoreProductsInventory =
+  async (data) => {
+
+    const response =
+      await fetch(
+        `${API_URL}/api/products/restore-inventory`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+          body: JSON.stringify(data)
+        }
+      );
+
+    return response.json();
+  };

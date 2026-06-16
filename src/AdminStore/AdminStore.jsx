@@ -4,7 +4,8 @@ import "./adminStore.css"
 import { QrCode } from "lucide-react";
 import QRCode from "react-qr-code";
 import API_URL from "../api/api_images"
-import { updateOrder } from "../api/auth"
+import { updateOrder, updateOrderStatus, 
+         deleteOrderAndUpdateUser, restoreProductsInventory } from "../api/auth"
 
 
 const AdminStore = ({user, customers, setCustomers, logout }) => {
@@ -16,22 +17,54 @@ const AdminStore = ({user, customers, setCustomers, logout }) => {
   const [activeQR, setActiveQR] = useState(null);
   const [orders, setOrders] = useState([]);
   const [guestOrder, setGuestOrder] = useState([])
+  const [showConfirm, setShowConfirm] = useState(false);
 
-    // const handleEdit = (customerId) => {
-    // setExpandedCustomerId(prev =>
-    //     prev === customerId ? null : customerId
-    // );
-    // };
+
+  const handleRemoveClick = (
+  customerId,
+  orderId,
+  order
+) => {
+
+  setSelectedOrder({
+    customerId,
+    orderId,
+    order
+  });
+
+  setShowConfirm(true);
+};
+
+
+  const confirmRemove = async () => {
+
+  if (!selectedOrder) return;
+
+  await handleDelete(
+    selectedOrder.customerId,
+    selectedOrder.orderId,
+    selectedOrder.order
+  );
+
+  setShowConfirm(false);
+  setSelectedOrder(null);
+};
+
+
+  const cancelRemove = () => {
+
+  setShowConfirm(false);
+  setSelectedOrder(null);
+
+};
+
+
 
     const handleEdit = (orderId) => {
-      console.log("order id", orderId)
         setExpandedOrderId(prev =>
             prev === orderId ? null : orderId
         );
-        console.log(expandedOrderId)
      };
-//   const [orders, setOrders] = useState([]);
-
 
   const deleteProduct = (id) => {
     fetch(`/api/admin/products/${id}`, {
@@ -45,23 +78,114 @@ const AdminStore = ({user, customers, setCustomers, logout }) => {
 //     setSelectedOrder(customer); // this will open your sub card
 //   };
 
-  const handleConfirm = (customerId, orderId) => {
-    const updatedCustomers = [user].map(c => {
-        if (c.customerId === customerId) {
-        return {
-            ...c,
-            order: c.order.map(o =>
-            o.id === orderId
-                ? { ...o, statusSell: "Pagada" }
-                : o
-            )
-        };
-        }
-        return c;
-    });
-
-    setCustomers(updatedCustomers);
+  const handleConfirm = async (customerId, orderId) => {
+   
+      await updateOrderStatus(
+        customerId,
+        orderId,
+        "Pagada"
+      );
     };
+  
+  // const handleDelete = async (
+  //     customerId,
+  //     orderId,
+  //     order
+  //   ) => {
+
+  //     if (confirm) {
+          
+  //         if (!customerId || !orderId || !order) return;
+
+
+  //         const items = order.orders?.map(
+  //             item => ({
+  //               product_id: item.product_id,
+  //               name: item.name,
+  //               qty: item.qty,
+  //               colors: item.colors,
+  //               sizes: item.sizes
+  //             })
+  //           );
+
+  //           await restoreProductsInventory({
+  //             items
+  //           });
+
+          
+  //         const result =
+  //           await deleteOrderAndUpdateUser(
+  //             customerId,
+  //             orderId
+  //           );
+          
+  //           console.log("result", result)
+
+  //         if (result.success) {
+  //             console.log(result.success)
+  //         }else{
+  //           console.error()
+  //         }
+
+  //         setConfirm(false);
+  //     }
+
+   
+
+  //     //  setSelectedOrder(null);
+  //   };
+
+  const handleDelete = async (
+        customerId,
+        orderId,
+        order
+      ) => {
+
+        if (
+          !customerId ||
+          !orderId ||
+          !order
+        ) return;
+
+        const items =
+          order.orders?.map(item => ({
+            product_id: item.product_id,
+            name: item.name,
+            qty: item.qty,
+            colors: item.colors,
+            sizes: item.sizes
+          }));
+
+        await restoreProductsInventory({
+          items
+        });
+
+        const result =
+          await deleteOrderAndUpdateUser(
+            customerId,
+            orderId
+          );
+
+        console.log(result);
+
+         if (result.success) {
+              console.log(result.success)
+          }else{
+            console.error()
+          }
+
+      };
+
+  const handleRemove = (orderId) => {
+
+    const confirmed = window.confirm(
+      "¿Está seguro que desea eliminar esta orden?"
+    );
+
+    if (!confirmed) return;
+
+    handleEdit(orderId);
+  };
 
   const getOrderTotal = (order) => {
     return order.orders.reduce((total, item) => {
@@ -89,139 +213,234 @@ const AdminStore = ({user, customers, setCustomers, logout }) => {
 
   const handleComplete2 = async (customerid, orderId) => {
 
-    console.log( "id of user", customerid)
-    console.log( "id order", orderId)
     setExpandedOrderId(null)
 
+     await updateOrder(orderId, {
+        status_sell: "Lista"
+      });
 
-    //  await updateOrder(orderId, {
-    //     status_sell: "Lista"
-    //   });
+      await updateOrderStatus(
+        customerid,
+        orderId,
+        "Lista"
+      );
 
   };
 
+    // useEffect(() => {
+
+    //   const token =
+    //     localStorage.getItem("token");
+
+    //   fetch(
+    //     `${API_URL}/api/admin/dashboard`,
+    //     {
+    //       headers: {
+    //         Authorization:
+    //           `Bearer ${token}`
+    //       }
+    //     }
+    //   )
+    //     .then(res => res.json())
+    //     .then(data => {
+
+    //       const customerOrders =
+    //         (data.customers || [])
+    //           .flatMap(customer =>
+    //             (customer.order || [])
+    //               .map(order => ({
+
+    //                 type: "customer",
+
+    //                 customer_id:
+    //                   customer.customer_id,
+
+    //                 name:
+    //                   customer.name,
+
+    //                 email:
+    //                   customer.email,
+
+    //                 phone:
+    //                   customer.phone,
+
+    //                 address:
+    //                   customer.address,
+
+    //                 user_create:
+    //                   customer.user_create,
+
+    //                 order
+
+    //               }))
+    //           );
+
+    //       const guestOrders =
+    //         (data.guest || [])
+    //           .flatMap(guest =>
+    //             (guest.order || [])
+    //               .map(order => ({
+
+    //                 type: "guest",
+
+    //                 customer_id:
+    //                   guest.guestid,
+
+    //                 name:
+    //                   guest.name,
+
+    //                 email:
+    //                   guest.email,
+
+    //                 phone:
+    //                   guest.phone,
+
+    //                 address:
+    //                   guest.address,
+
+    //                 user_create:
+    //                   guest.user_create,
+
+    //                 order
+
+    //               }))
+    //           );
+
+    //       const allOrders = [
+
+    //         ...customerOrders,
+
+    //         ...guestOrders
+
+    //       ].sort(
+    //         (a, b) =>
+    //           new Date(b.order.date) -
+    //           new Date(a.order.date)
+    //       );
+
+    //       console.log(
+    //         "allOrders",
+    //         allOrders
+    //       );
+
+    //       setOrders(allOrders);
+
+    //     })
+    //     .catch(console.error);
+
+    // }, []);
 
     useEffect(() => {
-      const token = localStorage.getItem("token");
 
-      fetch(`${API_URL}/api/admin/dashboard`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-        .then(res => res.json())
-        .then(data => {
-          console.log("data", data)
+        const fetchOrders = () => {
 
-          // setOrders(data.customers.map(a => a.order.map(b => b.date)));
-          setGuestOrder(data.guestOrder)
-        });
-    }, []);
+          const token =
+            localStorage.getItem("token");
 
-    useEffect(() => {
+          fetch(
+            `${API_URL}/api/admin/dashboard`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          )
+            .then(res => res.json())
+            .then(data => {
 
-      const token =
-        localStorage.getItem("token");
+              const customerOrders =
+                (data.customers || [])
+                  .flatMap(customer =>
+                    (customer.order || [])
+                      .map(order => ({
 
-      fetch(
-        `${API_URL}/api/admin/dashboard`,
-        {
-          headers: {
-            Authorization:
-              `Bearer ${token}`
-          }
-        }
-      )
-        .then(res => res.json())
-        .then(data => {
+                        type: "customer",
 
-          const customerOrders =
-            (data.customers || [])
-              .flatMap(customer =>
-                (customer.order || [])
-                  .map(order => ({
+                        customer_id:
+                          customer.customer_id,
 
-                    type: "customer",
+                        name:
+                          customer.name,
 
-                    customer_id:
-                      customer.customer_id,
+                        email:
+                          customer.email,
 
-                    name:
-                      customer.name,
+                        phone:
+                          customer.phone,
 
-                    email:
-                      customer.email,
+                        address:
+                          customer.address,
 
-                    phone:
-                      customer.phone,
+                        user_create:
+                          customer.user_create,
 
-                    address:
-                      customer.address,
+                        order
 
-                    user_create:
-                      customer.user_create,
+                      }))
+                  );
 
-                    order
+              const guestOrders =
+                (data.guest || [])
+                  .flatMap(guest =>
+                    (guest.order || [])
+                      .map(order => ({
 
-                  }))
+                        type: "guest",
+
+                        customer_id:
+                          guest.guestid,
+
+                        name:
+                          guest.name,
+
+                        email:
+                          guest.email,
+
+                        phone:
+                          guest.phone,
+
+                        address:
+                          guest.address,
+
+                        user_create:
+                          guest.user_create,
+
+                        order
+
+                      }))
+                  );
+
+              const allOrders = [
+
+                ...customerOrders,
+
+                ...guestOrders
+
+              ].sort(
+                (a, b) =>
+                  new Date(b.order.date) -
+                  new Date(a.order.date)
               );
 
-          const guestOrders =
-            (data.guest || [])
-              .flatMap(guest =>
-                (guest.order || [])
-                  .map(order => ({
+              setOrders(allOrders);
 
-                    type: "guest",
+            })
+            .catch(console.error);
 
-                    customer_id:
-                      guest.guestid,
+        };
 
-                    name:
-                      guest.name,
+        // Initial fetch
+        fetchOrders();
 
-                    email:
-                      guest.email,
+        // Refresh every 5 seconds
+        const interval =
+          setInterval(fetchOrders, 2000);
 
-                    phone:
-                      guest.phone,
+        return () =>
+          clearInterval(interval);
 
-                    address:
-                      guest.address,
-
-                    user_create:
-                      guest.user_create,
-
-                    order
-
-                  }))
-              );
-
-          const allOrders = [
-
-            ...customerOrders,
-
-            ...guestOrders
-
-          ].sort(
-            (a, b) =>
-              new Date(b.order.date) -
-              new Date(a.order.date)
-          );
-
-          console.log(
-            "allOrders",
-            allOrders
-          );
-
-          setOrders(allOrders);
-
-        })
-        .catch(console.error);
-
-    }, []);
-
-console.log( "guest orders", orders)
+      }, []);
+console.log( "guest orders", orders.slice(0,1))
 
 
   return (
@@ -262,14 +481,16 @@ console.log( "guest orders", orders)
       <table>
         <thead>
           <tr>
-            <th># Cuenta</th>
+            {/* <th># Cuenta</th> */}
+            <th># Orden</th>
             <th>Usuarios</th>
             <th>Direccion</th>
             <th>Telefono</th>
-            <th># Orden</th>
+            {/* <th># Orden</th> */}
             <th>Estado</th>
             <th>Editar</th>
             <th>Procesar</th>
+            <th>Borrar</th>
           </tr>
         </thead>
 
@@ -277,23 +498,27 @@ console.log( "guest orders", orders)
             {orders.map( customer => (
                <React.Fragment key={customer.order.id}>
                    <tr>
-                        <td>{customer.customer_id}</td>
+                        {/* <td>{customer.customer_id}</td> */}
+                         <td>{customer.order.id}</td>
                         <td>{customer.name}</td>
                         <td>{customer.address}</td>
                         <td>{customer.phone}</td>
 
                           {/* ORDER ID */}
-                        <td>{customer.order.id}</td>
+                        {/* <td>{customer.order.id}</td> */}
                           {/* STATUS */}
                         <td>
-                            {customer.order.status_sell === "Pendiente"
-                            ? "Pendiente"
-                            : "Pagada"}
+                            {customer.order.status_sell}
                         </td>
                           {/* EDIT */}
                         <td>
                             <div
-                            className="action-btn edit"
+                            // className="action-btn edit"
+                            className={`action-btn ${
+                              customer.order.status_sell === "Pagada"
+                                ? "edit disabled"
+                                : "edit"
+                            }`}
                             onClick={() => handleEdit(customer.order.id)}
                             >
                             Editar
@@ -301,15 +526,49 @@ console.log( "guest orders", orders)
                         </td>
                          <td>
                             <div
-                            className="action-btn edit"
-                            onClick={() =>
-                                handleConfirm(customer.id)
-                            }
+                            // className="action-btn edit"
+                            className={`action-btn ${
+                              customer.order.status_sell === "Pagada"
+                                ? "done disabled"
+                                : "edit"
+                            }`}
+                            onClick={() => {
+                                if (customer.order.status_sell === "Pagada") return;
+
+                                handleConfirm(
+                                  customer.customer_id,
+                                  customer.order.id
+                                );
+                              }}
                             >
-                            Confirmar
+                            {/* Confirmar */}
+                            {
+                              customer.order.status_sell === "Pagada"
+                                ? "Completada"
+                                : "Confirmar"
+                            }
+                            </div>
+                        </td>
+                         {/* BORRAR */}
+                        <td>
+                            <div
+                            // className="action-btn remove"
+                            className={`action-btn ${
+                              customer.order.status_sell === "Pagada"
+                                ? "remove disabled"
+                                : "remove"
+                            }`}
+                            onClick={() => 
+                              handleRemoveClick(customer.customer_id, 
+                                                customer.order.id, 
+                                                customer.order)}
+                            
+                            >
+                             Cancelar
                             </div>
                         </td>
                    </tr>
+                  
                    {expandedOrderId === customer.order.id && (
                        <tr className="order-details-row">
                            <td colSpan="8">
@@ -318,22 +577,24 @@ console.log( "guest orders", orders)
 
                                     <p><strong>Cliente:</strong> {customer.name}</p>
                                     <p><strong>Teléfono:</strong> +{customer.phone}</p>
+                                    {customer.order.payment_option  === "Domicilio"
+                                       && (<p><strong>Direccion:</strong> {customer.address}</p>)
+                                    }
+                                    
                                     <p><strong>Encargada:</strong> {customer.order.adm_in_charge}</p>
                                     {customer.order.gestor_sell !== "" && <p><strong>Gestor de Ventas:</strong> {customer.order.gestor_sell}</p> }
 
                                     <div className="qr-icons"
                                             onClick={() => {
-                                                if (!customer.qrcode) return;
+                                                if (!customer.order.qrcode) return;
                                                
-                                                setActiveQR(customer.qrcode)
+                                                setActiveQR(customer.order.qrcode)
                                                 }} >
                                         <QrCode   size={56} />
                                     </div>
 
                                      <div className="order-item">
-                                          <p><strong>Estado:</strong> {customer.order.status_sell === "Pendiente"
-                                      ? "Pendiente"
-                                      : "Pagada"}</p>
+                                          <p><strong>Estado:</strong> {customer.order.status_sell}</p>
 
                                           <p><strong>Total:</strong> ${customer.order.revenew_total}</p>
                                           <p><strong>Pago:</strong> {customer.order.payment_format}</p>
@@ -363,6 +624,7 @@ console.log( "guest orders", orders)
                                     <div
                                       className="action-btn2 complete"
                                       onClick={() =>  handleComplete2(customer.customer_id, customer.order.id)}
+
                                       >
                                       Marcar como listo
                                     </div>
@@ -394,6 +656,41 @@ console.log( "guest orders", orders)
       
                                 </div>
                               )}
+              {
+                  showConfirm && (
+                    <div className="confirm-overlay">
+                      <div className="confirm-modal">
+
+                        <h3>Confirmar eliminación</h3>
+
+                        <p>
+                          ¿Está seguro que desea eliminar esta
+                          orden?
+                        </p>
+
+                        <div className="confirm-actions">
+
+                          <button
+                            className="cancel-btn"
+                            onClick={cancelRemove}
+                          >
+                            Cancelar
+                          </button>
+
+                          <button
+                            className="delete-btn"
+                            onClick={confirmRemove}
+                            // onClick={() =>  confirmRemove(customer.customer_id, customer.order.id)}
+                          >
+                            Eliminar
+                          </button>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  )
+                }
     </div>
   );
 };

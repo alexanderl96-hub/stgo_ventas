@@ -127,7 +127,16 @@ tr:nth-child(even) {
     color: #ffffff
 }
 .action-btn.done{
-    background-color: #44f37cdd;
+    background-color: #0be851dd;
+     color: #ffffff
+}
+.action-btn.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.action-btn.remove{
+    background-color: #e8300bdd;
      color: #ffffff
 }
 
@@ -319,4 +328,45 @@ tr:nth-child(even) {
   cursor: not-allowed;
   box-shadow: none;
   transform: none;
+}
+
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.confirm-modal {
+  width: 350px;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  padding: 10px 20px;
+  border: none;
+  background: #ccc;
+  cursor: pointer;
+}
+
+.delete-btn {
+  padding: 10px 20px;
+  border: none;
+  background: #e53935;
+  color: white;
+  cursor: pointer;
 }
