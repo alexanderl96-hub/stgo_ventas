@@ -17,6 +17,7 @@ import useDataProducts from "../api/dataProducts";
 import API_URL from "../api/api_images";
 
 export default function ProductDetail({
+    user,
     productsDB, categoryDB, 
     searchTerm, setSearchTerm,
     // openCategory,
@@ -29,41 +30,44 @@ export default function ProductDetail({
     const navigate = useNavigate();
     const [showTabs, setShowTabs] = useState(false);
     const [activeSection, setActiveSection] = useState("generales");
-
+ 
     const overviewRef = useRef(null);
     const featuresRef = useRef(null);
-    
-
 
   const [currentImg, setCurrentImg] = useState(0);
   const [showImageModal, setShowImageModal] = useState(false);
   const [modalImgIndex, setModalImgIndex] = useState(0);
   const { id } = useParams();
 
-  const nextModalImage = () => {
 
-    setModalImgIndex(prev =>
 
-            prev ===
-            product.img.length - 1
 
-            ? 0
+//   const nextModalImage = () => {
 
-            : prev + 1
-        );
-    };
+//     setModalImgIndex(prev =>
 
-    const prevModalImage = () => {
+//             prev ===
+//             product.img.length - 1
 
-    setModalImgIndex(prev =>
+//             ? 0
 
-        prev === 0
+//             : prev + 1
+//         );
+//     };
 
-        ? product.img.length - 1
+//     const prevModalImage = () => {
 
-        : prev - 1
-    );
-    };
+//     setModalImgIndex(prev =>
+
+//         prev === 0
+
+//         ? product.img.length - 1
+
+//         : prev - 1
+//     );
+//     };
+
+
 
     useEffect(() => {
   const handleScroll = () => {
@@ -123,9 +127,6 @@ const availableColors = !orderConfig.size
       )
       .map(([color]) => color);
 
-
-
-  console.log("product", product)
 
   if (!product) return <div>Product not found</div>;
  
@@ -206,144 +207,6 @@ const availableColors = !orderConfig.size
 
             </header>
 
-        {/* <div className="image-slider">
-
-        ⬅️ LEFT ARROW
-        {product.img.length > 1 &&
-        <div
-            className="arrow left"
-            onClick={() =>
-            setCurrentImg((prev) =>
-                prev === 0 ? product.img.length - 1 : prev - 1
-            )
-            }
-        >
-            ‹
-        </div>}
-
-        📸 IMAGE
-        <img
-            src={product.img[currentImg].image_path}
-            className="detail-img"
-            alt={product.name}
-
-               onClick={() => {
-
-                setModalImgIndex(currentImg);
-
-                setShowImageModal(true);
-
-            }}
-
-        />
-
-        {
-            showImageModal && (
-
-                <div
-                className="image-modal-overlay"
-
-                onClick={() =>
-                    setShowImageModal(false)
-                }
-                >
-
-                <div
-                    className="image-modal-content"
-
-                    onClick={(e) =>
-                    e.stopPropagation()
-                    }
-                >
-
-                    CLOSE
-                    <button
-                    className="close-modal"
-
-                    onClick={() =>
-                        setShowImageModal(false)
-                    }
-                    >
-                    ✕
-                    </button>
-
-
-
-                    LEFT
-                    {
-                    product.img.length > 1 && (
-
-                        <button
-                        className="modal-arrow left"
-
-                        onClick={prevModalImage}
-                        >
-                        ❮
-                        </button>
-                    )
-                    }
-
-
-
-                    IMAGE
-                    <img
-                    src={
-                        product.img[modalImgIndex]
-                        .image_path
-                    }
-
-                    className="modal-image"
-
-                    alt={product.name}
-                    />
-
-
-
-                    RIGHT
-                    {
-                    product.img.length > 1 && (
-
-                        <button
-                        className="modal-arrow right"
-
-                        onClick={nextModalImage}
-                        >
-                        ❯
-                        </button>
-                    )
-                    }
-
-                </div>
-
-                </div>
-
-               
-            )
-            }
-
-        ➡️ RIGHT ARROW
-        {product.img.length > 1 &&
-        <div
-            className="arrow right"
-            onClick={() =>
-            setCurrentImg((prev) =>
-                prev === product.img.length - 1 ? 0 : prev + 1
-            )
-            }
-        >
-            ›
-        </div>}
-        <div className="dots">
-            {product.img.map((_, i) => (
-                <span
-                key={i}
-                className={`dot ${i === currentImg ? "active" : ""}`}
-                />
-            ))}
-            </div>
-
-        </div> */}
-
         <div className="image-slider">
 
            <Swiper
@@ -380,59 +243,6 @@ const availableColors = !orderConfig.size
             ))}
             </div>
 
-
-            {/* {showImageModal && (
-                <div
-                className="image-modal-overlay"
-                onClick={() => setShowImageModal(false)}
-                >
-                <div
-                    className="image-modal-content"
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <button
-                    className="close-modal"
-                    onClick={() => setShowImageModal(false)}
-                    >
-                    ✕
-                    </button>
-
-                    <Swiper
-                    modules={[Zoom]}
-                    zoom={true}
-                    pagination={{ clickable: true }}
-                    initialSlide={modalImgIndex}
-                    slidesPerView={1}
-                    onSlideChange={(swiper) =>
-                        setModalImgIndex(swiper.activeIndex)
-                    }
-                    >
-                    {product.img.map((img, index) => (
-                        <SwiperSlide key={index}>
-                        <div className="swiper-zoom-container">
-                            <img
-                            src={img.image_path}
-                            className="modal-image"
-                            alt={product.name}
-                            />
-                        </div>
-                        </SwiperSlide>
-                    ))}
-                    </Swiper>
-                    <div className="dots modal-dots">
-                        {product.img.map((_, i) => (
-                            <span
-                            key={i}
-                            className={`dot ${
-                                i === modalImgIndex ? "active" : ""
-                            }`}
-                            />
-                        ))}
-                    </div>
-                </div>
-                </div>
-            )} */}
-
             {showImageModal && (
                 <div
                     className="image-modal-overlay"
@@ -464,10 +274,8 @@ const availableColors = !orderConfig.size
                     >
                         {product.img.map((img, index) => (
                         <SwiperSlide key={index}>
-                            {/* className="swiper-zoom-container" */}
                             <div className="swiper-zoom-container"
                             style={{
-                                // border: "1px solid white",
                                 height: "75vh",
                                 display: "flex",
                                 justifyContent: "center",
@@ -711,7 +519,13 @@ const availableColors = !orderConfig.size
                 </span>
             ))}
             <span className="product" >{product.rating}</span>
-            <span className="product2">Reviews ({product.reviews})</span>
+            <span className="product2"
+                 
+                > Reviews ({product.reviews})
+            </span>
+
+
+
             </div>
 
             <div className="price-container">

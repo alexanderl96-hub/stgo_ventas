@@ -38,8 +38,6 @@ export default function Home({
   const [open, setOpen] = useState(false);
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
-  // const [openCategory, setOpenCategory] = useState(null);
-  // const [searchTerm, setSearchTerm] = useState("");
   const [wishlist, setWishlist] = useState([]);
   
 
@@ -73,13 +71,6 @@ export default function Home({
   };
 
  const currentItems = filteredProducts?.slice(0, visibleCount);
-
-  // const totalItems = filteredProducts?.length;
-  // const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  // const startIndex = (currentPage - 1) * itemsPerPage;
-  // const currentItems = filteredProducts?.slice(startIndex, startIndex + itemsPerPage);
-
 
   const getDiscount = (price, originalPrice) => {
     if (!originalPrice) return null;
@@ -142,9 +133,8 @@ useEffect(() => {
   }, []);
 
   console.log("cart", cart)
-
   console.log("visibleCount", visibleCount);
-console.log("filteredProducts", filteredProducts?.length);
+  console.log("filteredProducts", filteredProducts?.length);
 
 
   const availableSizes = !orderConfig.color
@@ -387,11 +377,16 @@ const availableColors = !orderConfig.size
 
                             toggleWishlist(p.id);
 
+                            // await updateWishlist(
+
+                            //   p.id,
+
+                            //   p.likes + 1
+                            // );
+
                             await updateWishlist(
-
                               p.id,
-
-                              p.likes + 1
+                              user?.customer_id
                             );
 
                           }}

@@ -195,6 +195,203 @@
 }
 
 
+.review-btn {
+  margin-top: 10px;
+  padding: 8px 14px;
+
+  border: none;
+  border-radius: 20px;
+
+  background: linear-gradient(
+    90deg,
+    #8b5cf6,
+    #ec4899
+  );
+
+  color: white;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.review-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+
+.review-modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+
+  z-index: 9999;
+
+  padding: 20px;
+}
+
+.review-modal {
+  width: 100%;
+  max-width: 500px;
+
+  background: #fff;
+
+  border-radius: 16px;
+
+  padding: 24px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.2);
+
+  animation: reviewModalOpen 0.25s ease;
+}
+
+.review-modal h2 {
+  margin: 0 0 20px;
+
+  text-align: center;
+
+  color: #7c3aed;
+
+  font-size: 1.5rem;
+}
+
+.review-modal label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-weight: 600;
+
+  color: #333;
+}
+
+.review-modal select,
+.review-modal input,
+.review-modal textarea {
+  width: 100%;
+
+  padding: 12px;
+
+  margin-bottom: 15px;
+
+  border: 1px solid #ddd;
+  border-radius: 10px;
+
+  font-size: 0.95rem;
+
+  outline: none;
+
+  transition: all 0.2s ease;
+}
+
+.review-modal select:focus,
+.review-modal input:focus,
+.review-modal textarea:focus {
+  border-color: #8b5cf6;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(139, 92, 246, 0.15);
+}
+
+.review-modal textarea {
+  min-height: 120px;
+
+  resize: vertical;
+}
+
+.review-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  margin-top: 20px;
+}
+
+.review-actions button {
+  border: none;
+
+  padding: 10px 18px;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.review-actions button:first-child {
+  background: #f3f4f6;
+  color: #444;
+}
+
+.review-actions button:first-child:hover {
+  background: #e5e7eb;
+}
+
+.review-actions button:last-child {
+  background: linear-gradient(
+    135deg,
+    #8b5cf6,
+    #ec4899
+  );
+
+  color: white;
+}
+
+.review-actions button:last-child:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 15px
+    rgba(139, 92, 246, 0.3);
+}
+
+@keyframes reviewModalOpen {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.rating-stars {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.rating-stars span {
+  font-size: 1.5rem;
+  color: #d1d5db;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.rating-stars span.active {
+  color: #fbbf24;
+}
+
+.rating-stars span:hover {
+  transform: scale(1.15);
+}
+
 
 
 /* Extra Small Phones */

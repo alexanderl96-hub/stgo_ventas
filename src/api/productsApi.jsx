@@ -1,15 +1,16 @@
 import API_URL from "./api_images";
 
-export const updateWishlist =
-async (id, likes) => {
+
+export const updateWishlist = async (
+  productId,
+  customerId = null
+) => {
 
   try {
 
     const response =
       await fetch(
-
-        `${API_URL}/api/products/${id}`,
-
+        `${API_URL}/api/products/${productId}/wishlist`,
         {
           method: "PUT",
 
@@ -19,20 +20,13 @@ async (id, likes) => {
           },
 
           body: JSON.stringify({
-
-            likes
+            customer_id:
+              customerId
           })
         }
       );
 
-
-
-    const data =
-      await response.json();
-
-
-
-    return data;
+    return await response.json();
 
   } catch (error) {
 

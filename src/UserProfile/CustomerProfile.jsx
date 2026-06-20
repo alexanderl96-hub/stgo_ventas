@@ -1,7 +1,22 @@
 import React, { useEffect, useState, useMemo } from "react";
 import "./customerProfile.css";
+import { submitReview } from "../api/auth"
 
-const CustomerProfile = ({ user, customers, setCustomers, logout }) => {
+const CustomerProfile = ({ user, customers, setCustomers, logout, productsDB }) => {
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [reviewData, setReviewData] = useState({
+      rating: 5,
+      title: "",
+      comment: ""
+      });
+  const [selectedProductId, setSelectedProductId] = useState(null);
+
+
+
+  const openReviewModal = (productId) => {
+    setSelectedProductId(productId);
+    console.log("selectedProductId", selectedProductId)
+  };
 
   // ---------------------------
   // STATE
@@ -15,6 +30,41 @@ const CustomerProfile = ({ user, customers, setCustomers, logout }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [orders, setOrders] = useState([]);
 
+
+
+
+  const handleSubmitReview = async () => {
+
+    try {
+
+      await submitReview(
+        selectedProductId,
+        {
+          customer_id:
+            user?.customer_id ||
+            user?.guestid,
+
+          name:
+            user?.name,
+
+          rating:
+            reviewData.rating,
+
+          title:
+            reviewData.title,
+
+          comment:
+            reviewData.comment
+        }
+      );
+
+      setShowReviewModal(false);
+
+    } catch (error) {
+
+      console.error(error);
+    }
+  };
 
   // ---------------------------
   // AUTO SELECT LAST USER (STATIC APP)
@@ -75,7 +125,9 @@ const CustomerProfile = ({ user, customers, setCustomers, logout }) => {
     }
   }, [user]);
 
+  console.log(orders, selectedProductId)
 
+ 
   // ---------------------------
   // REGISTER VIEW
   // ---------------------------
@@ -228,6 +280,20 @@ const CustomerProfile = ({ user, customers, setCustomers, logout }) => {
                           <div >
                             <span>$ {item.price} cup</span>
                           </div>
+                          {order.status_sell === "Pagada" && (
+                            <button
+                              className="review-btn"
+                              onClick={() => {
+                                //  openReviewModal(item.product_id);
+                                 setSelectedProductId(item.product_id);
+                                 setShowReviewModal(true);
+
+                              }}
+                            >
+                              Leave Review
+                            </button>
+                          )}
+
                         </div>
 
                       </div>
@@ -241,6 +307,80 @@ const CustomerProfile = ({ user, customers, setCustomers, logout }) => {
           ))
         )}
       </div>
+
+                   {
+                    showReviewModal && (
+                        <div className="review-modal-overlay">
+                        <div className="review-modal">
+
+                            <h2>Escribe tu opinión</h2>
+
+                            <label>Calificación</label>
+
+                            <div className="rating-stars">
+                              {[1,2,3,4,5].map(star => (
+                                <span
+                                  key={star}
+                                  className={
+                                    star <= reviewData.rating
+                                      ? "active"
+                                      : ""
+                                  }
+                                  onClick={() =>
+                                    setReviewData({
+                                      ...reviewData,
+                                      rating: star
+                                    })
+                                  }
+                                >
+                                  ★
+                                </span>
+                              ))}
+                            </div>
+
+                            <input
+                            type="text"
+                            placeholder="Título de la reseña"
+                            value={reviewData.title}
+                            onChange={(e) =>
+                                setReviewData({
+                                ...reviewData,
+                                title: e.target.value
+                                })
+                            }
+                            />
+
+                            <textarea
+                            placeholder="Cuéntanos tu experiencia con el producto..."
+                            value={reviewData.comment}
+                            onChange={(e) =>
+                                setReviewData({
+                                ...reviewData,
+                                comment: e.target.value
+                                })
+                            }
+                            />
+
+                            <div className="review-actions">
+                            <button
+                                onClick={() =>
+                                setShowReviewModal(false)
+                                }
+                            >
+                                Cancelar
+                            </button>
+
+                            <button
+                                onClick={handleSubmitReview}
+                            >
+                                Enviar reseña
+                            </button>
+                            </div>
+
+                        </div>
+                        </div>
+                    )
+                    }
 
     </div>
   );

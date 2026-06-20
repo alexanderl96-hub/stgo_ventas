@@ -325,6 +325,7 @@ function App() {
                 setCustomers={setCustomers}
                 user={user}
                 logout={logout}
+                productsDB={productsDB}
               />
             ) : (
               <Login onAuth={handleAuth} />

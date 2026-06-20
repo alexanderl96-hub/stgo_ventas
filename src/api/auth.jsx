@@ -260,3 +260,27 @@ export const restoreProductsInventory =
 
     return response.json();
   };
+
+export const submitReview = async (
+  productId,
+  review
+) => {
+
+  const response =
+    await fetch(
+      `${API_URL}/api/products/${productId}/review`,
+      {
+        method: "PUT",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body:
+          JSON.stringify(review)
+      }
+    );
+
+  return response.json();
+};
