@@ -317,7 +317,7 @@ export default function InPersonPaymentGuess({
 
     }, [customers]);
 
-    console.log("customers", customers)
+    console.log("customers las check", customers)
     console.log("form", form)
 
 

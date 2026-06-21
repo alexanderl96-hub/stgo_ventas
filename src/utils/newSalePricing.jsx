@@ -11,14 +11,26 @@
   // 2️⃣ fee rule
   let feePercent = 0.10;
   let feeTotal = 0.55;
+  let totalVenta2 = 0;
 
-//   const totalVenta = Math.round(usdPrice * exchangeRate * (1 + feeTotal));
-  const totalVenta2 = modifySalePrice(Math.round(usdPrice * exchangeRate * (1 + feeTotal)));
+  if(usdPrice > 1){
+   totalVenta2 = Math.round(usdPrice * exchangeRate * (1 + feeTotal))
+  }else{
+   totalVenta2 = modifySalePrice(Math.round(usdPrice * exchangeRate * (1 + feeTotal)))
+  }
+
+//   const totalVenta2 = Math.round(usdPrice * exchangeRate * (1 + feeTotal));
+     
+//   const totalVenta2 = modifySalePrice(Math.round(usdPrice * exchangeRate * (1 + feeTotal)));
   let totalZelle = totalVenta2;
   let totalEfectivo = 0;
   let gananciaVenta = 0;
   let gananciaVendedor = 0;
   let gananciaTienda = 0;
+
+
+
+  console.log("totalVenat 2", totalVenta2)
 
 
     if (totalVenta2 > 5000 && formatPay?.trim() === "Transferencia") {

@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import "./customerProfile.css";
 import { submitReview } from "../api/auth"
 
-const CustomerProfile = ({ user, customers, setCustomers, logout, productsDB }) => {
+const CustomerProfile = ({ user, customers, setCustomers, 
+  logout, productsDB, setCart, categoryDB }) => {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewData, setReviewData] = useState({
       rating: 5,
@@ -10,13 +12,13 @@ const CustomerProfile = ({ user, customers, setCustomers, logout, productsDB }) 
       comment: ""
       });
   const [selectedProductId, setSelectedProductId] = useState(null);
+  const navigate = useNavigate();
 
 
-
-  const openReviewModal = (productId) => {
-    setSelectedProductId(productId);
-    console.log("selectedProductId", selectedProductId)
-  };
+  // const openReviewModal = (productId) => {
+  //   setSelectedProductId(productId);
+  //   console.log("selectedProductId", selectedProductId)
+  // };
 
   // ---------------------------
   // STATE
@@ -59,6 +61,11 @@ const CustomerProfile = ({ user, customers, setCustomers, logout, productsDB }) 
       );
 
       setShowReviewModal(false);
+      setReviewData({
+          rating: 5,
+          title: "",
+          comment: ""
+      })
 
     } catch (error) {
 
@@ -118,6 +125,93 @@ const CustomerProfile = ({ user, customers, setCustomers, logout, productsDB }) 
     return `(${part1}) ${part2}-${part3}`;
   };
 
+ const handleBuyAgain = (order) => {
+
+      const cartItems = order.orders
+        .map(oldItem => {
+
+          const product = productsDB.find(
+            p => String(p.id) === String(oldItem.product_id)
+          );
+
+
+          const normalize = str =>
+                              str
+                                ?.normalize("NFD")
+                                .replace(/[\u0300-\u036f]/g, "")
+                                .trim()
+                                .toLowerCase();
+
+          const categoryActi =
+                              categoryDB.find(
+                                a =>
+                                  normalize(a.name) ===
+                                  normalize(product?.category)
+                              );
+
+          if (!product) return null;
+
+          return {
+            productid: product.id,
+            name: product.name,
+            description: product.description,
+            price: product.price,
+            dollar_price: product.dollar_price,
+            // qty: product.qty,
+            colors: oldItem.colors,
+            sizes: oldItem.sizes,
+            img: oldItem.img,
+            total_items: product.total_items,
+            gender: product.gender,
+            brand: product.brand,
+            store: product.store,
+            likes: product.likes,
+            rating: product.rating,
+            reviews: product.reviews,
+            adm_in_charge: categoryActi?.person_in_charge,
+            person_in_charge: categoryActi?.person_in_charge,
+            // cup_price: product.cup_price,
+            // revenew_total: product.revenew_total,
+            // seller_cash: product.seller_cash,
+            // gestor_sell: product.gestor_sell,
+            // tienda: product.tienda,
+            age_group: product.age_group,
+            battery_details: product.battery_details,
+            caracteristics: product.caracteristics,
+            category: product.category,
+            colors_match: product.colors_match,
+            current_dollar_price: product.current_dollar_price,
+            discount: product.discount,
+            featured: product.featured,
+            likes_data: product.likes_data,
+            material: product.material,
+            modelo: product.modelo,
+            original_price: product.original_price,
+            original_store_price: product.original_store_price,
+            qrcode: product.qrcode,
+            reviews_data: product.reviews_data,
+            sold: product.sold,
+            stock: product.stock,
+            recommended: product.recommended,
+            sub_category: product.sub_category,
+            status: product.status
+
+            
+          };
+        })
+        .filter(Boolean);
+
+      setCart(cartItems);
+
+      console.log("cartItems", cartItems)
+
+      localStorage.setItem(
+        "cart",
+        JSON.stringify(cartItems)
+      );
+
+      navigate("/cart");
+    };
   
   useEffect(() => {
     if (user) {
@@ -245,8 +339,21 @@ const CustomerProfile = ({ user, customers, setCustomers, logout, productsDB }) 
 
               <div className="order-header">
                 <span>Order #{order.id}</span>
-                <span className={`status ${order.status_sell.includes("Pendiente") ? "new" : "pago"}`}>
-                  {order.status_sell.includes("Pendiente") ? "Nueva Orden" : "Pagada"}
+                <span
+                      className={`status ${
+                        order.status_sell === "Pendiente"
+                          ? "new"
+                          : order.status_sell === "Lista"
+                          ? "Lista"
+                          : "pago"
+                      }`}
+                    >
+                  {order.status_sell === "Pendiente"
+                          ? "Nueva Orden"
+                          : order.status_sell === "Lista"
+                          ? "Por Entregar"
+                          : "Pagada"}
+                  {/* {order.st} */}
                   </span>
               </div>
 
@@ -280,19 +387,30 @@ const CustomerProfile = ({ user, customers, setCustomers, logout, productsDB }) 
                           <div >
                             <span>$ {item.price} cup</span>
                           </div>
+                         
                           {order.status_sell === "Pagada" && (
+                            <div style={{width: "100%", display: "flex", justifyContent: "space-around"}}>
                             <button
                               className="review-btn"
                               onClick={() => {
-                                //  openReviewModal(item.product_id);
+                                
                                  setSelectedProductId(item.product_id);
                                  setShowReviewModal(true);
 
                               }}
                             >
-                              Leave Review
+                              Escribe tu opinión
                             </button>
+                            <button
+                            
+                            className="review-btn"
+                            onClick={() => handleBuyAgain(order)}
+                          >
+                            Comprar de nuevo
+                          </button>
+                          </div>
                           )}
+
 
                         </div>
 

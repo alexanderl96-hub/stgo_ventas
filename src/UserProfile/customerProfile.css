@@ -115,6 +115,11 @@
   color: #1976d2;
 }
 
+.status.Lista {
+  background: #ef7a1a;
+  color: #ffffff;
+}
+
 .status.pago {
   background: #e3f2fd;
   color: #06bb21;

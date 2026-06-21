@@ -39,6 +39,7 @@ export default function PaymentSelector({
         current_dollar_price: item.current_dollar_price || 0,
         qty: item.qty
         })) 
+  console.log("checkAmount", checkAmount)
 
   const usdTotal = zellePermitions.reduce(
         (sum, a) => sum + (Number(a.price) || 0),

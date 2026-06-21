@@ -28,7 +28,8 @@ import useDataProducts from "../api/dataProducts";
 import useDataOrders from "../api/useDataOrders";
 import { generateOrderQr } from "../utils/orderQrGenerator";
 import { calculateOrderPricing } from "../utils/pricing";
-import { modifyOrderPricing } from "../utils/newSalePricing";
+import { modifyOrderPricing,  } from "../utils/newSalePricing";
+// import { calculateOrderPricing } from "../utils/pricing";
 import { createNewOrderUser, 
          updateCustomerOrder, 
          addCustomerOrder, 
@@ -63,6 +64,8 @@ export default function InPersonPayment({
     const [message, setMessage] = useState("");
 
     const person = amountOrder.map(a => a.person_in_charge)?.[0] || "";
+
+     console.log("customers las check", customers)
 
 
 //   // const handleSend = () => {
