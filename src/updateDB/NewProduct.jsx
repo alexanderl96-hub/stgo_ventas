@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 import API_URL from "../api/api_images";
+import { ArrowLeft } from "lucide-react";
 
 import "./newProduct.css";
 
 
 export default function NewProduct({categoryDB}) {
-  
+  const navigate = useNavigate();
+
   const [categorias, setCategorias] = useState([])
 
   const [sub_categorias, setSub_Categorias] = useState([])
@@ -465,7 +467,16 @@ export default function NewProduct({categoryDB}) {
 
   return (
     <div className="create-product-page">
-      <h1>Create Product</h1>
+
+       <button
+            className="back-btn-icon"
+            onClick={() => navigate("/Admin")}
+        >
+            <ArrowLeft size={20} />
+            <span>Volver al Panel</span>
+        </button>
+      
+      <h2>Create Product</h2>
 
       <form className="create-product-form" onSubmit={handleSubmit}>
         <input

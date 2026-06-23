@@ -6,7 +6,7 @@ import QRCode from "react-qr-code";
 import API_URL from "../api/api_images"
 import { updateOrder, updateOrderStatus, 
          deleteOrderAndUpdateUser, restoreProductsInventory } from "../api/auth"
-
+import Ordenes from "../updateDB/OrdenDasboard"
 
 const AdminStore = ({user, customers, setCustomers, logout }) => {
   const navigate = useNavigate();
@@ -18,37 +18,38 @@ const AdminStore = ({user, customers, setCustomers, logout }) => {
   const [orders, setOrders] = useState([]);
   const [guestOrder, setGuestOrder] = useState([])
   const [showConfirm, setShowConfirm] = useState(false);
+  const [activePage, setActivePage] = useState("dashboard");
 
 
   const handleRemoveClick = (
-  customerId,
-  orderId,
-  order
-) => {
+      customerId,
+      orderId,
+      order
+    ) => {
 
-  setSelectedOrder({
-    customerId,
-    orderId,
-    order
-  });
+      setSelectedOrder({
+        customerId,
+        orderId,
+        order
+      });
 
-  setShowConfirm(true);
-};
+      setShowConfirm(true);
+    };
 
 
   const confirmRemove = async () => {
 
-  if (!selectedOrder) return;
+      if (!selectedOrder) return;
 
-  await handleDelete(
-    selectedOrder.customerId,
-    selectedOrder.orderId,
-    selectedOrder.order
-  );
+      await handleDelete(
+        selectedOrder.customerId,
+        selectedOrder.orderId,
+        selectedOrder.order
+      );
 
-  setShowConfirm(false);
-  setSelectedOrder(null);
-};
+      setShowConfirm(false);
+      setSelectedOrder(null);
+    };
 
 
   const cancelRemove = () => {
@@ -74,9 +75,6 @@ const AdminStore = ({user, customers, setCustomers, logout }) => {
     });
   };
 
-//   const handleEdit = (customer) => {
-//     setSelectedOrder(customer); // this will open your sub card
-//   };
 
   const handleConfirm = async (customerId, orderId) => {
    
@@ -87,54 +85,6 @@ const AdminStore = ({user, customers, setCustomers, logout }) => {
       );
     };
   
-  // const handleDelete = async (
-  //     customerId,
-  //     orderId,
-  //     order
-  //   ) => {
-
-  //     if (confirm) {
-          
-  //         if (!customerId || !orderId || !order) return;
-
-
-  //         const items = order.orders?.map(
-  //             item => ({
-  //               product_id: item.product_id,
-  //               name: item.name,
-  //               qty: item.qty,
-  //               colors: item.colors,
-  //               sizes: item.sizes
-  //             })
-  //           );
-
-  //           await restoreProductsInventory({
-  //             items
-  //           });
-
-          
-  //         const result =
-  //           await deleteOrderAndUpdateUser(
-  //             customerId,
-  //             orderId
-  //           );
-          
-  //           console.log("result", result)
-
-  //         if (result.success) {
-  //             console.log(result.success)
-  //         }else{
-  //           console.error()
-  //         }
-
-  //         setConfirm(false);
-  //     }
-
-   
-
-  //     //  setSelectedOrder(null);
-  //   };
-
   const handleDelete = async (
         customerId,
         orderId,
@@ -443,254 +393,159 @@ const AdminStore = ({user, customers, setCustomers, logout }) => {
 console.log( "guest orders", orders)
 
 
+
+const totalOrders =
+  orders.length;
+
+const totalProfit =
+  orders.map(a => a.order).reduce(
+    (sum, order) =>
+      sum + Number(order.revenew_total || 0),
+    0
+  );
+
+const recoveredInvestment =
+  orders.map(a => a.order).reduce(
+    (sum, order) =>
+      sum + Number(order.tienda || 0),
+    0
+  ) * -1;
+
+  const calculateMonthlyTarget = (orders) => {
+
+      const now = new Date();
+
+      const currentMonthOrders =
+        orders.map(a => a.order).filter(order => {
+
+          const orderDate =
+            new Date(order.date);
+
+          return (
+            orderDate.getMonth() ===
+              now.getMonth() &&
+            orderDate.getFullYear() ===
+              now.getFullYear()
+          );
+        });
+
+      const currentRevenue =
+        currentMonthOrders.reduce(
+          (sum, order) =>
+            sum +
+            Number(
+              order.revenew_total || 0
+            ),
+          0
+        );
+
+      const currentDay =
+        now.getDate();
+
+      const daysInMonth =
+        new Date(
+          now.getFullYear(),
+          now.getMonth() + 1,
+          0
+        ).getDate();
+
+      const projectedRevenue =
+        (currentRevenue / currentDay) *
+        daysInMonth;
+
+      return Math.round(
+        projectedRevenue
+      );
+    };
+
+  const monthlyTarget =
+  calculateMonthlyTarget(
+    orders
+  );
+
+
   return (
-    <div className="admin-page">
-      <h2>🛒 Administrador Tienda</h2>
+    <div className="admin-dashboard">
 
-      {/* PRODUCTS */}
-      {/* <h3>Productos</h3>
-      <div className="product-list">
-        {customers.map(p => (
-          <div key={p.customerId} className="admin-card">
-            <img src={p.img[0] || ""} alt="" width="80" />
-            <p>{p.name}</p>
-            <p>${p.phone}</p>
-            <p>{p.userCreate}</p>
+      <div className="dashboard-header">
+        <h1>📊 Panel Administrativo</h1>
+        <p>Ventas Express - Gestión Comercial</p>
+      </div>
 
-            <button onClick={() => deleteProduct(p.id)}>
-              Borrar
-            </button>
-          </div>
-        ))}
-      </div> */}
+      <div className="dashboard-stats">
+
+        <div className="stat-card">
+          <h3>📦 Órdenes</h3>
+          <span>{totalOrders}</span>
+        </div>
+
+        <div className="stat-card">
+          <h3>💰 Ganancias Totales</h3>
+          <span>${totalProfit}</span>
+        </div>
+
+        <div className="stat-card">
+          <h3>📈 Inversión Recuperada</h3>
+          <span>${recoveredInvestment}</span>
+        </div>
+
+        <div className="stat-card">
+          <h3>🎯 Meta Mensual</h3>
+          <span>${monthlyTarget}</span>
+        </div>
+
+      </div>
+
+      <div className="dashboard-actions">
 
         <button
-          className="logout-btn"
-          onClick={() => {
-              logout();
-              navigate("/login");
-            }}
-          // onClick={logout}
+          className="action-card"
+          onClick={() => navigate("/ordenes")}
         >
-          Cerrar Sesión
+          📦
+          <h3>Órdenes</h3>
+          <p>Gestionar pedidos y entregas</p>
         </button>
 
+        <button
+          className="action-card"
+          onClick={() => navigate("/create-product")}
+        >
+          ➕
+          <h3>Nuevo Producto</h3>
+          <p>Agregar productos al catálogo</p>
+        </button>
 
-      {/* ORDERS */}
-      <h3>Ordenes</h3>
-      <table>
-        <thead>
-          <tr>
-            {/* <th># Cuenta</th> */}
-            <th># Orden</th>
-            <th>Usuarios</th>
-            <th>Direccion</th>
-            <th>Telefono</th>
-            {/* <th># Orden</th> */}
-            <th>Estado</th>
-            <th>Editar</th>
-            <th>Procesar</th>
-            <th>Borrar</th>
-          </tr>
-        </thead>
+        <button
+          className="action-card"
+          onClick={() => navigate("/update-products")}
+        >
+          ✏️
+          <h3>Actualizar Producto</h3>
+          <p>Modificar inventario y precios</p>
+        </button>
 
-        <tbody>
-            {orders.map( customer => (
-               <React.Fragment key={customer.order.id}>
-                   <tr>
-                        {/* <td>{customer.customer_id}</td> */}
-                         <td>{customer.order.id}</td>
-                        <td>{customer.name}</td>
-                        <td>{customer.address}</td>
-                        <td>{customer.phone}</td>
+        <button
+          className="action-card"
+          onClick={() => navigate("/admin/analytics")}
+        >
+          📊
+          <h3>Proyección de Ventas</h3>
+          <p>Mes · 6 Meses · Año</p>
+        </button>
 
-                          {/* ORDER ID */}
-                        {/* <td>{customer.order.id}</td> */}
-                          {/* STATUS */}
-                        <td>
-                            {customer.order.status_sell}
-                        </td>
-                          {/* EDIT */}
-                        <td>
-                            <div
-                            // className="action-btn edit"
-                            className={`action-btn ${
-                              customer.order.status_sell === "Pagada"
-                                ? "edit disabled"
-                                : "edit"
-                            }`}
-                            onClick={() => handleEdit(customer.order.id)}
-                            >
-                            Editar
-                            </div>
-                        </td>
-                         <td>
-                            <div
-                            // className="action-btn edit"
-                            className={`action-btn ${
-                              customer.order.status_sell === "Pagada"
-                                ? "done disabled"
-                                : "edit"
-                            }`}
-                            onClick={() => {
-                                if (customer.order.status_sell === "Pagada") return;
+      </div>
 
-                                handleConfirm(
-                                  customer.customer_id,
-                                  customer.order.id
-                                );
-                              }}
-                            >
-                            {/* Confirmar */}
-                            {
-                              customer.order.status_sell === "Pagada"
-                                ? "Completada"
-                                : "Confirmar"
-                            }
-                            </div>
-                        </td>
-                         {/* BORRAR */}
-                        <td>
-                            <div
-                            // className="action-btn remove"
-                            className={`action-btn ${
-                              customer.order.status_sell === "Pagada"
-                                ? "remove disabled"
-                                : "remove"
-                            }`}
-                            onClick={() => 
-                              handleRemoveClick(customer.customer_id, 
-                                                customer.order.id, 
-                                                customer.order)}
-                            
-                            >
-                             Cancelar
-                            </div>
-                        </td>
-                   </tr>
-                  
-                   {expandedOrderId === customer.order.id && (
-                       <tr className="order-details-row">
-                           <td colSpan="8">
-                               <div className="order-details">
-                                     <h4>Detalle Orden #{customer.order.id}</h4>
+      <button
+        className="logout-btn"
+        onClick={() => {
+          logout();
+          navigate("/login");
+        }}
+      >
+        Cerrar Sesión
+      </button>
 
-                                    <p><strong>Cliente:</strong> {customer.name}</p>
-                                    <p><strong>Teléfono:</strong> +{customer.phone}</p>
-                                    {customer.order.payment_option  === "Domicilio"
-                                       && (<p><strong>Direccion:</strong> {customer.address}</p>)
-                                    }
-                                    
-                                    <p><strong>Encargada:</strong> {customer.order.adm_in_charge}</p>
-                                    {customer.order.gestor_sell !== "" && <p><strong>Gestor de Ventas:</strong> {customer.order.gestor_sell}</p> }
-
-                                    <div className="qr-icons"
-                                            onClick={() => {
-                                                if (!customer.order.qrcode) return;
-                                               
-                                                setActiveQR(customer.order.qrcode)
-                                                }} >
-                                        <QrCode   size={56} />
-                                    </div>
-
-                                     <div className="order-item">
-                                          <p><strong>Estado:</strong> {customer.order.status_sell}</p>
-
-                                          <p><strong>Total:</strong> ${customer.order.revenew_total}</p>
-                                          <p><strong>Pago:</strong> {customer.order.payment_format}</p>
-                                    </div>
-
-                                    {customer.order.orders?.map((prod, i) => (
-
-                                    <div key={i} className="order-item2">
-                                          
-            
-                                          {/* LEFT → PRODUCT IMAGE */}
-                                          <img
-                                              src={prod.img?.[0]}
-                                              alt={prod.name || "product"}
-                                              className="order-img"
-                                              />
-
-                                          {/* CENTER → TEXT */}
-                                          <div className="order-info">
-                                              <p><strong>Producto:</strong> {prod.name}</p>
-                                              <p><strong>Cantidad:</strong> {prod.qty}</p>
-                                              <p><strong>Precio:</strong> ${prod.price}</p>
-                                          </div>
-                                    </div>
-                                    ))}
-
-                                    <div
-                                      className="action-btn2 complete"
-                                      onClick={() =>  handleComplete2(customer.customer_id, customer.order.id)}
-
-                                      >
-                                      Marcar como listo
-                                    </div>
-                               </div>
-                           </td>
-                       </tr>
-                   )}
-               </React.Fragment>
-            )
-
-            )}
-            </tbody>
-      </table>
-              {activeQR  && (
-                                <div className="qr-modal" onClick={() => setActiveQR(null)}>
-      
-                                  <div
-                                    className="qr-modal-content"
-                                    onClick={(e) => e.stopPropagation()}
-                                  >
-                                  <QRCode value={activeQR} size={200} />
-                                    <p>Escanear</p>
-      
-                                    <button onClick={() => setActiveQR(null)}>
-                                      Cerrar
-                                    </button>
-      
-                                  </div>
-      
-                                </div>
-                              )}
-              {
-                  showConfirm && (
-                    <div className="confirm-overlay">
-                      <div className="confirm-modal">
-
-                        <h3>Confirmar eliminación</h3>
-
-                        <p>
-                          ¿Está seguro que desea eliminar esta
-                          orden?
-                        </p>
-
-                        <div className="confirm-actions">
-
-                          <button
-                            className="cancel-btn"
-                            onClick={cancelRemove}
-                          >
-                            Cancelar
-                          </button>
-
-                          <button
-                            className="delete-btn"
-                            onClick={confirmRemove}
-                            // onClick={() =>  confirmRemove(customer.customer_id, customer.order.id)}
-                          >
-                            Eliminar
-                          </button>
-
-                        </div>
-
-                      </div>
-                    </div>
-                  )
-                }
     </div>
   );
 };

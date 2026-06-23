@@ -20,6 +20,7 @@ import CheckoutGuess from "./CheckoutGuess/PyamentSelectorGuess";
 // import UpdateProduct from "./updateDB/Update/UpdateDBProduct";
 import UpdateDBProduct from "./updateDB/UpdateProduct.jsx";
 import CreateProduct from "./updateDB/NewProduct.jsx";
+import Ordenes from "./updateDB/OrdenDasboard.jsx";
 import { Product } from "./Product/Product.jsx";
 
 function App() {
@@ -389,12 +390,23 @@ function App() {
 
         <Route path="/order/:orderId" element={<QrOrderPage />} />
         <Route path="/product/:orderId" element={<QrOrderPage />} />
-        <Route path="/update-products" element={<UpdateDBProduct />} />
+        <Route path="/update-products" 
+               element={
+                   <UpdateDBProduct 
+                       productsDB={productsDB}
+                   />} />
         <Route path="/create-product" 
                element={
                   <CreateProduct  
                        categoryDB={categoryDB} />} 
                   />
+        <Route path="/ordenes" 
+               element={
+                  <Ordenes  
+                          user={user}
+                          setCustomers={setCustomers}
+                          customers={customers}
+                 />} />
 
         <Route path="/login" element={<Login onAuth={handleAuth} />} />
         <Route path="/register" element={<Register onAuth={handleAuth} />} />

@@ -1,12 +1,17 @@
 // src/pages/Admin/UpdateProduct.jsx
 
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import API_URL from "../api/api_images";
+import { ArrowLeft } from "lucide-react";
 
 import "./updateProduct.css";
 
-export default function UpdateProduct() {
+export default function UpdateProduct({productsDB}) {
+  const navigate = useNavigate();
+
+  const [productID, setProductID] = useState(null);
+
   const [products, setProducts] = useState([]);
 
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -33,23 +38,58 @@ export default function UpdateProduct() {
   });
 
   // GET PRODUCTS
+  // const getProducts = async () => {
+  //   try {
+  //     const response = await fetch(`${API_URL}/api/products/${productID}`);
+
+  //     const data = await response.json();
+
+  //     console.log(data)
+  //     // setProducts(data?.products);
+  //      setProducts(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const getProducts = async () => {
-    try {
-      const response = await fetch(`${API_URL}/api/products`);
+  try {
+    const response = await fetch(
+      `${API_URL}/api/products/${productID}`
+    );
 
-      const data = await response.json();
+    const data = await response.json();
 
-      console.log(data[0])
-      // setProducts(data?.products);
-       setProducts([data[0]]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    setProducts([data]);
+
+    setFormData({
+      name: data.name || "",
+      description: data.description || "",
+      price: data.price || "",
+      original_price: data.original_price || "",
+      discount: data.discount || "",
+      stock: data.stock || "",
+      category: data.category || "",
+      sub_category: data.sub_category || "",
+      brand: data.brand || "",
+      gender: data.gender || "",
+      age_group: data.age_group || "",
+      material: data.material || "",
+      featured: data.featured || false
+    });
+
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   useEffect(() => {
+
+    if (!productID) return;
+
     getProducts();
-  }, []);
+
+  }, [productID]);
 
   // SELECT PRODUCT
   const handleSelectProduct = (product) => {
@@ -125,8 +165,76 @@ export default function UpdateProduct() {
 
   return (
     <div className="update-product-page">
-      <h1>Update Products</h1>
+       <button
+            className="back-btn-icon"
+            onClick={() => {
+              navigate("/Admin");
+              setProducts([])
+            }}
+        >
+            <ArrowLeft size={20} />
+            <span>Volver al Panel</span>
+        </button>
+      
 
+      <h2>Actualizar producto</h2>
+         {products?.length === 0 && ( <>
+          <h3>Selecciona el producto</h3>
+          <div className="up-products-grid">
+
+              {productsDB.map((prod) => (
+
+                <div
+                  key={prod.id}
+                  className="up-product-card-admin"
+                >
+
+                  <img
+                    src={
+                      prod.img?.[0]?.image_path ||
+                      prod.img?.[0] ||
+                      ""
+                    }
+                    alt={prod.name}
+                    className="up-product-admin-img"
+                  />
+
+                  <div className="up-product-info">
+
+                  <h4>{prod.name}</h4>
+
+                  <p>
+                    <strong>Precio:</strong> $
+                    {prod.price}
+                  </p>
+
+                  <p>
+                    <strong>Stock:</strong> {
+                      prod.stock
+                    }
+                  </p>
+
+                  </div>
+
+                  <button
+                    className="up-edit-product-btn"
+                    onClick={() => {
+                      setProductID(prod.id);
+
+                    }}
+                  >
+                    Editar
+                  </button>
+
+                </div>
+
+              ))}
+
+            </div>
+         </>)}
+
+
+        {products?.length > 0 && ( <>
         {/* FORM Update*/}
         <div className="update-form">
           <input
@@ -240,6 +348,8 @@ export default function UpdateProduct() {
 
           {message && <p className="message">{message}</p>}
         </div>
+        </>
+        )}
     </div>
   );
 }
