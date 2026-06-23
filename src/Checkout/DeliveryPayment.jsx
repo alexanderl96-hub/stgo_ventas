@@ -10,7 +10,7 @@ import { createNewOrderUser,
          addCustomerOrder, 
          getCustomer  } from "../api/auth"
          import { updateInventory } from "../utils/inventory";
-         import { updateProduct } from "../api/auth";
+         import { updateProduct, createGuestCustomer } from "../api/auth";
 
 export default function DeliveryPayment ({
   user, setUser, cart, setCart, amountOrder,
@@ -26,6 +26,14 @@ export default function DeliveryPayment ({
   const [moneyType, setMoneyType] = useState("cup")
   const [sellOrder, setSellOrder] = useState([])
   const [message, setMessage] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    guestId: "",
+    order: []
+  });
 
 
   // const [admin, setAdmin] = useState(administrator)
@@ -90,7 +98,10 @@ export default function DeliveryPayment ({
     };
 
   const saveOrder = (order) => {
-    const email = user?.email || `guest_${Date.now()}@local`;
+    // const email = user?.email || `guest_${Date.now()}@local`;
+    const email =  user?.role !== "admin"
+                  ? user?.email || `guest_${Date.now()}@local`
+                  : `guest_${Date.now()}@local`
 
     console.log("email", email)
 
@@ -368,6 +379,62 @@ export default function DeliveryPayment ({
       return () => clearTimeout(timer);
     }
   }, [fullName, address, phone]);
+
+    // useEffect(() => {
+
+    //   if (!customers.length) return;
+
+    //   const customer = customers[0];
+
+    //   console.log("check inside of useeffect", customer)
+
+    //   const guestData = {
+
+    //     name: customer.name || "",
+
+    //     email: customer.email || "",
+
+    //     phone: customer.phone || "",
+
+    //     address: customer.address || "",
+
+    //     guestId:
+    //       customer.customer_id ||
+    //       customer.customerId ||
+    //       "",
+
+    //     order:
+    //       customer.order || []
+    //   };
+
+    //   setForm(guestData);
+
+    //   const createGuest = async () => {
+
+    //     try {
+
+    //       const result =
+    //         await createGuestCustomer(
+    //           guestData
+    //         );
+
+    //       console.log(
+    //         "Guest created:",
+    //         result
+    //       );
+
+    //     } catch (error) {
+
+    //       console.error(error);
+
+    //     }
+
+    //   };
+
+    //   createGuest();
+
+    // }, [customers]);
+
 
     const normalize = (str) =>
       str

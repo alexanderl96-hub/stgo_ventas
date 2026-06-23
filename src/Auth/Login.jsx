@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 import API_URL from "../api/api_images";
 import "./auth.css";
 
@@ -8,6 +9,7 @@ export default function Login({ onAuth }) {
     email: "",
     password: ""
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -69,7 +71,7 @@ export default function Login({ onAuth }) {
   return (
     <div className="auth-container">
       <form className="auth-box" onSubmit={handleSubmit}>
-        <h2>Login</h2>
+        <h2>Iniciar sesión</h2>
 
         <input
           type="email"
@@ -77,22 +79,40 @@ export default function Login({ onAuth }) {
           onChange={(e) =>
             setForm({ ...form, email: e.target.value })
           }
+          required
         />
 
-        <input
-          type="password"
-          placeholder="Contraseña"
-          onChange={(e) =>
-            setForm({ ...form, password: e.target.value })
-          }
-        />
+         <div className="input-wrapper">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Contraseña"
+              onChange={(e) =>
+                setForm({ ...form, password: e.target.value })
+              }
+              required
+            />
 
-        <button type="submit">Login</button>
+            {showPassword ? (
+                <EyeOff
+                  size={18}
+                  className="password-eye"
+                  onClick={() => setShowPassword(false)}
+                />
+              ) : (
+                <Eye
+                  size={18}
+                  className="password-eye"
+                  onClick={() => setShowPassword(true)}
+                />
+              )}
+          </div>
+
+        <button type="submit">Iniciar sesión</button>
 
         <div className="auth-switch">
-          Don’t have an account?{" "}
+          No tienes una cuenta?{" "}
           <span onClick={() => navigate("/register")}>
-            Register
+            Regístrate
           </span>
         </div>
       </form>

@@ -9,7 +9,7 @@ import "../Checkout/delivery.css"
 import WhatsAppOrder from "../WhatsAppOrder/WhatsAppOrder";
 import API_URL from "../api/api_images";
 import APP_URL from "../api/endPoint"
-import { createNewOrderGuest, updateProduct } from "../api/auth"
+import { createNewOrderGuest, updateProduct, createGuestCustomer } from "../api/auth"
 import { updateInventory } from "../utils/inventory";
 
 
@@ -35,6 +35,14 @@ export default function DeliveryPaymentGuess ({
   const [moneyType, setMoneyType] = useState("cup")
   const [sellOrder, setSellOrder] = useState([])
   const [message, setMessage] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    guestId: "",
+    order: []
+  });
 
   const person = amountOrder.map(a => a.person_in_charge)?.[0] || "";
 
@@ -260,7 +268,10 @@ export default function DeliveryPaymentGuess ({
     // };
 
     const saveOrder = (order) => {
-      const email = user?.email || `guest_${Date.now()}@local`;
+      // const email = user?.email || `guest_${Date.now()}@local`;
+      const email =  user?.role !== "admin"
+                        ? user?.email || `guest_${Date.now()}@local`
+                        : `guest_${Date.now()}@local`
 
       setCustomers(prev => {
 
@@ -346,6 +357,7 @@ export default function DeliveryPaymentGuess ({
         saveOrder(newOrder);
 
         console.log("newOrder", newOrder)
+
         setSellOrder(newOrder);
 
         if(formatPay === "Zelle"){
@@ -356,7 +368,7 @@ export default function DeliveryPaymentGuess ({
   const handleConfirmDelivery = async () => {
     if (!fullName || !address || phone.length !== 8) return;
 
-      
+      console.log("sleeeeee", sellOrder)
       const data = await createNewOrderGuest(sellOrder);
 
       for (const orderItem of sellOrder.orders) {
@@ -491,6 +503,61 @@ console.log("revenuesSeller", revenuesSeller);
     return () => clearTimeout(timer);
   }
 }, [fullName, address, phone]);
+
+  useEffect(() => {
+
+      if (!customers.length) return;
+
+      const customer = customers[0];
+
+      console.log("check inside of useeffect", customer)
+
+      const guestData = {
+
+        name: customer.name || "",
+
+        email: customer.email || "",
+
+        phone: customer.phone || "",
+
+        address: customer.address || "",
+
+        guestId:
+          customer.customer_id ||
+          customer.customerId ||
+          "",
+
+        order:
+          customer.order || []
+      };
+
+      setForm(guestData);
+
+      const createGuest = async () => {
+
+        try {
+
+          const result =
+            await createGuestCustomer(
+              guestData
+            );
+
+          console.log(
+            "Guest created:",
+            result
+          );
+
+        } catch (error) {
+
+          console.error(error);
+
+        }
+
+      };
+
+      createGuest();
+
+    }, [customers]);
 
 
   return (

@@ -200,6 +200,8 @@ export default function InPersonPaymentGuess({
 
     saveOrder(newOrder);
 
+    console.log("inperson", newOrder)
+
     const data = await createNewOrderGuest(newOrder);
 
     

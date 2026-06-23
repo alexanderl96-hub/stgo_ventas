@@ -6,17 +6,24 @@
 }) => {
 
   // 1️⃣ base conversion
-  let cupPrice = Math.round(usdPrice * exchangeRate);
+  // let cupPrice = Math.round(usdPrice * exchangeRate);
 
   // 2️⃣ fee rule
   let feePercent = 0.10;
   let feeTotal = 0.55;
   let totalVenta2 = 0;
 
+  let cupPrice =  usdPrice * exchangeRate;
+
+  // dollar_price > 1 ? 
+  //        Math.round(totalVenta / 500) * 500 : Math.round(totalVenta)
+
   if(usdPrice > 1){
-   totalVenta2 = Math.round(usdPrice * exchangeRate * (1 + feeTotal))
+  //  totalVenta2 = Math.round(usdPrice * exchangeRate * (1 + feeTotal))
+   totalVenta2 = Math.round((usdPrice * exchangeRate * (1 + feeTotal)) / 500) * 500
   }else{
-   totalVenta2 = modifySalePrice(Math.round(usdPrice * exchangeRate * (1 + feeTotal)))
+  //  totalVenta2 = modifySalePrice(Math.round(usdPrice * exchangeRate * (1 + feeTotal)))
+   totalVenta2 = Math.round(usdPrice * exchangeRate * (1 + feeTotal))
   }
 
 //   const totalVenta2 = Math.round(usdPrice * exchangeRate * (1 + feeTotal));

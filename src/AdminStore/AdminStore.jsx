@@ -440,7 +440,7 @@ const AdminStore = ({user, customers, setCustomers, logout }) => {
           clearInterval(interval);
 
       }, []);
-console.log( "guest orders", orders.slice(0,1))
+console.log( "guest orders", orders)
 
 
   return (

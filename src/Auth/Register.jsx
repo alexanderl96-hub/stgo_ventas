@@ -171,7 +171,7 @@ const formatDate = (value) => {
   return (
     <div className="auth-container">
       <form className="auth-box" onSubmit={handleSubmit}>
-        <h2>Register</h2>
+        <h2>Registrarse</h2>
 
         <input
           type="text"
@@ -179,6 +179,7 @@ const formatDate = (value) => {
           onChange={(e) =>
             setForm({ ...form, name: e.target.value })
           }
+          required
         />
 
        <input
@@ -203,6 +204,7 @@ const formatDate = (value) => {
               email !== "" && !isValidEmail(email)
             );
           }}
+          required
         />
 
 
@@ -225,6 +227,7 @@ const formatDate = (value) => {
 
                   transition: "all .3s ease"
                 }}
+                required
           />
 
           {showPassword ? (
@@ -318,6 +321,7 @@ const formatDate = (value) => {
           <input
             type="text"
             placeholder="Fecha de Nacimiento (Mes/Dia/Año)"
+            value={form.birthday ? `${formatDate(form.birthday)}` : ""}
             onChange={(e) => {
               const formatted = formatDate(e.target.value);
 
@@ -326,6 +330,7 @@ const formatDate = (value) => {
                 birthday: formatted
               });
             }}
+            required
           />
         )}
         {/* {form.phone.length === 8 && (
@@ -364,6 +369,7 @@ const formatDate = (value) => {
               onChange={(e) =>
                 setForm({ ...form, address: e.target.value })
               }
+              required
             />
           )}
 
@@ -376,14 +382,14 @@ const formatDate = (value) => {
           style={{display: "none"}}
         />
 
-        Imagen
+        {/* Imagen */}
 
-        <button type="submit">Register</button>
+        <button type="submit">Registrarse</button>
 
         <div className="auth-switch">
-          Already have an account?{" "}
+          Ya tienes una cuenta?{" "}
           <span onClick={() => navigate("/login")}>
-            Login
+            Iniciar sesión
           </span>
         </div>
       </form>
