@@ -322,22 +322,14 @@ export default function Ordenes ({
             {orders.map( customer => (
                <React.Fragment key={customer.order.id}>
                    <tr>
-                        {/* <td>{customer.customer_id}</td> */}
-                         <td>{customer.order.id}</td>
+                        <td>{customer.order.id}</td>
                         <td>{customer.name}</td>
                         <td>{customer.address}</td>
                         <td>{customer.phone}</td>
-
-                          {/* ORDER ID */}
-                        {/* <td>{customer.order.id}</td> */}
-                          {/* STATUS */}
-                        <td>
-                            {customer.order.status_sell}
-                        </td>
+                        <td>{customer.order.status_sell}</td>
                           {/* EDIT */}
                         <td>
                             <div
-                            // className="action-btn edit"
                             className={`action-btn ${
                               customer.order.status_sell === "Pagada"
                                 ? "edit disabled"
@@ -350,7 +342,6 @@ export default function Ordenes ({
                         </td>
                          <td>
                             <div
-                            // className="action-btn edit"
                             className={`action-btn ${
                               customer.order.status_sell === "Pagada"
                                 ? "done disabled"
@@ -504,7 +495,6 @@ export default function Ordenes ({
                           <button
                             className="delete-btn"
                             onClick={confirmRemove}
-                            // onClick={() =>  confirmRemove(customer.customer_id, customer.order.id)}
                           >
                             Eliminar
                           </button>

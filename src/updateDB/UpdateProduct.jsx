@@ -24,64 +24,42 @@ export default function UpdateProduct({productsDB}) {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    price: "",
-    original_price: "",
-    discount: "",
-    stock: "",
-    category: "",
-    sub_category: "",
-    brand: "",
-    gender: "",
-    age_group: "",
-    material: "",
+    price: 0,
+    dollar_price: 0,
+    current_dollar_price: 0,
+    original_price: 0,
+    discount: 0,
+    stock: 0,
     featured: false,
   });
 
-  // GET PRODUCTS
-  // const getProducts = async () => {
-  //   try {
-  //     const response = await fetch(`${API_URL}/api/products/${productID}`);
-
-  //     const data = await response.json();
-
-  //     console.log(data)
-  //     // setProducts(data?.products);
-  //      setProducts(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const getProducts = async () => {
-  try {
-    const response = await fetch(
-      `${API_URL}/api/products/${productID}`
-    );
+      try {
+        const response = await fetch(
+          `${API_URL}/api/products/${productID}`
+        );
 
-    const data = await response.json();
+        const data = await response.json();
 
-    setProducts([data]);
+        setProducts([data]);
 
-    setFormData({
-      name: data.name || "",
-      description: data.description || "",
-      price: data.price || "",
-      original_price: data.original_price || "",
-      discount: data.discount || "",
-      stock: data.stock || "",
-      category: data.category || "",
-      sub_category: data.sub_category || "",
-      brand: data.brand || "",
-      gender: data.gender || "",
-      age_group: data.age_group || "",
-      material: data.material || "",
-      featured: data.featured || false
-    });
+        setFormData({
+          name: data.name || "",
+          description: data.description || "",
+          price: data.price || 0,
+          dollar_price: data.dollar_price || 0,
+          current_dollar_price: data.current_dollar_price || 0,
+          original_price: data.original_price || 0,
+          discount: data.discount || 0,
+          stock: data.stock || 0,
+          featured: data.featured || false
+        });
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   useEffect(() => {
 
@@ -93,21 +71,19 @@ export default function UpdateProduct({productsDB}) {
 
   // SELECT PRODUCT
   const handleSelectProduct = (product) => {
+
     setSelectedProduct(product);
+    setProductID(prod.id);
 
     setFormData({
       name: product.name || "",
       description: product.description || "",
-      price: product.price || "",
-      original_price: product.original_price || "",
-      discount: product.discount || "",
-      stock: product.stock || "",
-      category: product.category || "",
-      sub_category: product.sub_category || "",
-      brand: product.brand || "",
-      gender: product.gender || "",
-      age_group: product.age_group || "",
-      material: product.material || "",
+      price: product.price || 0,
+      dollar_price: data.dollar_price || 0,
+      current_dollar_price: data.current_dollar_price || 0,
+      original_price: product.original_price || 0,
+      discount: product.discount || 0,
+      stock: product.stock || 0,
       featured: product.featured || false,
     });
   };
@@ -131,7 +107,7 @@ export default function UpdateProduct({productsDB}) {
       setLoading(true);
 
       const response = await fetch(
-        `${API_URL}/api/products/${selectedProduct?.id}`,
+        `${API_URL}/api/products/${productID}`,
         {
           method: "PUT",
 
@@ -146,7 +122,7 @@ export default function UpdateProduct({productsDB}) {
       const data = await response.json();
 
       if (data?.success) {
-        setMessage("Product updated successfully");
+        setMessage("Producto actualizado con éxito");
 
         getProducts();
       } else {
@@ -220,6 +196,7 @@ export default function UpdateProduct({productsDB}) {
                     className="up-edit-product-btn"
                     onClick={() => {
                       setProductID(prod.id);
+                      handleSelectProduct(prod)
 
                     }}
                   >
@@ -251,6 +228,25 @@ export default function UpdateProduct({productsDB}) {
             value={formData.description}
             onChange={handleChange}
           />
+
+           <input
+              type="number"
+              name="dollar_price"
+              min="0"
+              step="0.1"
+              placeholder={`Pricio del Dollar: ${products.map(a => a.dollar_price)}`}
+              value={formData.dollar_price}
+              onChange={handleChange}
+            />
+
+            <input
+              type="number"
+              name="current_dollar_price"
+              min="0"
+              placeholder={`Precio del Dollar en el Toque: ${products.map(a => a.current_dollar_price)}`}
+              value={formData.current_dollar_price}
+              onChange={handleChange}
+            />
 
           <input
             type="number"
@@ -284,54 +280,6 @@ export default function UpdateProduct({productsDB}) {
             onChange={handleChange}
           />
 
-          <input
-            type="text"
-            name="category"
-            placeholder={`Categoria: ${products.map(a => a.category)}`}
-            value={formData.category}
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            name="sub_category"
-            placeholder={`Sub Categoria: ${products.map(a => a.sub_category)}`}
-            value={formData.sub_category}
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            name="brand"
-            placeholder={`Marca: ${products.map(a => a.brand)}`}
-            value={formData.brand}
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            name="gender"
-            placeholder={`Genero: ${products.map(a => a.gender)}`}
-            value={formData.gender}
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            name="age_group"
-            placeholder={`Edad de grupo: ${products.map(a => a.age_group)}`}
-            value={formData.age_group}
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            name="material"
-            placeholder={`Materiales: ${products.map(a => a.material)}`}
-            value={formData.material}
-            onChange={handleChange}
-          />
-
           <label className="featured-check">
             Featured
             <input
@@ -343,7 +291,7 @@ export default function UpdateProduct({productsDB}) {
           </label>
 
           <button onClick={handleUpdate} disabled={loading}>
-            {loading ? "Updating..." : "Update Product"}
+            {loading ? "Actualizando..." : "Actualizar Producto"}
           </button>
 
           {message && <p className="message">{message}</p>}
