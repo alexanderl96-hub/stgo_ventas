@@ -78,12 +78,22 @@ export default function InPersonPaymentGuess({
         0
     );
 
+
     const exchangeRate = amountOrder[0]?.current_dollar_price ;
+    const quantity = amountOrder[0]?.qty
+
+     const price2 = ordersCalculation.reduce(
+        (sum, item) => sum + item.price,
+        0
+      );
+
 
     const pricing = modifyOrderPricing({
         usdPrice: usdTotal,
         exchangeRate,
-        formatPay
+        formatPay,
+        quantity,
+        price2
     });
 
     const idQRcode = Date.now();

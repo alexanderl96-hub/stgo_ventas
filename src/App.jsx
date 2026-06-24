@@ -33,7 +33,8 @@ function App() {
     setSearch,
     categoryDB,
     dataColorsDB,
-    triggerProductsRefresh } = useDataProducts();
+    triggerProductsRefresh,
+   dataUpdateDB } = useDataProducts();
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -394,6 +395,7 @@ function App() {
                element={
                    <UpdateDBProduct 
                        productsDB={productsDB}
+                       dataUpdateDB={dataUpdateDB}
                    />} />
         <Route path="/create-product" 
                element={

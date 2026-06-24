@@ -385,7 +385,9 @@ export default function NewProduct({categoryDB}) {
     const totalVenta = dollar_price * current_dollar_price * (1 + feeTotal);
 
     return dollar_price > 1 ? 
-         Math.round(totalVenta / 500) * 500 : Math.round(totalVenta);
+         Math.round(totalVenta / 500) * 500 : totalVenta.toFixed(2);
+    // return dollar_price > 1 ? 
+    //      Math.round(totalVenta / 500) * 500 : Math.round(totalVenta);
   };
 
   const arrayToString = (text) => {

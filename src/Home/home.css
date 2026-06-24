@@ -535,11 +535,7 @@
   margin-bottom: 6px;
 }
 
-.home-price{
-  font-size: 14px;
-  font-weight: 700;
-  color: #111;
-}
+
 
 .old-price{
   font-size: 12px;
@@ -789,6 +785,37 @@
 
   animation: fadeInUp 0.3s ease;
   z-index: 9999;
+}
+
+
+
+
+
+
+.home-price {
+  display: inline-flex;
+  align-items: flex-start;
+  font-weight: 700;
+  line-height: 1;
+  color: #111;
+   font-size: 14px;
+}
+
+.currency {
+  margin-right: 2px;
+  align-self: flex-start;
+}
+
+.home-dot {
+  font-size: 9px;
+  margin-top: 2px;
+  margin-left: 1px;
+}
+
+.cents {
+  font-size: 9px;   /* Half the size */
+  margin-top: 2px;   /* Move up */
+  margin-left: 1px;
 }
 
 

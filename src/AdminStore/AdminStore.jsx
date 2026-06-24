@@ -8,7 +8,8 @@ import { updateOrder, updateOrderStatus,
          deleteOrderAndUpdateUser, restoreProductsInventory } from "../api/auth"
 import Ordenes from "../updateDB/OrdenDasboard"
 
-const AdminStore = ({user, customers, setCustomers, logout }) => {
+const AdminStore = ({user, customers, setCustomers, 
+  logout, dataUpdateDB }) => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);

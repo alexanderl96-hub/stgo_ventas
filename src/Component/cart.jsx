@@ -8,12 +8,13 @@ import QRCode from "react-qr-code";
 function Cart({token, user, cart, setCart, activeProduct, setActiveProduct, 
   orderConfig, setOrderConfig, 
   activeCategory, setActiveCategory, 
-  setAmountOrder, amountOrder
+  setAmountOrder, amountOrder, productsDB
  }) {
 
   const navigate = useNavigate();
   const [activeQR, setActiveQR] = useState(null);
   const [cartWarning, setCartWarning] = useState(false);
+  const [totalAmountItem, setTotalAmountItem ] = useState(0)
 
 
   // 🔥 GROUP ITEMS BY NAME
@@ -33,12 +34,18 @@ function Cart({token, user, cart, setCart, activeProduct, setActiveProduct,
     return Array.from(map.values()).reverse();
   }, [cart]);
   // ➕ INCREASE QTY
-  const increaseQty = (name) => {
+  const increaseQty = (name, amount, qty, product_id) => {
+    
+     if (totalAmountItem >= amount) return;
+
     const found = cart.find(item => item.name === name);
-    if (found) {
-      setCart(prev => [...prev, found]);
-    }
+
+      if (found ) {
+        setCart(prev => [...prev, found]);
+      }
   };
+
+
   // ➖ DECREASE QTY
   const decreaseQty = (name) => {
     const index = cart.findIndex(item => item.name === name);
@@ -104,6 +111,18 @@ useEffect(() => {
 useEffect(()=>{
     setAmountOrder(groupedCart) 
 }, [groupedCart, setAmountOrder])
+
+useEffect(() => {
+  if (cart.length > 0) {
+    const totalPrice = cart.reduce(
+      (sum, item) =>
+        sum + (Number(item.qty) || 1),
+      0
+    );
+
+    setTotalAmountItem(totalPrice)
+  }
+}, [cart]);
 
 
 console.log("user", user)
@@ -205,7 +224,7 @@ console.log("caret", cart)
               </p>
 
               <p className="meta">
-               <strong>Tienda: </strong> {item.total_items}
+               <strong>Tienda: </strong> {item.colors_match[item.colors].qty}
               </p>
 
               {/* COLORS */}
@@ -240,8 +259,9 @@ console.log("caret", cart)
                           <div className="qty">
                             <button onClick={() => decreaseQty(item.name)}>-</button>
                             <span>{item.qty}</span>
-                           {item.total_items > item.qty && <button onClick={() => increaseQty(item.name)}>+</button>}
-                           {item.total_items <= item.qty && <button ></button>}
+
+                            {item.colors_match[item.colors].qty > item.qty && <button onClick={() => increaseQty(item.name, item.colors_match[item.colors].qty, item.qty, item.id)}>+</button>}
+                           {item.colors_match[item.colors].qty <= item.qty && <button ></button>}
                           </div>
                           <div>
 

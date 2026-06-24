@@ -413,7 +413,13 @@ const availableColors = !orderConfig.size
                           </div>
 
                           <div className="price-container">
-                            <span className="home-price">${p.price}</span>
+                            {/* <span className="home-price">${p.price}</span> */}
+                            <div className="home-price">
+                                <span className="currency">$</span>
+                                <span className="whole">{Number(p.price).toFixed(2).split(".")[0]}</span>
+                                <span className="home-dot">.</span>
+                                <span className="cents">{Number(p.price).toFixed(2).split(".")[1]}</span>
+                            </div>
 
                             {Number(p.price) !== Number(p.original_price)&& (
                               <span className="old-price">${p.original_price}</span>

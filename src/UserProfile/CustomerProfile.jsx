@@ -385,7 +385,7 @@ const CustomerProfile = ({ user, customers, setCustomers,
                             <span>x{item.qty}</span>
                           </div>
                           <div >
-                            <span>$ {item.price} cup</span>
+                            <span>$ {Math.round(item.price)} cup</span>
                           </div>
                          
                           {order.status_sell === "Pagada" && (

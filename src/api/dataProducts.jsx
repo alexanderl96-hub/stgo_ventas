@@ -9,6 +9,7 @@ export default function useDataProducts() {
   const [administratorDB , setAdministratorDB] = useState([])
   const [dataColorsDB, setDataColorsDB] = useState([])
   const [refreshProducts, setRefreshProducts] = useState(false);
+  const [dataUpdateDB, setDataUpdateDB] = useState([])
 
   const triggerProductsRefresh = () => {
     setRefreshProducts(prev => !prev);
@@ -23,7 +24,11 @@ useEffect(() => {
   fetch(`${API_URL}/api/products`)
     .then(res => res.json())
     .then(data => {
-      setProductsDB(data);
+      console.log("filering", data.filter( a => a.featured && a.stock > 0))
+      setProductsDB(data.filter( a => a.featured === true && a.stock > 0));
+      setFilteredDB(data.filter( a => a.featured === true && a.stock > 0));
+      // setDataUpdateDB(data)
+      // setProductsDB(data);
       setFilteredDB(data);
     })
     .catch(console.error);
@@ -36,8 +41,11 @@ useEffect(() => {
       fetch(`${API_URL}/api/products`)
         .then(res => res.json())
         .then(data => {
-          setProductsDB(data);
-          setFilteredDB(data);
+          // setProductsDB(data);
+          // setFilteredDB(data);
+          setProductsDB(data.filter( a => a.featured === true && a.stock > 0));
+          setFilteredDB(data.filter( a => a.featured === true && a.stock > 0));
+          setDataUpdateDB(data)
         })
         .catch(err =>
           console.error(err)
@@ -66,31 +74,6 @@ useEffect(() => {
       });
   }, []);
 
-  //  useEffect(() => {
-
-  //   const fetchProducts = () => {
-  //     fetch(`${API_URL}/api/categories`)
-  //       .then(res => res.json())
-  //       .then(data => {
-  //            setCategoryDB(data.categories)
-  //       })
-  //       .catch(err =>
-  //         console.error(err)
-  //       );
-  //   };
-
-  //   // Initial load
-  //   fetchProducts();
-
-  //   // Refresh every 30 seconds
-  //   const interval = setInterval(
-  //     fetchProducts,
-  //     30000
-  //   );
-
-  //   return () => clearInterval(interval);
-
-  // }, []);
 
       // 🔥 FETCH FROM BACKEND ADMIN
   useEffect(() => {
@@ -192,7 +175,8 @@ useEffect(() => {
     setSearch,
     categoryDB,
     dataColorsDB,
-    triggerProductsRefresh
+    triggerProductsRefresh,
+    dataUpdateDB
     // setCategoryDB
   };
 }

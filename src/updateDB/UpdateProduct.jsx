@@ -7,7 +7,7 @@ import { ArrowLeft } from "lucide-react";
 
 import "./updateProduct.css";
 
-export default function UpdateProduct({productsDB}) {
+export default function UpdateProduct({productsDB, dataUpdateDB}) {
   const navigate = useNavigate();
 
   const [productID, setProductID] = useState(null);
@@ -31,6 +31,10 @@ export default function UpdateProduct({productsDB}) {
     discount: 0,
     stock: 0,
     featured: false,
+
+    colors: "",
+    colors_match: {},
+    sizes: "",
   });
 
 
@@ -53,7 +57,10 @@ export default function UpdateProduct({productsDB}) {
           original_price: data.original_price || 0,
           discount: data.discount || 0,
           stock: data.stock || 0,
-          featured: data.featured || false
+          featured: data.featured || false,
+          colors: data.colors || "",
+          colors_match: data.colors_match || {},
+          sizes: data.sizes || "",
         });
 
       } catch (error) {
@@ -73,18 +80,30 @@ export default function UpdateProduct({productsDB}) {
   const handleSelectProduct = (product) => {
 
     setSelectedProduct(product);
-    setProductID(prod.id);
+    setProductID(product.id);
 
     setFormData({
       name: product.name || "",
       description: product.description || "",
       price: product.price || 0,
-      dollar_price: data.dollar_price || 0,
-      current_dollar_price: data.current_dollar_price || 0,
+      dollar_price: product.dollar_price || 0,
+      current_dollar_price: product.current_dollar_price || 0,
       original_price: product.original_price || 0,
       discount: product.discount || 0,
       stock: product.stock || 0,
       featured: product.featured || false,
+      // colors: product.colors || "",
+      // colors_match: product.colors_match || {},
+      // sizes: product.sizes || "",
+      colors: Array.isArray(product.colors)
+        ? product.colors.join(", ")
+        : "",
+
+      colors_match: product.colors_match || {},
+
+      sizes: Array.isArray(product.sizes)
+        ? product.sizes.join(", ")
+        : ""
     });
   };
 
@@ -128,6 +147,11 @@ export default function UpdateProduct({productsDB}) {
       } else {
         setMessage(data.message);
       }
+
+        setProducts([])
+        setProductID(null)
+        setSelectedProduct(null);
+        
     } catch (error) {
       console.log(error);
 
@@ -137,7 +161,192 @@ export default function UpdateProduct({productsDB}) {
     }
   };
 
-  console.log(products)
+    const calculateSalePrice = (dollar_price, current_dollar_price) => {
+    const feeTotal = 0.55;
+
+    const totalVenta = dollar_price * current_dollar_price * (1 + feeTotal);
+
+    return dollar_price > 1 ? 
+         Math.round(totalVenta / 500) * 500 : totalVenta.toFixed(2);
+    // return dollar_price > 1 ? 
+    //      Math.round(totalVenta / 500) * 500 : Math.round(totalVenta);
+  };
+
+   useEffect(() => {
+    if (formData.dollar_price && formData.current_dollar_price) {
+      setFormData((prev) => ({
+        ...prev,
+
+        price: calculateSalePrice(
+          Number(prev.dollar_price),
+
+          Number(prev.current_dollar_price),
+        ),
+        original_price: calculateSalePrice(
+          Number(prev.dollar_price),
+
+          Number(prev.current_dollar_price),
+        ),
+      }));
+    }
+  }, [formData.dollar_price, formData.current_dollar_price]);
+
+
+    const addSize = (color) => {
+
+      setFormData(prev => ({
+
+        ...prev,
+
+        colors_match: {
+
+          ...prev.colors_match,
+
+          [color]: {
+
+            ...prev.colors_match[color],
+
+            matching_sizes: [
+
+              ...(prev.colors_match[color]
+                ?.matching_sizes || []),
+
+              ["", 0]
+            ]
+          }
+        }
+      }));
+    };
+
+  const updateSizeRow = (
+    color,
+    index,
+    position,
+    value
+  ) => {
+
+    setFormData(prev => {
+
+      const rows = [
+        ...(prev.colors_match[color]
+          ?.matching_sizes || [])
+      ];
+
+      // position 0 = size
+      // position 1 = qty
+
+      rows[index][position] =
+        position === 0
+          ? value
+          : Number(value);
+
+      const totalQty =
+        rows.reduce(
+          (sum, [_, qty]) =>
+            sum + Number(qty || 0),
+          0
+        );
+
+      return {
+
+        ...prev,
+
+        colors_match: {
+
+          ...prev.colors_match,
+
+          [color]: {
+
+            qty: totalQty,
+
+            matching_sizes: rows
+          }
+        }
+      };
+
+    });
+
+  };
+
+  const removeSize = (
+      color,
+      index
+    ) => {
+
+      setFormData(prev => {
+
+        const rows =
+          prev.colors_match[color]
+            .matching_sizes.filter(
+              (_, i) => i !== index
+            );
+
+        const totalQty =
+          rows.reduce(
+            (sum, [_, qty]) =>
+              sum + Number(qty || 0),
+            0
+          );
+
+        return {
+
+          ...prev,
+
+          colors_match: {
+
+            ...prev.colors_match,
+
+            [color]: {
+
+              qty: totalQty,
+
+              matching_sizes: rows
+            }
+          }
+        };
+
+      });
+
+    };
+
+    useEffect(() => {
+
+    const totalStock =
+      Object.values(formData.colors_match || {})
+        .reduce(
+          (sum, color) =>
+            sum + (color.qty || 0),
+          0
+        );
+      const allSizes = [
+        ...new Set(
+          Object.values(formData.colors_match || {})
+            .flatMap(color =>
+              (color.matching_sizes || [])
+                .map(([size]) => size)
+            )
+        )
+      ].sort((a, b) => a - b).join(", ");
+
+    setFormData(prev => ({
+      ...prev,
+      stock: totalStock,
+      total_items: totalStock,
+      sizes: allSizes
+    }));
+
+  }, [formData.colors_match]);
+
+    useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [])
+
+
+  console.log("products", products)
+    console.log("products form", formData)
 
   return (
     <div className="update-product-page">
@@ -154,11 +363,11 @@ export default function UpdateProduct({productsDB}) {
       
 
       <h2>Actualizar producto</h2>
-         {products?.length === 0 && ( <>
+         {productID === null && ( <>
           <h3>Selecciona el producto</h3>
           <div className="up-products-grid">
 
-              {productsDB.map((prod) => (
+              {dataUpdateDB.map((prod) => (
 
                 <div
                   key={prod.id}
@@ -211,7 +420,7 @@ export default function UpdateProduct({productsDB}) {
          </>)}
 
 
-        {products?.length > 0 && ( <>
+        {productID !== null && ( <>
         {/* FORM Update*/}
         <div className="update-form">
           <input
@@ -279,6 +488,130 @@ export default function UpdateProduct({productsDB}) {
             value={formData.stock}
             onChange={handleChange}
           />
+
+           <input
+              type="text"
+              name="colors"
+              placeholder="Colores (separado por coma)"
+              value={formData.colors}
+              onChange={(e) => {
+
+                const value = e.target.value;
+
+                const colors = value
+                  .split(",")
+                  .map(c => c.trim())
+                  .filter(Boolean);
+
+                const colorsMatch = {};
+
+                colors.forEach(color => {
+
+                  colorsMatch[color] =
+                    formData.colors_match?.[color] || {
+                      qty: 0,
+                      matching_sizes: []
+                    };
+
+                });
+
+                setFormData(prev => ({
+                  ...prev,
+                  colors: value,
+                  colors_match: colorsMatch
+                }));
+              }}
+            />
+
+
+            {Object.entries(formData.colors_match || {}).map(([color, data]) => (
+
+              <div
+                key={color}
+                style={{
+                  border: "1px solid #ddd",
+                  padding: "10px",
+                  marginBottom: "10px"
+                }}
+              >
+
+                <h4>{color}</h4>
+
+                {(data.matching_sizes || []).map(([size, qty], index) => (
+
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                      marginBottom: "5px"
+                    }}
+                  >
+
+                    <input
+                      type="text"
+                      placeholder="Talla / Medida"
+                      value={size}
+                      onChange={(e) =>
+                        updateSizeRow(
+                          color,
+                          index,
+                          0,
+                          e.target.value
+                        )
+                      }
+                    />
+
+                    <input
+                      type="number"
+                      placeholder="Cantidad"
+                      value={qty}
+                      onChange={(e) =>
+                        updateSizeRow(
+                          color,
+                          index,
+                          1,
+                          e.target.value
+                        )
+                      }
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        removeSize(color, index)
+                      }
+                    >
+                      X
+                    </button>
+
+                  </div>
+
+                ))}
+
+                <button
+                  type="button"
+                  onClick={() => addSize(color)}
+                >
+                  + Añadir talla
+                </button>
+
+                <p>
+                  Total: {data.qty || 0}
+                </p>
+
+              </div>
+
+            ))}
+
+            <input
+              type="text"
+              style={{ display: "none" }}
+              name="sizes"
+              placeholder="Dimensiones (separado por coma)"
+              value={formData.sizes}
+              onChange={handleChange}
+            />
 
           <label className="featured-check">
             Featured
