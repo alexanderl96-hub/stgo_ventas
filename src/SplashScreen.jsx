@@ -1,12 +1,12 @@
 // SplashScreen.jsx
 
 import "./SplashScreen.css";
+import logo from "./ventas_express.png"
 
 export default function SplashScreen() {
   return (
     <div className="splash-screen">
-      <img src="/ventas-express.png" alt="Ventas Express" />
-      <h1>Ventas Express</h1>
+      <img src={logo} alt="Ventas Express"  className="splash-logo"/>
     </div>
   );
 }

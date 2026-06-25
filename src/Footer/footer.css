@@ -13,7 +13,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 200px;
+  height: 65px;
 
   background: white;
   border-top: 1px solid #eee;
@@ -39,7 +39,7 @@
 
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .nav-item.active{

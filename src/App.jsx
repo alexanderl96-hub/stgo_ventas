@@ -143,20 +143,21 @@ function App() {
 
 
   useEffect(() => {
-  const timer = setTimeout(() => {
-    setShowSplash(false);
-  }, 5000);
+      const timer = setTimeout(() => {
+            setShowSplash(false);
+          }, 13000);
 
-  return () => clearTimeout(timer);
+          return () => clearTimeout(timer);
+
 }, []);
 
+  if(showSplash){
+    return (<SplashScreen/>);
+  }
 
 
   return (
-    <>
-       {showSplash === true ? 
-           <SplashScreen /> :
-            <div>
+      <div>
       <Routes>
         <Route
           path="/"
@@ -419,10 +420,9 @@ function App() {
         token={token}
       />
     </div>
-       }
     
-    </>
   );
+
 }
 
 export default App;
