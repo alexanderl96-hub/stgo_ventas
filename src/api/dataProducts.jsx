@@ -10,6 +10,7 @@ export default function useDataProducts() {
   const [dataColorsDB, setDataColorsDB] = useState([])
   const [refreshProducts, setRefreshProducts] = useState(false);
   const [dataUpdateDB, setDataUpdateDB] = useState([])
+  const [commingSoon, setShowComingSoon] = useState([])
 
   const triggerProductsRefresh = () => {
     setRefreshProducts(prev => !prev);
@@ -27,6 +28,7 @@ useEffect(() => {
       console.log("filering", data.filter( a => a.featured && a.stock > 0))
       setProductsDB(data.filter( a => a.featured === true && a.stock > 0));
       setFilteredDB(data.filter( a => a.featured === true && a.stock > 0));
+      setShowComingSoon(data.filter( a => a.featured === false && a.stock > 0))
       // setDataUpdateDB(data)
       // setProductsDB(data);
       setFilteredDB(data);
@@ -176,7 +178,8 @@ useEffect(() => {
     categoryDB,
     dataColorsDB,
     triggerProductsRefresh,
-    dataUpdateDB
+    dataUpdateDB,
+    commingSoon
     // setCategoryDB
   };
 }

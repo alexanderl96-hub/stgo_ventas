@@ -698,17 +698,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 .logo-speed{
   display: flex;
   flex-direction: column;
@@ -818,6 +807,131 @@
   margin-left: 1px;
 }
 
+
+
+
+.coming-soon{
+    margin:5px 0;
+    margin-top: -5px;
+    overflow: hidden;
+    height: 140px;
+    animation:
+    bannerOpen 1.6s ease,
+     bannerClose 1.8s ease 25s forwards;
+   
+}
+
+@keyframes bannerOpen {
+
+  from {
+    height: 0;
+    opacity: 0;
+  }
+
+  to {
+    height: 140px;
+    opacity: 1;
+  }
+
+}
+
+@keyframes bannerClose {
+
+  from {
+    height: 140px;
+    opacity: 1;
+  }
+
+  to {
+    height: 0;
+    opacity: 0;
+  }
+
+}
+
+
+.coming-title{
+    margin-bottom:5px;
+    padding-left:15px;
+    font-size:14px;
+    font-weight:700;
+}
+
+.coming-scroll::-webkit-scrollbar{
+    display:none;
+}
+
+.coming-card{
+
+    min-width:120px;
+    width:120px;
+
+    flex-shrink:0;
+
+    background:#fff;
+
+    overflow:hidden;
+
+    scroll-snap-align:start;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+
+    transition:.6s;
+}
+
+.coming-card img{
+
+    width:100%;
+    height:80px;
+
+    object-fit:cover;
+
+}
+
+.coming-card span{
+
+    display:block;
+
+    padding:3px;
+
+    text-align:center;
+
+    font-weight:600;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.coming-card:hover{
+
+    transform:scale(1.04);
+
+}
+
+.coming-scroll{
+
+    display:flex;
+
+    width:max-content;
+
+    animation:autoScroll 30s linear infinite;
+}
+
+
+@keyframes autoScroll{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(-50%);
+    }
+
+}
 
 
 

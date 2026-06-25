@@ -35,7 +35,7 @@ function App() {
     categoryDB,
     dataColorsDB,
     triggerProductsRefresh,
-   dataUpdateDB } = useDataProducts();
+   dataUpdateDB, commingSoon } = useDataProducts();
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -165,6 +165,7 @@ function App() {
             <Home
               productsDB={productsDB}
               categoryDB={categoryDB}
+              commingSoon={commingSoon}
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
               cart={cart}

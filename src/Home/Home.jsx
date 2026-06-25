@@ -18,7 +18,7 @@ import { filteringImgColor } from "../utils/filteringImgColor.jsx"
 
 
 export default function Home({
-  productsDB, categoryDB, 
+  productsDB, categoryDB, commingSoon,
   activeCategory, setActiveCategory,
   loading, setLoading, 
   searchTerm, setSearchTerm, 
@@ -51,6 +51,25 @@ export default function Home({
       p[field]?.toLowerCase().includes(term)
     );
   });
+
+  const [showComingSoon, setShowComingSoon] = useState(false);
+
+  useEffect(() => {
+    // show after splash disappears
+    const showTimer = setTimeout(() => {
+      setShowComingSoon(true);
+    }, 1000);
+
+    // hide after 20 seconds
+    const hideTimer = setTimeout(() => {
+      setShowComingSoon(false);
+    }, 40000);
+
+    return () => {
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+    };
+  }, []);
 
 
   const filterSubCategory = (value) => {
@@ -163,7 +182,7 @@ const availableColors = !orderConfig.size
       .map(([color]) => color);
 
 
-
+console.log(commingSoon)
 
 
   return (
@@ -339,6 +358,23 @@ const availableColors = !orderConfig.size
           </div>
         ) : (
         <div className="portal-content">
+         {showComingSoon && (
+          <div className="coming-soon">
+            <h2 className="coming-title">
+              🚀 Próximamente
+            </h2>
+ 
+           <div className="coming-scroll">
+            {commingSoon?.slice(0, 40).map((item, index)=> {
+              return(
+                  <div className="coming-card" key={index}>
+                    <img src={item.img.map(a => a.image_path)[0]} alt="" />
+                    <span>{item.name}</span>
+                  </div>
+              )
+            })}
+            </div>
+          </div> )}
 
           <div className="category-scroll">
             {categoryDB?.map((cat) => (
