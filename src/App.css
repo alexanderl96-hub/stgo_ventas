@@ -431,6 +431,12 @@
 }
  */
 
+ input,
+textarea,
+select {
+    font-size: 16px;
+}
+
 
 /* Phones */
 @media screen and (max-width: 480px) {
