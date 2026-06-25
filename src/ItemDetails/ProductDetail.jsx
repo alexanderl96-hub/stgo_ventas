@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./productDetails.css"
 import { filteringImgColor } from "../utils/filteringImgColor.jsx"
 import { getColorStyle } from "../utils/filterColorSet.jsx";
@@ -28,6 +28,8 @@ export default function ProductDetail({
     activeCategory, setActiveCategory, orderSuccess, setOrderSuccess}) {
 
     const navigate = useNavigate();
+    const location = useLocation();
+
     const [showTabs, setShowTabs] = useState(false);
     const [activeSection, setActiveSection] = useState("generales");
  
@@ -150,7 +152,10 @@ const availableColors = !orderConfig.size
 
                 <input
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  navigate("/")
+                }}
                 placeholder="Busqueda..."
                 />
 
@@ -529,7 +534,13 @@ const availableColors = !orderConfig.size
             </div>
 
             <div className="price-container">
-            <span className="price-details">${product.price}</span>
+              {/* <span className="price-details">${product.price}</span> */}
+              <div className="item-home-price">
+                  <span className="item-currency">$</span>
+                  <span className="whole">{Number(product.price).toFixed(2).split(".")[0]}</span>
+                  <span className="item-home-dot">.</span>
+                  <span className="item-cents">{Number(product.price).toFixed(2).split(".")[1]}</span>
+              </div>
             {Number(product.price) !== Number(product.original_price) && (
                 <span className="old-price-details">${product.original_price}</span>
             )}

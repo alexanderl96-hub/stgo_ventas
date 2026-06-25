@@ -549,6 +549,32 @@
   z-index:10000;
 }
 
+.item-home-price {
+  display: inline-flex;
+  align-items: flex-start;
+  font-weight: 700;
+  line-height: 1;
+  color: #111;
+   font-size: 18px;
+}
+
+.item-currency {
+  margin-right: 2px;
+  align-self: flex-start;
+}
+
+.item-home-dot {
+  font-size: 12px;
+  margin-top: 2px;
+  margin-left: 1px;
+}
+
+.item-cents {
+  font-size: 12px;   /* Half the size */
+  margin-top: 2px;   /* Move up */
+  margin-left: 1px;
+}
+
 
 
 /* Extra Small Phones (iPhone SE)*/

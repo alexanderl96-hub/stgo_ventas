@@ -1,37 +1,49 @@
+
 // import React from 'react';
 // import ReactDOM from 'react-dom/client';
 // import './index.css';
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
-// // import { HashRouter } from "react-router-dom";
 
-// import { BrowserRouter } from "react-router-dom"; // 👈 ADD THIS
+// import { HashRouter } from "react-router-dom";
 
 // const root = ReactDOM.createRoot(document.getElementById('root'));
+
 // root.render(
-//   // <React.StrictMode>
-//     <BrowserRouter> {/* 👈 WRAP HERE */}
-//       <App />
-//     </BrowserRouter>
-//   // </React.StrictMode>
+//   <HashRouter>
+//     <App />
+//   </HashRouter>
 // );
 
 // reportWebVitals();
 
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 import { HashRouter } from "react-router-dom";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <HashRouter>
     <App />
   </HashRouter>
 );
+
+// Register the service worker
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((registration) => {
+        console.log("✅ Service Worker registered:", registration);
+      })
+      .catch((error) => {
+        console.error("❌ Service Worker registration failed:", error);
+      });
+  });
+}
 
 reportWebVitals();
