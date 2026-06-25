@@ -817,7 +817,7 @@
     height: 140px;
     animation:
     bannerOpen 1.6s ease,
-     bannerClose 1.8s ease 25s forwards;
+     bannerClose 1.8s ease 30s forwards;
    
 }
 
@@ -917,7 +917,7 @@
 
     width:max-content;
 
-    animation:autoScroll 30s linear infinite;
+    animation:autoScroll 35s linear infinite;
 }
 
 
