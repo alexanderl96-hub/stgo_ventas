@@ -595,7 +595,8 @@
   }
 
   .main_inputContainer_PortalDetails input{
-    font-size: 12.5px;
+    /* font-size: 12.5px; */
+    font-size: 16px;
   }
 
   .details-icon{
@@ -761,7 +762,8 @@
     }
 
     .main_inputContainer_PortalDetails input{
-      font-size: 13.5px;
+      /* font-size: 13.5px; */
+      font-size: 16px;
     }
 
     .details-icon{
@@ -927,7 +929,8 @@
     }
 
     .main_inputContainer_PortalDetails input{
-      font-size: 14.5px;
+      /* font-size: 14.5px; */
+      font-size: 16px;
     }
 
     .details-icon{

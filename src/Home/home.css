@@ -882,7 +882,8 @@
     }
 
     .main_inputContainer_Portal input{
-      font-size: 12.5px;
+      /* font-size: 12.5px; */
+      font-size: 16px;
     }
 
     .search-icon{
@@ -1132,7 +1133,8 @@
     }
 
     .main_inputContainer_Portal input{
-      font-size: 13px;
+      /* font-size: 13px; */
+      font-size: 16px;
     }
 
     .search-icon{
