@@ -63,7 +63,7 @@ export default function Home({
     // hide after 20 seconds
     const hideTimer = setTimeout(() => {
       setShowComingSoon(false);
-    }, 40000);
+    }, 60000);
 
     return () => {
       clearTimeout(showTimer);
