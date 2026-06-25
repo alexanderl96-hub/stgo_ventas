@@ -22,6 +22,7 @@ import UpdateDBProduct from "./updateDB/UpdateProduct.jsx";
 import CreateProduct from "./updateDB/NewProduct.jsx";
 import Ordenes from "./updateDB/OrdenDasboard.jsx";
 import { Product } from "./Product/Product.jsx";
+import SplashScreen from "./SplashScreen.jsx";
 
 function App() {
   // 🧠 GLOBAL PRODUCT DATA (FROM BACKEND)
@@ -52,6 +53,7 @@ function App() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [openCategory, setOpenCategory] = useState(null);
+   const [showSplash, setShowSplash] = useState(true);
 
   const navigate = useNavigate();
 
@@ -138,33 +140,23 @@ function App() {
       clearInterval(interval);
 
   }, [user?.customer_id]);
-//   useEffect(() => {
-//   const savedToken = localStorage.getItem("token");
-//   const savedUser = localStorage.getItem("user");
 
-//   if (savedToken) {
-//     setToken(savedToken);
-//   }
 
-//   if (
-//     savedUser &&
-//     savedUser !== "undefined" &&
-//     savedUser !== "null"
-//   ) {
-//     try {
-//       setUser(JSON.parse(savedUser));
-//     } catch (error) {
-//       console.error("Invalid user in localStorage");
-//       localStorage.removeItem("user");
-//     }
-//   }
-// }, []);
-  
-  console.log("CPM App", activeCategory);
+  useEffect(() => {
+  const timer = setTimeout(() => {
+    setShowSplash(false);
+  }, 5000);
+
+  return () => clearTimeout(timer);
+}, []);
+
 
 
   return (
-    <div>
+    <>
+       {showSplash === true ? 
+           <SplashScreen /> :
+            <div>
       <Routes>
         <Route
           path="/"
@@ -427,6 +419,9 @@ function App() {
         token={token}
       />
     </div>
+       }
+    
+    </>
   );
 }
 

@@ -7,6 +7,7 @@ import { ShoppingCart, Menu, X, Search, QrCode,
 import { calculateOrderPricing } from "../utils/pricing";
 import { getColorStyle } from "../utils/filterColorSet.jsx";
 import logo from "../source/logo.png"
+import SplashScreen from "../SplashScreen.jsx";
 import API_URL from "../api/api_images";
 
 import {
@@ -83,14 +84,14 @@ export default function Home({
   });
 
 useEffect(() => {
-  if (categoryDB?.length > 0) {
+  if (categoryDB?.length > 0 && productsDB?.length > 0) {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000); // 2 seconds
 
     return () => clearTimeout(timer);
   }
-}, [categoryDB]);
+}, [categoryDB, productsDB]);
 
 
 useEffect(() => {
@@ -160,6 +161,7 @@ const availableColors = !orderConfig.size
         )
       )
       .map(([color]) => color);
+
 
 
 
