@@ -1,55 +1,67 @@
 const CACHE_NAME = "ventas-express-v1";
 
-const urlsToCache = [
+const APP_SHELL = [
   "/",
   "/index.html",
-  "/manifest.json"
+  "/manifest.json",
+  "/favicon.ico",
 ];
 
+// INSTALL
 self.addEventListener("install", (event) => {
-  console.log("Service Worker Installed");
+  self.skipWaiting();
 
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
+      return cache.addAll(APP_SHELL);
     })
   );
-
-  self.skipWaiting();
 });
 
+// ACTIVATE
 self.addEventListener("activate", (event) => {
-  console.log("Service Worker Activated");
-
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-        })
-      )
-    )
+    Promise.all([
+      caches.keys().then((keys) =>
+        Promise.all(
+          keys.map((key) => {
+            if (key !== CACHE_NAME) {
+              return caches.delete(key);
+            }
+          })
+        )
+      ),
+      self.clients.claim(),
+    ])
   );
-
-  self.clients.claim();
 });
 
+// FETCH
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
+  // Never cache API requests
+  if (event.request.url.includes("/api/")) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      return (
-        cachedResponse ||
-        fetch(event.request).then((networkResponse) => {
-          return caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, networkResponse.clone());
-            return networkResponse;
+    fetch(event.request)
+      .then((response) => {
+        // Cache only successful responses
+        if (response.status === 200) {
+          const clone = response.clone();
+
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, clone);
           });
-        })
-      );
-    })
+        }
+
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request);
+      })
   );
 });
