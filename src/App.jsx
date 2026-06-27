@@ -15,6 +15,7 @@ import Register from "./Auth/Register";
 import AdminLogin from "./Admin/AdminLogin";
 import QrOrderPage from "./QRCodeOrder/QrOrderPage";
 import CheckoutGuess from "./CheckoutGuess/PyamentSelectorGuess";
+import Analytics from "./updateDB/Analytics.jsx";
 
 
 // import UpdateProduct from "./updateDB/Update/UpdateDBProduct";
@@ -403,6 +404,14 @@ function App() {
                           setCustomers={setCustomers}
                           customers={customers}
                  />} />
+        <Route
+              path="/admin/analytics"
+              element={
+                <Analytics
+                  // orders={allOrders}
+                />
+              }
+            />
 
         <Route path="/login" element={<Login onAuth={handleAuth} />} />
         <Route path="/register" element={<Register onAuth={handleAuth} />} />

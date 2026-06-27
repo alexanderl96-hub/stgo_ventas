@@ -506,6 +506,71 @@ const recoveredInvestment =
   );
 
 
+  const getSalesAnalytics = (orders) => {
+      const now = new Date();
+
+      const analytics = {
+        month: {
+          revenue: 0,
+          sellerCash: 0,
+          storeProfit: 0,
+          orders: 0,
+        },
+        sixMonths: {
+          revenue: 0,
+          sellerCash: 0,
+          storeProfit: 0,
+          orders: 0,
+        },
+        year: {
+          revenue: 0,
+          sellerCash: 0,
+          storeProfit: 0,
+          orders: 0,
+        },
+      };
+
+      orders.forEach(({ order }) => {
+        const date = new Date(order.date);
+
+        const diffMonths =
+          (now.getFullYear() - date.getFullYear()) * 12 +
+          (now.getMonth() - date.getMonth());
+
+        const diffYears = now.getFullYear() - date.getFullYear();
+
+        // Current month
+        if (
+          date.getMonth() === now.getMonth() &&
+          date.getFullYear() === now.getFullYear()
+        ) {
+          analytics.month.revenue += Number(order.revenew_total);
+          analytics.month.sellerCash += Number(order.seller_cash);
+          analytics.month.storeProfit += Number(order.tienda);
+          analytics.month.orders++;
+        }
+
+        // Last 6 months
+        if (diffMonths >= 0 && diffMonths < 6) {
+          analytics.sixMonths.revenue += Number(order.revenew_total);
+          analytics.sixMonths.sellerCash += Number(order.seller_cash);
+          analytics.sixMonths.storeProfit += Number(order.tienda);
+          analytics.sixMonths.orders++;
+        }
+
+        // Current year
+        if (diffYears === 0) {
+          analytics.year.revenue += Number(order.revenew_total);
+          analytics.year.sellerCash += Number(order.seller_cash);
+          analytics.year.storeProfit += Number(order.tienda);
+          analytics.year.orders++;
+        }
+      });
+
+      return analytics;
+    };
+
+
   return (
     <div className="admin-dashboard">
 

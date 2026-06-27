@@ -375,7 +375,7 @@ tr:nth-child(even) {
   border: none;
   background: none;
   cursor: pointer;
-  gap: 12px;
+  gap: 14px;
 
   display: flex;
   align-items: center;
@@ -386,4 +386,8 @@ tr:nth-child(even) {
 
 .back-btn:hover {
   transform: translateX(-4px);
+}
+
+.back-btn-icon > span{
+  font-size: 14px;
 }

@@ -380,6 +380,7 @@ tr:nth-child(even) {
   max-width: 1200px;
   margin: auto;
   padding: 20px;
+  margin-bottom: 40px;
 }
 
 .dashboard-header {
