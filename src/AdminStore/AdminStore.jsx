@@ -393,7 +393,48 @@ const AdminStore = ({user, customers, setCustomers,
       }, []);
 console.log( "guest orders", orders)
 
+const groupedByPerson = orders.reduce((acc, item) => {
+  const person = item.order.adm_in_charge;
 
+  if (!acc[person]) {
+    acc[person] = {
+      person_in_charge: person,
+      total_seller_cash: 0,
+      total_cup_price: 0,
+      total_tienda: 0,
+      total_revenew: 0,
+      orders: []
+    };
+  }
+
+  acc[person].total_seller_cash += Number(item.order.seller_cash) || 0;
+  acc[person].total_cup_price += Number(item.order.cup_price) || 0;
+  acc[person].total_tienda += Number(item.order.tienda) || 0;
+  acc[person].total_revenew += Number(item.order.revenew_total) || 0;
+
+  // Keep the complete original object
+  acc[person].orders.push(item);
+
+  return acc;
+}, {});
+
+const result = Object.values(groupedByPerson);
+
+const isAdmin = user?.name === "Alexander La Rosa";
+
+const normalizeName = (name = "") =>
+  name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // remove accents
+    .trim()
+    .toLowerCase();
+
+const mySales = result.find(
+  item =>
+    normalizeName(item.person_in_charge) ===
+    normalizeName(user?.name)
+);
+console.log("is Admin", isAdmin, result.map(a => a.person_in_charge), user?.name, mySales)
 
 const totalOrders =
   orders.length;
@@ -408,9 +449,9 @@ const totalProfit =
 const recoveredInvestment =
   orders.map(a => a.order).reduce(
     (sum, order) =>
-      sum + Number(order.tienda || 0),
+      sum + Number(order.cup_price || 0),
     0
-  ) * -1;
+  );
 
   const calculateMonthlyTarget = (orders) => {
 
@@ -472,6 +513,53 @@ const recoveredInvestment =
         <h1>📊 Panel Administrativo</h1>
         <p>Ventas Express - Gestión Comercial</p>
       </div>
+
+      {isAdmin ? (
+        result.map((seller) => (
+          <div key={seller.person_in_charge} className="sales-summary">
+            <h2 className="sales-title">
+              {seller.person_in_charge}
+            </h2>
+
+            <div className="sales-grid">
+              <div className="sales-card">
+                <span>Ingresos Totales</span>
+                <strong>${seller.total_revenew}</strong>
+              </div>
+
+              <div className="sales-card">
+                <span>CUP Precio</span>
+                <strong>${seller.total_cup_price}</strong>
+              </div>
+
+              <div className="sales-card">
+                <span>Ganancia Tienda</span>
+                <strong>${seller.total_tienda}</strong>
+              </div>
+
+              <div className="sales-card">
+                <span>Ganancia del Vendedor</span>
+                <strong>${seller.total_seller_cash}</strong>
+              </div>
+            </div>
+          </div>
+        ))
+      ) : (
+        mySales && (
+          <div className="sales-summary">
+            <div className="seller-summary">
+              <h2 className="sales-title seller-name">
+                {mySales.person_in_charge}
+              </h2>
+
+              <div className="sales-card">
+                <span>Ganancia del Vendedor</span>
+                <strong>${mySales.total_seller_cash}</strong>
+              </div>
+            </div>
+          </div>
+        )
+      )}
 
       <div className="dashboard-stats">
 

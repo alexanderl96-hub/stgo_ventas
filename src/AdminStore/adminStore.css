@@ -451,3 +451,69 @@ tr:nth-child(even) {
 .logout-btn {
   margin-top: 30px;
 }
+
+
+
+.sales-summary {
+  background: #fff;
+  border-radius: 18px;
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  border: 1px solid #ececec;
+}
+
+.sales-title {
+  margin: 0 0 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #7c3aed;
+}
+
+.sales-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+}
+
+.sales-card {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  color: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+  transition: .25s;
+}
+
+.sales-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(139,92,246,.35);
+}
+
+.sales-card span {
+  display: block;
+  font-size: .85rem;
+  opacity: .9;
+  margin-bottom: 8px;
+}
+
+.sales-card strong {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .sales-summary {
+    padding: 18px;
+  }
+
+  .sales-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sales-card strong {
+    font-size: 1.35rem;
+  }
+}
