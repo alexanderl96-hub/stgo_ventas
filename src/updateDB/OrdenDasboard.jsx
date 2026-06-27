@@ -290,6 +290,13 @@ export default function Ordenes ({
       }, []);
       console.log( "guest orders", orders)
 
+    useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [])
+
 
   return (
     <div className="admin-page">

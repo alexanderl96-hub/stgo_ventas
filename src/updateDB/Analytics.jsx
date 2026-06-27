@@ -203,6 +203,13 @@ export default function Analytics() {
     },
   ];
 
+    useEffect(() => {
+        window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+        });
+    }, [])
+
   return (
     <div className="analytics-page">
 

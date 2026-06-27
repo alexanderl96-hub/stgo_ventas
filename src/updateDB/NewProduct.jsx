@@ -464,6 +464,12 @@ export default function NewProduct({categoryDB}) {
   }, [formData.colors_match]);
     // console.log("categorias", categorias )
     // console.log("categoryDB", categoryDB )
+    useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [])
 
     console.log("fomr", formData)
 
