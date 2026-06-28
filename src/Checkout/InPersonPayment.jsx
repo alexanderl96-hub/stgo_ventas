@@ -238,10 +238,12 @@ export default function InPersonPayment({
     const newOrder = createOrder();
    
        saveOrder(newOrder);
+
+        await addCustomerOrder( user.customer_id, newOrder);
    
        const data = await createNewOrderUser(newOrder);
 
-          await addCustomerOrder( user.customer_id, newOrder);
+        // await addCustomerOrder( user.customer_id, newOrder);
 
        const updatedCustomer =
         await getCustomer(user.customer_id);

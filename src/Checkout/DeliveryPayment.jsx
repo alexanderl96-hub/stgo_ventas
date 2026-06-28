@@ -257,9 +257,9 @@ export default function DeliveryPayment ({
   const handleConfirmDelivery = async () => {
       if (!fullName || !address || phone.length !== 8) return;
   
-        
+        await addCustomerOrder( user.customer_id, sellOrder);
         const data = await createNewOrderUser(sellOrder);
-         await addCustomerOrder( user.customer_id, sellOrder);
+        //  await addCustomerOrder( user.customer_id, sellOrder);
 
        const updatedCustomer =
         await getCustomer(user.customer_id);
